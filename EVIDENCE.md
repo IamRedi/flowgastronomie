@@ -33,7 +33,7 @@ Die Release-Prüfung `npm run release:verify` (Migrationen, alle Datenbank-Gates
 
 ## Was nicht geprüft ist
 
-- **Echter Betrieb.** Die Plattform lief noch nicht in einem echten Restaurant und nicht auf einem öffentlichen Server. Es gibt keine Live-Demo.
+- **Echter Betrieb.** Ein Pilotrestaurant testet die Plattform; die fiskaly-Anbindung dafür nutzt nur die Sandbox und ist nicht Teil dieses Repositorys. Einen Echtbetrieb mit Fiskalisierung, einen öffentlichen Server und eine Live-Demo gibt es nicht.
 - **Externe Dienste.** E-Mail (Brevo), KI-Import und Creative Studio (OpenAI), Web-Push und Bondrucker über die Android-Brücke sind mit Test-Doubles geprüft, nicht mit echten Konten oder Geräten.
 - **Recht und Steuern.** Fiskalkasse (TSE), Online-Zahlung und arbeitsrechtliche Regeln im Dienstplan sind nicht rechtlich abgenommen. RestaurantFlow ist kein Kassensystem im Sinne der KassenSichV.
 - **Last und Skalierung.** Es gab keinen Lasttest.

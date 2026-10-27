@@ -4,7 +4,7 @@
 
 ## Kurzfassung
 
-RestaurantFlow ist funktional weit (Gast, Service, Küche, Kasse, Online-Bestellung, Website, Personal, Berichte), aber noch nicht im Echtbetrieb. Es gibt keinen Pilotbetrieb und keinen öffentlichen Server. Die nächsten Schritte sind eine öffentliche Demo mit fiktiven Daten, die offenen Oberflächenfehler aus dem Browser-Durchgang und danach ein erster Pilot.
+RestaurantFlow ist funktional weit (Gast, Service, Küche, Kasse, Online-Bestellung, Website, Personal, Berichte), aber noch nicht im Echtbetrieb. Ein Pilotrestaurant testet die Plattform, die Kassenanbindung an fiskaly läuft dabei nur gegen die kostenlose Sandbox; dieser Teil liegt noch außerhalb dieses Repositorys. Einen öffentlichen Server gibt es nicht. Die nächsten Schritte sind eine öffentliche Demo mit fiktiven Daten und die offenen Oberflächenfehler aus dem Browser-Durchgang.
 
 ## Verlauf
 
