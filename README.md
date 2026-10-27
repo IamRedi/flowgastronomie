@@ -18,6 +18,14 @@
 
 RestaurantFlow ist das erste Produkt der Plattform FlowGastronomie. PizzeriaFlow, BarFlow, CaféFlow und ImbissFlow sollen auf demselben Kern folgen.
 
+### Rundgang in 30 Sekunden
+
+Website des Lokals, Anmeldung, Startseite, eine Bestellung für Tisch 06 an der Kasse, dieselbe Bestellung im Küchenmonitor, Service Radar und Tagesbericht. Aufgenommen am lokalen Produktionsbuild mit dem fiktiven Demo-Betrieb.
+
+![Rundgang: Website, Startseite, Bestellung an der Kasse, Küchenmonitor, Service Radar und Tagesbericht](docs/assets/video/rundgang.webp)
+
+[Als Video (MP4, 1,3 MB)](docs/assets/video/rundgang.mp4)
+
 ## Einblick in die Anwendung
 
 Alle Bilder stammen aus der laufenden Anwendung mit dem fiktiven Demo-Betrieb „Restaurant Olive“: `npm run db:seed` legt ihn an, `npm run demo:showcase` spielt über die echte API einen Abend im Service durch (Produktfotos, Tische, offene Kasse, Bestellungen in jedem Küchenstatus, Zahlungen, Rufe vom Tisch). Es sind keine Mockups.
