@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  verify:
+    # Public repository: GitHub-hosted runners only, never a self-hosted runner.
+    runs-on: ubuntu-latest
+    # The full release gate (build + seeded browser journeys + SSE + restore)
+    # needs well over 25 minutes on a standard 2-core runner.
+    timeout-minutes: 45
+    env:
+      DATABASE_URL: postgresql://restaurantflow:restaurantflow@localhost:5432/restaurantflow
+      # Keep shared VM CPU and database write pressure bounded. Assertions and
+      # individual test deadlines are unchanged.
+      VITEST_MAX_WORKERS: "1"
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: restaurantflow
+          POSTGRES_USER: restaurantflow
+          POSTGRES_PASSWORD: restaurantflow
+        ports:
+          - 5432:5432
+        options: >-
+          --cpus 1 --memory 1g --memory-swap 1g --pids-limit 256
+          --tmpfs /var/lib/postgresql/data:rw,nosuid,nodev,size=512m
+          --log-driver local --log-opt max-size=10m --log-opt max-file=3
+          --health-cmd "pg_isready -U restaurantflow -d restaurantflow"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Legacy migration acceptance reads the verified pre-WF1 schema.
+          # A push checkout must retain that baseline, as PR checkouts did.
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: ${{ runner.environment != 'self-hosted' && 'gradle' || '' }}
+      - name: Build Android bridge debug APK
+        run: bash apps/android-pos-bridge/gradlew -p apps/android-pos-bridge --no-daemon assembleDebug
+      - run: cp .env.example .env
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: ${{ runner.environment != 'self-hosted' && 'npm' || '' }}
+      - run: npm ci
+      # Clean installs never generate Prisma Client (no postinstall hook by
+      # design); the documented pre-deployment gate generates it explicitly.
+      - run: npm run db:generate
+      - name: Neon idle and liveness monitor contracts
+        run: python3 -m unittest discover -s tests/operations -p 'test_*monitor.py' -q
+      - name: Staging package isolation, TLS and backup checks
+        run: npm run test:staging-package
+      - name: R2 telemetry and retention safety
+        run: python3 -m unittest discover -s tests/operations -p 'test_r2*.py' -q
+      - run: npx playwright install --with-deps chromium
+      - name: Smart Setup and Menu Import focused gates
+        run: npm run test:setup
+      - run: npm run release:verify
+      - name: Verify evidence archive boundary
+        run: python3 -m unittest discover -s tests/operations -p 'test_ci_evidence.py' -q
+      - name: Preserve full evidence and prepare bounded cloud upload
+        id: ci-evidence
+        if: always()
+        run: python3 infra/ci/preserve-evidence.py --job verify
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && (runner.environment != 'self-hosted' || vars.CI_CLOUD_ARTIFACT_UPLOAD == 'true') }}
+        with:
+          retention-days: 7
+          name: release-evidence
+          path: ${{ steps.ci-evidence.outputs.directory }}
+          if-no-files-found: warn

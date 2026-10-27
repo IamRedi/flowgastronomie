@@ -1,0 +1,17 @@
+# Persistent infrastructure overlay, owned jointly by the two platform operators.
+# Apply after the existing staging/public-edge/image overrides. Never mount DB.
+services:
+  proxy:
+    volumes:
+      - type: bind
+        source: /etc/flowgastronomie/shared-edge/businesssite.conf
+        target: /etc/nginx/conf.d/businesssite.conf
+        read_only: true
+        bind:
+          create_host_path: false
+    networks:
+      businesssite_frontend: {}
+networks:
+  businesssite_frontend:
+    external: true
+    name: businesssite_public_web_20261020

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Task version="1.4" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo><Description>Optional reviewed local Operations Lab launch. Not installed by Codex.</Description></RegistrationInfo>
+  <Triggers><LogonTrigger><Enabled>true</Enabled></LogonTrigger></Triggers>
+  <Principals><Principal id="LocalOwner"><LogonType>InteractiveToken</LogonType><RunLevel>LeastPrivilege</RunLevel></Principal></Principals>
+  <Settings><MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy><StartWhenAvailable>true</StartWhenAvailable><Hidden>true</Hidden><ExecutionTimeLimit>PT5M</ExecutionTimeLimit></Settings>
+  <Actions Context="LocalOwner"><Exec><Command>REPLACE_WITH_NODE_EXE</Command><Arguments>&quot;REPLACE_WITH_APPROVED_CODE\tools\operations-lab\runtime\cli.mjs&quot; start --runtime-root &quot;REPLACE_WITH_ABSOLUTE_RUNTIME_ROOT&quot;</Arguments><WorkingDirectory>REPLACE_WITH_APPROVED_CODE</WorkingDirectory></Exec></Actions>
+</Task>

@@ -1,0 +1,620 @@
+.marketing-workspace {
+  padding: 24px 32px 40px;
+  max-width: 1440px;
+  margin-inline: auto;
+  color: var(--restaurant-espresso);
+  font-family: var(--restaurant-sans);
+  min-width: 0;
+}
+.marketing-workspace *,
+.marketing-dialog * {
+  box-sizing: border-box;
+}
+.marketing-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+.marketing-nav a {
+  min-height: 44px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: var(--restaurant-muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+.marketing-nav a[aria-current="page"] {
+  color: var(--restaurant-olive);
+  background: var(--restaurant-ready);
+}
+.marketing-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin: 28px 0 18px;
+}
+.marketing-heading h2 {
+  font: 500 clamp(28px, 3vw, 42px)/1.13 var(--restaurant-serif);
+  letter-spacing: -0.025em;
+  color: var(--restaurant-olive);
+  margin: 8px 0 12px;
+}
+.marketing-heading p {
+  max-width: 740px;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--restaurant-muted);
+}
+.marketing-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--restaurant-terracotta);
+}
+.marketing-notice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--restaurant-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.marketing-notice .pilot-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.marketing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0;
+}
+.marketing-workspace button,
+.marketing-workspace > a.marketing-primary,
+.marketing-actions a,
+.marketing-dialog button:not(.pilot-icon-button) {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--restaurant-olive);
+  padding: 11px 16px;
+  border-radius: 8px;
+  font: 600 14px/1.4 var(--restaurant-sans);
+  cursor: pointer;
+}
+.marketing-actions :is(a, button),
+.marketing-workspace > a.marketing-primary,
+.marketing-heading > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.marketing-workspace .marketing-primary,
+.marketing-dialog .marketing-primary {
+  background: var(--restaurant-olive);
+  color: var(--paper);
+  border-color: var(--restaurant-olive);
+}
+.marketing-heading > button {
+  flex-shrink: 0;
+}
+.marketing-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.marketing-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+.marketing-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 14px;
+  box-shadow: var(--restaurant-shadow);
+  min-width: 0;
+}
+.marketing-card-icon {
+  display: grid;
+  place-items: center;
+  background: var(--restaurant-soft);
+  color: var(--restaurant-terracotta);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.marketing-card h3,
+.marketing-types h3,
+.marketing-dialog h3 {
+  font: 500 25px/1.2 var(--restaurant-serif);
+  color: var(--restaurant-olive);
+  margin: 16px 0 18px;
+}
+.marketing-card h4 {
+  font-size: 15px;
+  margin: 12px 0;
+}
+.marketing-card p,
+.marketing-dialog p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--restaurant-muted);
+}
+.marketing-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 44px;
+  color: var(--restaurant-olive);
+  font-weight: 600;
+}
+.marketing-list {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.marketing-table-scroll {
+  overflow-x: auto;
+}
+.marketing-list table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 720px;
+  font-size: 13px;
+}
+.marketing-list caption {
+  text-align: left;
+  padding: 14px 20px;
+  color: var(--restaurant-muted);
+}
+.marketing-list th {
+  background: var(--restaurant-soft);
+  text-align: left;
+  padding: 14px 16px;
+  white-space: nowrap;
+}
+.marketing-list td {
+  padding: 0;
+}
+.marketing-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+.marketing-empty h3 {
+  font: 500 26px/1.2 var(--restaurant-serif);
+  color: var(--restaurant-olive);
+  margin: 18px 0 8px;
+}
+.marketing-empty p {
+  max-width: 570px;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--restaurant-muted);
+}
+.marketing-types {
+  margin-top: 28px;
+}
+.marketing-types > div,
+.marketing-field-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.marketing-types span,
+.marketing-field-list span {
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  background: var(--restaurant-soft);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.marketing-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.marketing-dialog {
+  width: min(580px, calc(100vw - 32px));
+}
+.marketing-form {
+  display: grid;
+  gap: 18px;
+}
+.marketing-form label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.marketing-form :is(input:not([type="checkbox"]), select) {
+  min-width: 0;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--restaurant-espresso);
+  font: 14px var(--restaurant-sans);
+}
+.marketing-form summary {
+  min-height: 44px;
+  padding: 12px 0;
+  cursor: pointer;
+  color: var(--restaurant-olive);
+}
+.marketing-form .marketing-check {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 400;
+}
+.marketing-check input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--restaurant-olive);
+}
+.marketing-date-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.marketing-review dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  font-size: 14px;
+}
+.marketing-review dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.marketing-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 26px 0;
+}
+.marketing-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.marketing-steps span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--restaurant-ready);
+  color: var(--restaurant-olive);
+}
+.marketing-studio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.marketing-studio fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.marketing-studio legend {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.marketing-formats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.marketing-formats button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-height: 135px;
+  padding: 16px 10px;
+}
+.marketing-formats button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.marketing-formats button[aria-pressed="true"] {
+  border-color: var(--restaurant-olive);
+  background: var(--restaurant-ready);
+  box-shadow: inset 0 0 0 1px var(--restaurant-olive);
+}
+.marketing-formats strong {
+  font-size: 12px;
+}
+.marketing-format-paper {
+  display: block;
+  width: 32px;
+  max-height: 58px;
+  background: var(--restaurant-parchment);
+  border: 1px solid var(--restaurant-muted);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 var(--restaurant-soft);
+}
+.marketing-preview {
+  text-align: center;
+}
+.marketing-preview h3 {
+  margin-top: 0;
+}
+.marketing-template {
+  width: min(100%, 240px);
+  margin: 18px auto;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--restaurant-parchment);
+  color: var(--restaurant-olive);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow-wrap: anywhere;
+}
+.marketing-template > span {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.marketing-template h4 {
+  font: 500 28px/1.15 var(--restaurant-serif);
+}
+.marketing-template p {
+  margin: 8px 0;
+}
+.marketing-template small {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.marketing-template.is-thermal {
+  background: #fff;
+  color: #333;
+  font-family: monospace;
+  border-style: dashed;
+}
+.marketing-template.is-thermal h4 {
+  font-family: monospace;
+  font-size: 23px;
+}
+.marketing-preview-note {
+  margin: 20px 0 0;
+}
+.marketing-drafts {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.marketing-draft-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+  gap: 22px;
+  padding: 18px 22px;
+}
+.marketing-draft-row + .marketing-draft-row {
+  border-top: 1px solid var(--line);
+}
+.marketing-draft-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.marketing-draft-title h3 {
+  margin: 0;
+  color: var(--restaurant-olive);
+  font: 500 23px/1.25 var(--restaurant-serif);
+}
+.marketing-badge {
+  display: inline-block;
+  background: var(--restaurant-ready);
+  color: var(--restaurant-olive);
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.marketing-draft-row p {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.marketing-draft-row .marketing-draft-type {
+  color: var(--restaurant-muted);
+  font-size: 12px;
+}
+.marketing-draft-row small {
+  display: block;
+  color: var(--restaurant-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.marketing-nonoperational {
+  display: inline-block;
+  color: var(--restaurant-terracotta);
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.marketing-draft-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  align-self: center;
+}
+.marketing-draft-actions > span {
+  font-size: 13px;
+}
+.marketing-draft-actions button {
+  margin-top: 4px;
+}
+.marketing-gift-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.marketing-gift-template {
+  background: linear-gradient(135deg, var(--paper), var(--restaurant-soft));
+}
+.marketing-gift-value {
+  display: block;
+  font: 500 36px/1.2 var(--restaurant-serif);
+  color: var(--restaurant-olive);
+  margin: 22px 0;
+}
+.marketing-gift-template p {
+  margin: 8px 0;
+}
+.marketing-gift-template button {
+  margin-top: 18px;
+}
+.marketing-starter-details {
+  display: grid;
+  gap: 8px;
+  margin: 22px 0;
+  font-size: 14px;
+}
+.marketing-starter-details dt {
+  font-weight: 600;
+  color: var(--restaurant-olive);
+  margin-top: 10px;
+}
+.marketing-starter-details dd {
+  margin: 0;
+}
+.marketing-starter-formats {
+  margin-top: 20px;
+}
+.marketing-starter-formats button {
+  min-height: 155px;
+}
+.marketing-starter-formats small {
+  font-size: 10px;
+  color: var(--restaurant-muted);
+}
+.marketing-template.is-gift {
+  background: var(--restaurant-ready);
+  border: 2px solid var(--restaurant-parchment);
+}
+.marketing-qr-placeholder {
+  border: 1px dashed var(--restaurant-muted);
+  padding: 12px;
+  max-width: 145px;
+  font-size: 11px !important;
+  letter-spacing: 0 !important;
+}
+@media (max-width: 760px) {
+  .marketing-draft-row {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 18px;
+    gap: 10px;
+  }
+  .marketing-draft-actions {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .marketing-draft-actions small {
+    flex-basis: 100%;
+  }
+  .marketing-draft-actions button {
+    margin: 0 0 0 auto;
+  }
+  .marketing-gift-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+:is(.marketing-workspace, .marketing-dialog)
+  :is(a, button, input, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--restaurant-terracotta);
+  outline-offset: 3px;
+}
+@media (max-width: 1100px) {
+  .marketing-workspace {
+    padding-inline: 24px;
+  }
+  .marketing-overview-grid {
+    gap: 12px;
+  }
+  .marketing-card {
+    padding: 20px;
+  }
+  .marketing-formats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .marketing-workspace {
+    padding: 16px 14px 32px;
+  }
+  .marketing-nav {
+    gap: 2px;
+  }
+  .marketing-nav a {
+    padding: 12px 10px;
+    font-size: 13px;
+  }
+  .marketing-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 24px;
+    gap: 16px;
+  }
+  .marketing-overview-grid,
+  .marketing-detail-grid,
+  .marketing-metrics,
+  .marketing-studio-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .marketing-list table {
+    min-width: 640px;
+  }
+  .marketing-empty {
+    padding: 32px 18px;
+  }
+  .marketing-list .marketing-empty {
+    align-items: flex-start;
+    text-align: left;
+    max-width: calc(100vw - 32px);
+  }
+  .marketing-steps {
+    gap: 10px;
+  }
+  .marketing-steps li {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,14 @@
+# Add to the exact existing staging Compose invocation, after production is ready.
+# Retains its staging vhosts, certificates, environment and network.
+services:
+  proxy:
+    volumes:
+      - ${STAGING_EDGE_TEMPLATE:?Set the reviewed staging template with unique upstreams}:/etc/nginx/templates/default.conf.template:ro
+      - ${PUBLIC_EDGE_CONFIG:?Set the absolute reviewed production vhost file}:/etc/nginx/conf.d/public.conf:ro
+    networks:
+      production:
+        ipv4_address: 172.30.43.3
+networks:
+  production:
+    external: true
+    name: flowgastronomie-public_application

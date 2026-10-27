@@ -1,0 +1,41 @@
+.catalog-photo {
+  display: block;
+  width: 112px;
+  flex-shrink: 0;
+}
+.catalog-photo .pos-product-media {
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f2eee4;
+  color: #8a816b;
+}
+.catalog-photo .pos-product-media > :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.catalog-photo .pos-photo-label {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  background: #fffdf8ed;
+  color: #344f3f;
+  font-size: 10px;
+  padding: 3px 5px;
+  border-radius: 4px;
+}
+.public-product > .catalog-photo {
+  width: 140px;
+}
+@media (max-width: 600px) {
+  .catalog-photo,
+  .public-product > .catalog-photo {
+    width: 88px;
+  }
+}

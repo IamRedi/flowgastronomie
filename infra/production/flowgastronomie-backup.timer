@@ -1,0 +1,10 @@
+[Unit]
+Description=FlowGastronomie daily backup schedule (UTC)
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 UTC
+Persistent=true
+RandomizedDelaySec=5m
+
+[Install]
+WantedBy=timers.target

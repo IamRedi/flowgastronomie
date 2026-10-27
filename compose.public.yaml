@@ -1,0 +1,67 @@
+# Layer over compose.production.yaml with project name flowgastronomie-public.
+# Public TLS stays on the existing edge; its separate overlay joins this network.
+name: flowgastronomie-public
+
+services:
+  api:
+    environment:
+      TRUST_PROXY: 172.30.43.2,172.30.43.3
+      CREATIVE_STORAGE_DIR: /var/lib/flowgastronomie/creative
+      CREATIVE_PUBLIC_ORIGIN: ${WEB_ORIGIN:?Set the production HTTPS origin}
+      MENU_IMPORT_PROVIDER: ${MENU_IMPORT_PROVIDER:?Choose the production import provider}
+      CREATIVE_OPENAI_API_KEY: ${CREATIVE_OPENAI_API_KEY:-}
+      MENU_IMPORT_OPENAI_API_KEY: ${MENU_IMPORT_OPENAI_API_KEY:-}
+      CREATIVE_PLANNER_MODEL: ${CREATIVE_PLANNER_MODEL:-gpt-6-luna}
+      CREATIVE_PLANNER_QUALITY_MODEL: ${CREATIVE_PLANNER_QUALITY_MODEL:-gpt-6-sol}
+      CREATIVE_IMAGE_MODEL: ${CREATIVE_IMAGE_MODEL:-gpt-image-2.5-flare}
+      WEBSITE_COPY_AI_ENABLED: ${WEBSITE_COPY_AI_ENABLED:-false}
+      MENU_IMPORT_MODEL: ${MENU_IMPORT_MODEL:-gpt-5-mini}
+      BUSINESS_IMPORT_ALLOW_PAID_AI: ${BUSINESS_IMPORT_ALLOW_PAID_AI:-false}
+      BUSINESS_IMPORT_RENDERER_IMAGE: ${BUSINESS_IMPORT_RENDERER_IMAGE:-}
+    volumes:
+      - type: bind
+        source: ${CREATIVE_STORAGE_DIRECTORY:?Set the isolated production media directory}
+        target: /var/lib/flowgastronomie/creative
+        bind:
+          create_host_path: false
+    networks:
+      application:
+        aliases: [production-api]
+  web:
+    environment:
+      PLATFORM_OPERATOR_NAME: ${PLATFORM_OPERATOR_NAME:?Set the verified operator}
+      PLATFORM_OPERATOR_ADDRESS: ${PLATFORM_OPERATOR_ADDRESS:?Set the verified address}
+      PLATFORM_OPERATOR_EMAIL: ${PLATFORM_OPERATOR_EMAIL:?Set the operator contact}
+      PLATFORM_PRIVACY_NOTICE_DE: ${PLATFORM_PRIVACY_NOTICE_DE:?Set the verified production privacy notice}
+      PLATFORM_PRIVACY_NOTICE_SQ: ${PLATFORM_PRIVACY_NOTICE_SQ:-}
+      PLATFORM_PRIVACY_NOTICE_EN: ${PLATFORM_PRIVACY_NOTICE_EN:-}
+      PLATFORM_PRIVACY_NOTICE_IT: ${PLATFORM_PRIVACY_NOTICE_IT:-}
+    networks:
+      application:
+        aliases: [production-web]
+  proxy:
+    ports: !override ["127.0.0.1:${PROXY_HTTP_PORT:-8180}:8080"]
+    networks:
+      application:
+        ipv4_address: 172.30.43.2
+  backup:
+    build:
+      args:
+        BACKUP_POSTGRES_MAJOR: "18"
+    environment:
+      BACKUP_MEDIA: "true"
+    volumes:
+      - type: bind
+        source: ${CREATIVE_STORAGE_DIRECTORY:?Set the isolated production media directory}
+        target: /media
+        read_only: true
+        bind:
+          create_host_path: false
+
+networks:
+  application:
+    name: flowgastronomie-public_application
+    ipam:
+      config: !override
+        - subnet: 172.30.43.0/28
+          ip_range: 172.30.43.8/29

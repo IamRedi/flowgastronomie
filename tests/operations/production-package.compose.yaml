@@ -1,0 +1,15 @@
+# Gate-only fresh PostgreSQL. This file is never part of the production stack.
+services:
+  gate-postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: package_gate
+      POSTGRES_USER: package_gate
+      POSTGRES_PASSWORD: ${GATE_DB_PASSWORD:?Gate creates a disposable credential}
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U package_gate -d package_gate"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    networks: [application]

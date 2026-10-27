@@ -1,0 +1,189 @@
+.website-copy-import,
+.website-draft-history,
+.premium-style-picker {
+  display: block;
+  margin-bottom: 16px;
+  padding: 18px 24px;
+  border: 1px solid #dfd8cc;
+  border-radius: 18px;
+  background: #fffefa;
+  color: #263a31;
+}
+.website-copy-import summary,
+.website-draft-history summary {
+  min-height: 44px;
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 650;
+}
+.website-copy-import section,
+.website-copy-import label,
+.website-draft-history label {
+  margin-top: 20px;
+}
+.website-copy-import label,
+.website-draft-history label,
+.premium-style-picker {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.website-copy-import label,
+.website-draft-history label {
+  display: grid;
+  gap: 8px;
+}
+.website-copy-import input:not([type="checkbox"]),
+.website-copy-import textarea,
+.website-draft-history select,
+.premium-style-picker select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #c6cbbf;
+  border-radius: 10px;
+  background: white;
+  color: #263a31;
+  font: inherit;
+}
+.premium-style-picker select {
+  display: block;
+  margin-top: 8px;
+}
+.website-copy-import textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.website-copy-import label:has(input[type="checkbox"]),
+.website-draft-history label:has(input[type="checkbox"]),
+.premium-hours-confirm {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 12px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+.website-copy-import input[type="checkbox"],
+.website-draft-history input[type="checkbox"],
+.premium-hours-confirm input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: #294c3d;
+}
+.website-copy-import button,
+.website-draft-history button {
+  min-height: 44px;
+  margin: 16px 12px 0 0;
+  padding: 12px 20px;
+  border: 1px solid #294c3d;
+  border-radius: 12px;
+  background: #294c3d;
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.website-copy-import button:disabled,
+.website-draft-history button:disabled {
+  background: #e3e7df;
+  color: #515d54;
+  border-color: #c6cbbf;
+  cursor: not-allowed;
+}
+.website-copy-import :focus-visible,
+.website-draft-history :focus-visible,
+.premium-style-picker select:focus-visible,
+.premium-hours-confirm input:focus-visible {
+  outline: 3px solid #976441;
+  outline-offset: 4px;
+}
+.website-copy-import p,
+.website-copy-import blockquote {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+.website-copy-import blockquote {
+  margin: 16px 0;
+  padding: 16px;
+  border-left: 3px solid #976441;
+  background: #f3efe7;
+}
+@media (max-width: 600px) {
+  .website-editor-card {
+    min-width: 0;
+    padding: 20px 16px;
+  }
+  .website-hours-row {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .website-hours-row strong {
+    grid-column: 1 / -1;
+  }
+  .website-hours-row input[type="time"] {
+    min-width: 0;
+    padding-inline: 6px;
+  }
+  .website-copy-import,
+  .website-draft-history,
+  .premium-style-picker {
+    padding: 14px 16px;
+  }
+  .website-copy-import button,
+  .website-draft-history button {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+#website-editor-form {
+  grid-template-columns: minmax(0, 1fr);
+}
+#website-editor-form > * {
+  min-width: 0;
+}
+
+.premium-advanced {
+  width: 100%;
+  min-width: 0;
+}
+.premium-advanced summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.premium-advanced[open] summary {
+  margin-bottom: 16px;
+}
+.premium-media-entry a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  padding: 12px 18px;
+  border: 1px solid #42634a;
+  border-radius: 8px;
+  color: #284d38;
+  font-weight: 600;
+}
+.website-editor-actions {
+  position: static;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .website-editor-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: static;
+  }
+  .website-editor-actions .button {
+    padding-inline: 10px;
+    width: 100%;
+    font-size: 13px;
+    min-height: 48px;
+  }
+}

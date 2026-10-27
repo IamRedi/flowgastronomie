@@ -1,0 +1,91 @@
+.platform-ai-usage {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  gap: 24px;
+}
+.platform-ai-usage section {
+  background: #fff;
+  border: 1px solid #d7ded8;
+  border-radius: 12px;
+  padding: 20px;
+}
+.platform-ai-usage h1,
+.platform-ai-usage h2,
+.platform-ai-usage h3 {
+  margin: 0 0 12px;
+}
+.platform-ai-usage label {
+  display: grid;
+  gap: 6px;
+}
+.platform-ai-usage input,
+.platform-ai-usage select,
+.platform-ai-usage button {
+  min-height: 44px;
+  font: inherit;
+}
+.platform-ai-usage input:focus-visible,
+.platform-ai-usage select:focus-visible,
+.platform-ai-usage button:focus-visible {
+  outline: 3px solid #176b58;
+  outline-offset: 2px;
+}
+.platform-ai-usage button {
+  border: 1px solid #174d40;
+  border-radius: 8px;
+  background: #174d40;
+  color: white;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.platform-ai-usage button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.platform-ai-totals,
+.platform-ai-provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.platform-ai-totals p,
+.platform-ai-provider {
+  border: 1px solid #e1e8e1;
+  border-radius: 8px;
+  padding: 12px;
+}
+.platform-ai-provider {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.platform-ai-checkbox {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+.platform-ai-checkbox input {
+  min-width: 24px;
+}
+.platform-ai-emergency {
+  background: #8d241f !important;
+  border-color: #8d241f !important;
+}
+.platform-ai-history {
+  overflow-x: auto;
+}
+.platform-ai-history table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.platform-ai-history th,
+.platform-ai-history td {
+  text-align: left;
+  border-bottom: 1px solid #e1e8e1;
+  padding: 10px;
+}
+.platform-ai-error {
+  color: #8d241f;
+}

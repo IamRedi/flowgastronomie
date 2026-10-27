@@ -1,0 +1,12 @@
+[Unit]
+Description=FlowGastronomie staging health and backup freshness
+After=docker.service network-online.target
+
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+# Only WEB_HOST, API_HOST, BACKUP_DIRECTORY; no database passwords in this file.
+EnvironmentFile=/etc/flowgastronomie/staging-monitor.env
+ExecStart=/usr/bin/python3 /opt/flowgastronomie/current/infra/staging/monitor.py
+TimeoutStartSec=120

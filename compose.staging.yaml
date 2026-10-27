@@ -1,0 +1,47 @@
+# Compose >= 2.24.4. Always layer over compose.production.yaml.
+# Valid certificates and prepared host directories are required before startup.
+services:
+  api:
+    environment:
+      CREATIVE_STORAGE_DIR: /var/lib/flowgastronomie/creative
+      CREATIVE_PUBLIC_ORIGIN: ${WEB_ORIGIN:?Set the staging HTTPS origin}
+      MENU_IMPORT_PROVIDER: disabled
+    volumes:
+      - type: bind
+        source: ${CREATIVE_STORAGE_DIRECTORY:?Set the private host media directory}
+        target: /var/lib/flowgastronomie/creative
+        bind:
+          create_host_path: false
+
+  proxy:
+    ports: !override
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - ./infra/staging/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - type: bind
+        source: ${TLS_DIRECTORY:?Set the host letsencrypt directory}
+        target: /etc/letsencrypt
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${ACME_DIRECTORY:?Set the host ACME webroot}
+        target: /var/www/acme
+        read_only: true
+        bind:
+          create_host_path: false
+
+  backup:
+    build:
+      args:
+        BACKUP_POSTGRES_MAJOR: "18"
+    environment:
+      BACKUP_MEDIA: "true"
+    volumes:
+      - type: bind
+        source: ${CREATIVE_STORAGE_DIRECTORY:?Set the private host media directory}
+        target: /media
+        read_only: true
+        bind:
+          create_host_path: false

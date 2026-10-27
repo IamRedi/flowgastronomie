@@ -1,0 +1,103 @@
+import type { PlatformLocale } from "@flowgastronomie/domain";
+const en = {
+  title: "Import your menu",
+  intro: "Choose a menu file or a website. Review everything before importing.",
+  files: "Upload menu PDF/photos",
+  drop: "Choose files or drag them here",
+  website: "Import from website",
+  pending: "You have an unfinished import",
+  resume: "Continue",
+  remove: "Remove",
+  back: "Back to import start",
+  cancel: "Cancel import / Start over",
+  confirmTitle: "Cancel this unfinished import?",
+  confirmText:
+    "It will leave active work. Technical history is kept; existing menus and orders stay unchanged.",
+  confirm: "Cancel import",
+  keep: "Keep working",
+  cancelled: "This import was cancelled.",
+  activeBusiness: "Active business",
+  source: "Selected source",
+  noSource: "Choose a source",
+  history: "Completed imports",
+  pendingHint: "Saved work stays available until you continue or remove it.",
+  info: "Extraction details",
+};
+const sq: typeof en = {
+  title: "Importo menunë",
+  intro:
+    "Zgjidh skedarin e menusë ose një website. Kontrollo të dhënat para importit.",
+  files: "Ngarko menu PDF/foto",
+  drop: "Zgjidh skedarët ose tërhiqi këtu",
+  website: "Importo nga website",
+  pending: "Ke një import të papërfunduar",
+  resume: "Vazhdo",
+  remove: "Hiq",
+  back: "Kthehu te fillimi i importit",
+  cancel: "Anulo importin / Fillo nga e para",
+  confirmTitle: "Ta anulosh këtë import të papërfunduar?",
+  confirmText:
+    "Hiqet nga puna aktive. Historiku teknik ruhet; menutë dhe porositë ekzistuese nuk ndryshojnë.",
+  confirm: "Anulo importin",
+  keep: "Vazhdo punën",
+  cancelled: "Ky import është anuluar.",
+  activeBusiness: "Biznesi aktiv",
+  source: "Burimi i zgjedhur",
+  noSource: "Zgjidh një burim",
+  history: "Importet e përfunduara",
+  pendingHint: "Puna e ruajtur mbetet derisa ta vazhdosh ose ta heqësh.",
+  info: "Detajet e analizës",
+};
+const de: typeof en = {
+  title: "Speisekarte importieren",
+  intro: "Menüdatei oder Website auswählen. Vor dem Import alles prüfen.",
+  files: "Menü-PDF/Fotos hochladen",
+  drop: "Dateien wählen oder hier ablegen",
+  website: "Von Website importieren",
+  pending: "Ein Import ist noch nicht abgeschlossen",
+  resume: "Fortsetzen",
+  remove: "Entfernen",
+  back: "Zurück zum Importstart",
+  cancel: "Import abbrechen / Neu beginnen",
+  confirmTitle: "Unfertigen Import abbrechen?",
+  confirmText:
+    "Er wird aus der aktiven Arbeit entfernt. Der technische Verlauf bleibt; bestehende Menüs und Bestellungen bleiben unverändert.",
+  confirm: "Import abbrechen",
+  keep: "Weiterarbeiten",
+  cancelled: "Dieser Import wurde abgebrochen.",
+  activeBusiness: "Aktiver Betrieb",
+  source: "Gewählte Quelle",
+  noSource: "Quelle auswählen",
+  history: "Abgeschlossene Importe",
+  pendingHint:
+    "Gespeicherte Arbeit bleibt bis zum Fortsetzen oder Entfernen erhalten.",
+  info: "Details zur Analyse",
+};
+const it: typeof en = {
+  title: "Importa il menu",
+  intro:
+    "Scegli il file del menu o un sito. Controlla i dati prima di importare.",
+  files: "Carica menu PDF/foto",
+  drop: "Scegli i file o trascinali qui",
+  website: "Importa da sito web",
+  pending: "Hai un import incompleto",
+  resume: "Continua",
+  remove: "Rimuovi",
+  back: "Torna all’inizio dell’importazione",
+  cancel: "Annulla import / Ricomincia",
+  confirmTitle: "Annullare questo import incompleto?",
+  confirmText:
+    "Viene rimosso dal lavoro attivo. La cronologia tecnica resta; menu e ordini esistenti non cambiano.",
+  confirm: "Annulla import",
+  keep: "Continua a lavorare",
+  cancelled: "Questo import è stato annullato.",
+  activeBusiness: "Attività attiva",
+  source: "Fonte scelta",
+  noSource: "Scegli una fonte",
+  history: "Import completati",
+  pendingHint:
+    "Il lavoro salvato resta disponibile finché non lo continui o rimuovi.",
+  info: "Dettagli dell’analisi",
+};
+export const entryCopy = (locale: PlatformLocale) =>
+  ({ en, sq, de, it })[locale];

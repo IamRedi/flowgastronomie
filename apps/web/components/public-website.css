@@ -1,0 +1,304 @@
+.website-sections.public-experience {
+  --ws-paper: #faf8f2;
+}
+.website-sections.public-experience .ws-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 5%;
+  border-bottom: 1px solid #243c3018;
+}
+.website-sections.public-experience .ws-header strong {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  font-size: 1.15rem;
+  max-width: none;
+}
+.website-sections.public-experience .ws-header nav {
+  gap: 0.7rem;
+}
+.website-sections.public-experience .ws-header a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.website-sections.public-experience .ws-header nav[aria-label="Language"] {
+  gap: 0.25rem;
+}
+.website-sections.public-experience .ws-header nav[aria-label="Language"] a {
+  min-width: 44px;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+.public-experience .ws-section {
+  padding: clamp(2.5rem, 5vw, 5rem) 6%;
+}
+.public-experience .ws-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5%;
+  align-items: center;
+  min-height: 620px;
+  padding-block: 3.5rem;
+}
+.public-experience .ws-hero h1 {
+  font-size: clamp(3.2rem, 5.8vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  max-width: 14ch;
+  margin: 0 0 1.5rem;
+}
+.public-experience .ws-hero .ws-copy p {
+  max-width: 42ch;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.public-experience .ws-hero .ws-images {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.public-experience .ws-hero .ws-images img {
+  width: 100%;
+  height: 550px;
+  max-height: none;
+  object-fit: cover;
+  border-radius: 180px 180px 24px 24px;
+}
+.public-experience .ws-hero .ws-images .ws-logo-hero {
+  display: grid;
+  place-items: center;
+  min-height: 540px;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background: radial-gradient(circle at 45% 42%, #f7e8c7, #e3d6b5 58%, #b9a780);
+  border-radius: 220px 220px 28px 28px;
+}
+.public-experience .ws-hero .ws-images .ws-logo-hero img {
+  width: min(100%, 430px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 18px 48px #1b211b38;
+}
+.public-experience.design-urban .ws-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 660px;
+  padding: 0;
+}
+.public-experience.design-urban .ws-hero .ws-images,
+.public-experience.design-urban .ws-hero .ws-copy {
+  grid-area: 1/1;
+}
+.public-experience.design-urban .ws-hero .ws-images img {
+  height: 660px;
+  border-radius: 0;
+  filter: brightness(0.48);
+}
+.public-experience.design-urban .ws-hero .ws-copy {
+  padding: 5% 7%;
+  max-width: 70%;
+}
+.public-experience.design-urban .ws-hero h1 {
+  max-width: 13ch;
+}
+.public-experience.design-heritage .ws-hero {
+  text-align: center;
+}
+.public-experience.design-heritage .ws-hero h1,
+.public-experience.design-heritage .ws-hero p {
+  margin-inline: auto;
+}
+.public-experience .ws-art {
+  min-height: 440px;
+  background:
+    radial-gradient(ellipse at 25% 30%, #e3cc9d, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, #889a75, transparent 65%), #efe5d2;
+  border-radius: 200px 200px 24px 24px;
+  font-size: 9rem;
+  display: grid;
+  place-items: center;
+  color: #465d3d;
+}
+.public-experience .ws-gallery {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  background: transparent;
+}
+.public-experience .ws-gallery > .ws-copy h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+.public-gallery {
+  position: relative;
+}
+.public-gallery-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.public-gallery-controls button {
+  border: 1px solid #cbd1c3;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.public-gallery-strip {
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  padding-bottom: 1rem;
+}
+.public-gallery-strip figure {
+  position: relative;
+  flex: 0 0 clamp(220px, 26vw, 360px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+.public-gallery-strip img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.public-gallery-strip figcaption {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background: #14231ed9;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+}
+.public-experience .ws-menu {
+  display: block;
+  background: #f1f2e9;
+}
+.public-experience .ws-menu > .ws-copy {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.public-experience .ws-menu > .ws-copy h2 {
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+.public-experience .ws-about {
+  max-width: 1200px;
+  margin: auto;
+}
+.public-experience .ws-about .ws-copy p {
+  max-width: 58ch;
+}
+.public-experience .ws-contact {
+  background: #e9ecdf;
+}
+.public-experience .ws-contact address {
+  font-style: normal;
+}
+.public-experience .ws-contact address a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-right: 1rem;
+  color: inherit;
+}
+.public-experience .public-map-link {
+  padding: 0.5rem 1rem;
+  border: 1px solid #a4b29a;
+  border-radius: 10px;
+}
+.public-experience .ws-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+  padding: 1.8rem 6% 7rem;
+  border-top: 1px solid #d5ddca;
+}
+.public-experience .ws-footer a {
+  color: inherit;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.public-experience :focus-visible {
+  outline: 3px solid #aa5c35;
+  outline-offset: 3px;
+}
+@media (max-width: 800px) {
+  .website-sections.public-experience .ws-header {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 0.3rem 0.7rem;
+    padding: 0.7rem 5%;
+  }
+  .website-sections.public-experience .ws-header strong {
+    max-width: none;
+    grid-area: 1 / 1;
+    font-size: 1rem;
+  }
+  .website-sections.public-experience .ws-header nav:first-of-type {
+    grid-area: 2 / 1 / 3 / -1;
+    min-width: 0;
+  }
+  .website-sections.public-experience .ws-header nav[aria-label="Language"] {
+    grid-area: 3 / 1 / 4 / -1;
+  }
+  .website-sections.public-experience .ws-header .public-basket-icon {
+    grid-area: 1 / 2;
+  }
+  .website-sections.public-experience .ws-header a {
+    font-size: 0.8rem;
+  }
+  .public-experience .ws-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: auto;
+    padding: 2.5rem 6%;
+  }
+  .public-experience .ws-hero h1 {
+    font-size: clamp(2.6rem, 9vw, 4.5rem);
+  }
+  .public-experience .ws-hero .ws-images img {
+    height: 340px;
+  }
+  .public-experience.design-urban .ws-hero {
+    min-height: 540px;
+  }
+  .public-experience.design-urban .ws-hero .ws-images img {
+    height: 540px;
+  }
+  .public-experience.design-urban .ws-hero .ws-copy {
+    max-width: 100%;
+    padding: 2.5rem 6%;
+  }
+  .public-experience .ws-art {
+    min-height: 280px;
+  }
+  .public-experience .ws-contact {
+    grid-template-columns: 1fr;
+  }
+  .public-gallery-strip img {
+    height: 200px;
+  }
+}
+.public-gallery-controls[hidden] {
+  display: none;
+}
+.public-gallery-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

@@ -1,0 +1,12 @@
+# Optional layer, after the existing environment/release overlays.
+# Enable only after environment-specific review and verified rollback preparation.
+services:
+  api:
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          infra/production/healthcheck.mjs,
+          "http://127.0.0.1:4000/health",
+        ]

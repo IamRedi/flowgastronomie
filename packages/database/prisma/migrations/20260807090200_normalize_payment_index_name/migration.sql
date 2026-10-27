@@ -1,0 +1,2 @@
+ALTER INDEX "PaymentRecord_tableSessionId_recordedByUserId_idempotencyKey_ke"
+RENAME TO "PaymentRecord_tableSessionId_recordedByUserId_idempotencyKe_key";

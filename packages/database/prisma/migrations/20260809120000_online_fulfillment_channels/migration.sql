@@ -1,0 +1,3 @@
+ALTER TABLE "Venue" ADD COLUMN "onlinePickupEnabled" BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE "Venue" ADD COLUMN "onlineDeliveryEnabled" BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE "Venue" ADD COLUMN "onlineCateringEnabled" BOOLEAN NOT NULL DEFAULT true;
