@@ -4,7 +4,7 @@
 
 **Restaurant software that digitises only what the venue actually needs.** Table QR menus in four languages, Service Radar, counter sales, kitchen and bar stations, online ordering and the venue's own website run on one core. The venue decides per area, table or time of day how much of this it switches on. Waiters are not replaced.
 
-![Counter sales with stone-oven pizzas and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
+![Counter sales with photos of every dish and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
 
 **[Deutsche Version](README.md)** · **As of 27 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
 
@@ -28,11 +28,11 @@ Venue website, sign-in, owner home, an order for table 06 at the counter, the sa
 
 ## Screenshots
 
-All images come from the running application with the fictitious demo venue "Restaurant Olive": `npm run db:seed` creates it, and `npm run demo:showcase` plays through an evening of service via the real API (product photos, tables, an open register, orders in every kitchen state, payments, calls from the table). None are mockups. The UI language shown is German.
+All images come from the running application with the fictitious demo venue "Restaurant Olive": `npm run db:seed` creates it, and `npm run demo:showcase` plays through an evening of service via the real API (a menu with a photo for every dish, tables, an open register, orders in every kitchen state, payments, calls from the table). None are mockups. The UI language shown is German.
 
-| Owner home                                                                                               | Counter sales                                                                                                       |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| ![Owner home with live queue, today's revenue and open actions](docs/assets/screenshots/startseite.webp) | ![Counter sales with stone-oven pizzas, table 06 and three items in the basket](docs/assets/screenshots/kasse.webp) |
+| Owner home                                                                                               | Counter sales                                                                                                           |
+| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| ![Owner home with live queue, today's revenue and open actions](docs/assets/screenshots/startseite.webp) | ![Counter sales with photos of every dish, table 06 and three pizzas in the basket](docs/assets/screenshots/kasse.webp) |
 
 | Service Radar                                                                                                    | Kitchen                                                                                                  |
 | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
