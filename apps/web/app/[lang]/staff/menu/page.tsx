@@ -17,6 +17,7 @@ export default async function StaffMenuPage({
   return (
     <StaffMenuClient
       labels={dictionary.menuAdmin}
+      allergenLabels={dictionary.menuPage.allergenLabels}
       locale={lang}
       staffLabels={dictionary.staff}
     />

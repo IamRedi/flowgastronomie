@@ -268,7 +268,7 @@ export function businessIdentityLabel(kind: TenantKind) {
     : kind === "LOCAL_PILOT"
       ? "LOCAL PILOT"
       : kind === "LEGACY_CI"
-        ? "LEGACY CI FIXTURE"
+        ? "DEMO SEED"
         : null;
 }
 
