@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+coverage
+package-lock.json
+artifacts/
+.operations-lab/
+.operations-lab-runtime/
+apps/web/.next-operations-runtime/
+apps/web/.next-operations-lab/

@@ -1,0 +1,1 @@
+ALTER TABLE "VenueWebsite" ADD COLUMN "designVersion" INTEGER NOT NULL DEFAULT 1;

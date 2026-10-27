@@ -1,0 +1,241 @@
+﻿.wf2-workspace {
+  margin: 28px 0;
+  border: 1px solid var(--wf-line);
+  border-radius: 18px;
+  background: #f8faf6;
+  padding: 20px;
+  min-width: 0;
+}
+.wf2-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--wf-line);
+  padding-bottom: 14px;
+}
+.wf-workspace .wf2-tabs button {
+  background: transparent;
+  color: var(--wf-ink);
+  border-color: transparent;
+}
+.wf-workspace .wf2-tabs button[aria-selected="true"] {
+  background: #20382e;
+  color: white;
+}
+.wf2-toolbar,
+.wf2-period,
+.wf2-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.wf2-toolbar span {
+  font-size: 12px;
+  color: #5e7163;
+}
+.wf2-today {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.wf2-clock,
+.wf2-card,
+.wf2-stats article {
+  background: white;
+  border: 1px solid var(--wf-line);
+  border-radius: 14px;
+  padding: 20px;
+  min-width: 0;
+}
+.wf2-clock {
+  background: #eef3e9;
+}
+.wf2-workspace h3 {
+  font-family: var(--font-serif), serif;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 12px 0;
+}
+.wf2-workspace h4 {
+  font-size: 15px;
+  margin: 0;
+}
+.wf2-workspace p {
+  color: #526458;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.wf2-totals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.wf2-totals dt {
+  font-size: 12px;
+  color: #5e7163;
+}
+.wf2-totals dd {
+  font-size: clamp(15px, 1.7vw, 21px);
+  font-weight: 600;
+  margin: 8px 0;
+}
+.wf2-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin: 14px 0;
+}
+.wf2-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.wf2-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.wf2-stats span {
+  display: block;
+  font-size: 12px;
+  color: #5e7163;
+}
+.wf2-stats strong {
+  display: block;
+  font-family: var(--font-serif), serif;
+  font-size: 34px;
+  font-weight: 500;
+  margin: 10px 0;
+}
+.wf2-days {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.wf2-days .wf2-card {
+  padding: 14px;
+}
+.wf2-days p {
+  font-size: 12px;
+  margin: 8px 0;
+}
+.wf2-history {
+  margin-top: 16px;
+  border-top: 1px solid var(--wf-line);
+}
+.wf2-history summary,
+.wf2-policy summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
+.wf2-history p {
+  font-size: 12px;
+}
+.wf2-policy {
+  margin-top: 20px;
+  padding: 14px;
+  background: #f0f3ed;
+  border-radius: 12px;
+}
+.wf2-inline {
+  margin: 18px 0;
+  background: white;
+  border: 1px solid var(--wf-line);
+  border-radius: 14px;
+  padding: 20px;
+}
+.wf2-check {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+}
+.wf2-check input {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+}
+.wf2-break-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  border: 1px solid var(--wf-line);
+  border-radius: 10px;
+  padding: 14px;
+}
+.wf2-feedback {
+  background: #e8eee1;
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+.wf2-empty {
+  padding: 16px;
+  text-align: center;
+}
+.wf2-warning {
+  border-left: 3px solid #ce884a;
+  padding-left: 10px;
+  font-size: 12px;
+}
+.wf2-workspace input,
+.wf2-workspace select {
+  min-height: 44px;
+  border: 1px solid var(--wf-line);
+  border-radius: 8px;
+  padding: 8px;
+  max-width: 100%;
+  background: white;
+  color: var(--wf-ink);
+}
+.wf2-break-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+@media (max-width: 900px) {
+  .wf2-stats,
+  .wf2-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wf2-today,
+  .wf2-list {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .wf2-workspace {
+    padding: 12px;
+    border-radius: 14px;
+  }
+  .wf2-clock,
+  .wf2-card,
+  .wf2-stats article {
+    padding: 14px;
+  }
+  .wf2-tabs button {
+    flex: 1 0 auto;
+    padding: 10px !important;
+    font-size: 12px !important;
+  }
+  .wf2-days {
+    grid-template-columns: 1fr;
+  }
+  .wf2-break-fields {
+    grid-template-columns: 1fr;
+  }
+  .wf2-totals {
+    gap: 6px;
+  }
+}

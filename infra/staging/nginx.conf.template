@@ -1,0 +1,70 @@
+# Never log private tracking URLs, cookies or query strings.
+log_format operational '$remote_addr $request_method $status $request_time';
+access_log /var/log/nginx/access.log operational;
+server_tokens off;
+
+server {
+    listen 8080 default_server;
+    server_name _;
+    location = /proxy-health { access_log off; return 200 'ok'; }
+    location / { return 444; }
+}
+
+server {
+    listen 8080;
+    server_name ${WEB_HOST} ${API_HOST};
+    location ^~ /.well-known/acme-challenge/ { root /var/www/acme; }
+    location / { return 308 https://$host$request_uri; }
+}
+
+server {
+    listen 8443 ssl default_server;
+    ssl_reject_handshake on;
+}
+
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_session_cache shared:TLS:10m;
+ssl_session_timeout 1d;
+ssl_session_tickets off;
+ssl_certificate /etc/letsencrypt/live/flowgastronomie-staging/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/flowgastronomie-staging/privkey.pem;
+# Stage-scoped only: no includeSubDomains/preload affecting unrelated hosts.
+add_header Strict-Transport-Security "max-age=86400" always;
+add_header X-Content-Type-Options nosniff always;
+add_header X-Robots-Tag "noindex, nofollow" always;
+
+server {
+    listen 8443 ssl;
+    server_name ${API_HOST};
+    client_max_body_size 12m;
+    location / {
+        proxy_pass http://api:4000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 75s;
+        proxy_send_timeout 75s;
+        gzip off;
+    }
+}
+
+server {
+    listen 8443 ssl;
+    server_name ${WEB_HOST};
+    client_max_body_size 12m;
+    location / {
+        proxy_pass http://web:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 75s;
+    }
+}

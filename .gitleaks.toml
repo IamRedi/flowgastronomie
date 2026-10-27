@@ -1,0 +1,13 @@
+# Extends the default gitleaks rules. The allowlisted values are test
+# idempotency keys and a commit hash, not secrets.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Synthetic test identifiers"
+regexTarget = "match"
+regexes = [
+  '''pos-idempotency-\d+''',
+  '''foundation-bf1-legacy-region''',
+  '''d6fe124f7ea0b6457f2ec13649c9d907995aea35''',
+]

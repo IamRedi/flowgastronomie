@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "id": "flow-daily-7-days",
+      "enabled": true,
+      "prefix": "daily/",
+      "condition": { "type": "Age", "maxAgeSeconds": 604800 }
+    },
+    {
+      "id": "flow-weekly-28-days",
+      "enabled": true,
+      "prefix": "weekly/",
+      "condition": { "type": "Age", "maxAgeSeconds": 2419200 }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+name: Operations Lab
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: operations-lab-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+permissions:
+  contents: read
+jobs:
+  lab1:
+    # Public repository: GitHub-hosted runners only, never a self-hosted runner.
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      COMPOSE_PROJECT_NAME: rf-ci-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: ${{ runner.environment != 'self-hosted' && 'npm' || '' }}
+      - run: npm ci
+      - run: npm run lab:generate
+      - run: npx playwright install --with-deps chromium
+      - run: docker compose -f compose.operations-lab.yaml -f infra/ci/operations-lab.ci.yaml up -d --wait
+      - run: npm run lab:init
+      - run: npm run lab:acceptance
+      - run: npm run lab:runtime:acceptance
+      - name: Prepare isolated pinned background candidate
+        run: |
+          git restore -- apps/web/next-env.d.ts
+          npm run lab:prepare -- --revision "$(git rev-parse HEAD)" --acceptance-only
+      - name: Bounded background, entitlement and fresh-volume restore acceptance
+        run: npm run lab:runtime:hardening:test
+      # Never upload credentials, raw logs, traces, cookies or guest tokens.
+      - name: Verify evidence archive boundary
+        run: python3 -m unittest discover -s tests/operations -p 'test_ci_evidence.py' -q
+      - name: Preserve full evidence and prepare bounded cloud upload
+        id: ci-evidence
+        if: always()
+        run: python3 infra/ci/preserve-evidence.py --job lab1
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && (runner.environment != 'self-hosted' || vars.CI_CLOUD_ARTIFACT_UPLOAD == 'true') }}
+        with:
+          retention-days: 7
+          name: operations-lab-lab1-evidence
+          path: ${{ steps.ci-evidence.outputs.directory }}
+          if-no-files-found: warn
+      - name: Remove only this run's disposable synthetic lab database
+        if: always()
+        shell: bash
+        run: |
+          test "$COMPOSE_PROJECT_NAME" = "rf-ci-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          if test -f compose.operations-lab.yaml && test -f infra/ci/operations-lab.ci.yaml; then
+            docker compose -f compose.operations-lab.yaml -f infra/ci/operations-lab.ci.yaml down --volumes --remove-orphans --timeout 10
+          fi

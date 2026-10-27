@@ -1,0 +1,2 @@
+# Only needed by the remote retention adapter; telemetry uses Python stdlib.
+boto3==1.43.113

@@ -1,0 +1,8 @@
+[Unit]
+Description=FlowGastronomie quota checks every six hours UTC
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:00:00 UTC
+Persistent=true
+AccuracySec=1m
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: restaurantflow
+      POSTGRES_USER: restaurantflow
+      POSTGRES_PASSWORD: restaurantflow
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurantflow -d restaurantflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - restaurantflow-postgres:/var/lib/postgresql/data
+
+  sse-proxy:
+    image: nginx:1.30.4-alpine
+    profiles: ["sse-smoke"]
+    ports:
+      - "4280:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./infra/nginx/sse-smoke.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test:
+        ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/health >/dev/null"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  restore-postgres:
+    image: postgres:17-alpine
+    profiles: ["restore-rehearsal"]
+    environment:
+      POSTGRES_DB: flowgastronomie_restore
+      POSTGRES_USER: flowgastronomie_restore
+      POSTGRES_PASSWORD: flowgastronomie_restore
+    ports:
+      - "${RESTORE_POSTGRES_PORT:-55432}:5432"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U flowgastronomie_restore -d flowgastronomie_restore",
+        ]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+volumes:
+  restaurantflow-postgres:

@@ -1,0 +1,15 @@
+[Unit]
+Description=FlowGastronomie read-only R2 quota and local capacity monitor
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+ExecStart=/bin/sh @BACKUP_RELEASE@/infra/staging/r2-quota-monitor.sh
+TimeoutStartSec=120
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/flowgastronomie/r2-monitor

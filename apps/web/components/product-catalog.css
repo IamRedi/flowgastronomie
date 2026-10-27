@@ -1,0 +1,535 @@
+/* Shared menu photography and touch catalog. Scoped to the two staff surfaces. */
+.pilot-app-shell :is(.menu-admin-page, .pos-page) {
+  --catalog-line: #e5e5db;
+}
+.pilot-app-shell .pos-categories,
+.menu-catalog-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: thin;
+  padding: 4px 0 10px;
+  scroll-snap-type: x proximity;
+}
+.pilot-app-shell .pos-categories button,
+.menu-catalog-tabs button {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  white-space: nowrap;
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 9px 17px;
+  font-weight: 600;
+}
+.pilot-app-shell .pos-grid {
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 14px;
+}
+.pilot-app-shell .pos-product {
+  border-radius: 18px;
+  padding: 7px;
+  border-color: var(--catalog-line);
+  box-shadow: 0 3px 12px #25372b07;
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
+}
+.pilot-app-shell .pos-product:hover:enabled {
+  box-shadow: 0 8px 24px #25372b14;
+}
+.pilot-app-shell .pos-product .pos-product-media {
+  border-radius: 12px;
+  aspect-ratio: 4/3;
+}
+.pilot-app-shell .pos-product .pos-product-name {
+  font-size: 15px;
+  line-height: 1.35;
+  padding: 12px 7px 5px;
+  min-height: 54px;
+}
+.pilot-app-shell .pos-product .pos-product-price {
+  font-size: 17px;
+  letter-spacing: -0.025em;
+}
+.pilot-app-shell .pos-product .pos-product-bottom {
+  padding: 0 5px 5px 7px;
+}
+.pilot-app-shell .pos-product .pos-product-add {
+  width: 38px;
+  height: 38px;
+}
+.pilot-app-shell .pos-product-media {
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  color: #81795f;
+  background: linear-gradient(145deg, #f8f5ee, #efede3);
+}
+.pilot-app-shell .pos-product-media.illustration-pizza {
+  color: #aa7448;
+  background: linear-gradient(145deg, #faf4e9, #f2e7d5);
+}
+.pilot-app-shell .pos-product-media.illustration-pasta {
+  color: #9c803f;
+  background: linear-gradient(145deg, #faf7ea, #eee8cf);
+}
+.pilot-app-shell .pos-product-media.illustration-salad {
+  color: #678168;
+  background: linear-gradient(145deg, #f1f6ed, #e3ecdd);
+}
+.pilot-app-shell .pos-product-media.illustration-dessert {
+  color: #976b69;
+  background: linear-gradient(145deg, #faf0ed, #f0e1db);
+}
+.pilot-app-shell .pos-product-media.illustration-drink {
+  color: #668387;
+  background: linear-gradient(145deg, #f0f7f6, #dfebea);
+}
+.pilot-app-shell .pos-product-media.illustration-coffee {
+  color: #856b54;
+  background: linear-gradient(145deg, #f7f1eb, #e8ded1);
+}
+.pilot-app-shell .pos-product-media > svg {
+  width: 85%;
+  height: auto;
+}
+.pilot-app-shell .pos-catalog-empty,
+.menu-admin-empty {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  padding: 24px;
+  border: 1px dashed var(--catalog-line);
+  border-radius: 20px;
+  background: #fffdf8;
+}
+.pos-catalog-empty svg,
+.menu-admin-empty svg {
+  width: 150px;
+  height: 110px;
+  color: #8b967d;
+}
+.pilot-app-shell .menu-admin-page {
+  padding-top: 20px;
+}
+.pilot-app-shell .menu-admin-intro {
+  align-items: center;
+  gap: 16px;
+  padding-block: 0 18px;
+}
+.pilot-app-shell .menu-admin-intro h1 {
+  font-size: clamp(26px, 3vw, 38px);
+  margin: 4px 0 8px;
+}
+.pilot-app-shell .menu-admin-intro p {
+  margin: 4px 0;
+  max-width: 65ch;
+}
+.pilot-app-shell .menu-admin-content > .owner-setup-links {
+  margin: 0 0 12px;
+}
+.pilot-app-shell .menu-admin-content > .pos-activation {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+.menu-catalog-tools {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.menu-catalog-search span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.menu-catalog-search input {
+  width: min(100%, 420px);
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 1px solid #d9dfd4;
+  border-radius: 14px;
+  font: inherit;
+  background: white;
+}
+.menu-catalog-tabs {
+  margin: 0;
+}
+.menu-catalog-tabs button {
+  border: 1px solid #dce1d6;
+  background: #fffdf8;
+  color: #374e3c;
+  cursor: pointer;
+}
+.menu-catalog-tabs button[aria-pressed="true"] {
+  background: #344f3f;
+  border-color: #344f3f;
+  color: white;
+}
+.menu-catalog-tabs span {
+  margin-left: 5px;
+  opacity: 0.65;
+  font-size: 12px;
+}
+.pilot-app-shell .menu-category-list {
+  gap: 20px;
+}
+.pilot-app-shell .menu-admin-category {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+.pilot-app-shell .menu-category-heading {
+  padding: 0 0 12px;
+  border: 0;
+}
+.pilot-app-shell .menu-category-heading h2 {
+  font-size: 23px;
+  margin: 4px 0;
+}
+.pilot-app-shell .menu-category-heading small {
+  display: none;
+}
+.pilot-app-shell .menu-product-list {
+  gap: 10px;
+}
+.pilot-app-shell .menu-admin-product {
+  background: #fffdf9;
+  border: 1px solid #e3e5da;
+  border-radius: 17px;
+  box-shadow: 0 3px 14px #243c3005;
+  overflow: hidden;
+}
+.pilot-app-shell .menu-product-summary {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) auto;
+  gap: 16px;
+}
+.menu-product-photo {
+  position: relative;
+  width: 100px;
+  height: 88px;
+  padding: 0;
+  border: 0;
+  border-radius: 11px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.menu-product-photo .pos-product-media {
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+}
+.menu-product-photo .pos-product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menu-photo-action {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 7px;
+  background: #fffdf8ed;
+  color: #344f3f;
+  border-radius: 5px;
+}
+.menu-product-copy {
+  min-width: 0;
+}
+.pilot-app-shell .menu-product-copy h3 {
+  margin: 5px 0;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+.pilot-app-shell .menu-product-copy > p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #446349;
+}
+.pilot-app-shell .menu-product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.pilot-app-shell .menu-product-actions button,
+.pilot-app-shell .menu-category-actions button,
+.pilot-app-shell .menu-form-actions button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+.product-photo-dialog {
+  width: min(560px, calc(100% - 24px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 1px solid #dfe4d9;
+  border-radius: 22px;
+  padding: 20px;
+  color: #253e30;
+  background: #fffdf8;
+  box-shadow: 0 24px 100px #12261d40;
+}
+.product-photo-dialog::backdrop {
+  background: #17271d70;
+  backdrop-filter: blur(3px);
+}
+.product-photo-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.product-photo-dialog header span {
+  font-size: 12px;
+  color: #6c7868;
+}
+.product-photo-dialog h2 {
+  font-size: 23px;
+  margin: 4px 0;
+}
+.product-photo-dialog button {
+  min-height: 44px;
+  border: 1px solid #d9dfd3;
+  border-radius: 10px;
+  background: #fff;
+  color: #344f3f;
+  padding: 9px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+.product-photo-dialog button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.product-photo-dialog header > button {
+  min-width: 44px;
+  font-size: 24px;
+}
+.photo-methods {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.photo-methods button {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+}
+.photo-preview {
+  aspect-ratio: 4/3;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f0eee5;
+  color: #647360;
+}
+.photo-preview p {
+  padding: 20px;
+  text-align: center;
+}
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.photo-fit {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.photo-fit button[aria-pressed="true"],
+.photo-methods button[aria-pressed="true"] {
+  background: #e6eddf;
+  border-color: #68815e;
+}
+.photo-camera video {
+  width: 100%;
+  max-height: 360px;
+  border-radius: 12px;
+  background: #17271d;
+}
+.photo-camera > button {
+  width: 100%;
+  margin-top: 8px;
+}
+.photo-ai {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f0eee5;
+}
+.photo-ai p {
+  margin: 0;
+  line-height: 1.5;
+}
+.photo-ai label {
+  display: grid;
+  gap: 8px;
+}
+.photo-ai textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #c8cfbf;
+  border-radius: 8px;
+}
+.photo-ai small {
+  color: #647360;
+}
+.photo-ai .photo-preview {
+  position: relative;
+}
+.photo-ai .photo-preview img {
+  position: absolute;
+  inset: 0;
+}
+.photo-error {
+  color: #a23c2c;
+  font-size: 14px;
+}
+.product-photo-dialog footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.product-photo-dialog footer p {
+  margin: 0;
+  flex: 1;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #647360;
+}
+.product-photo-dialog footer .button-primary {
+  background: #344f3f;
+  border-color: #344f3f;
+  color: white;
+  font-weight: 600;
+}
+@media (max-width: 1000px) {
+  .pilot-app-shell .menu-product-summary {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .menu-product-photo {
+    width: 88px;
+  }
+  .pilot-app-shell .menu-product-actions {
+    grid-column: 1/-1;
+    justify-content: flex-start;
+    border-top: 1px solid #eaece4;
+    padding-top: 9px;
+  }
+}
+@media (max-width: 600px) {
+  .pilot-app-shell .pos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .pilot-app-shell .pos-product .pos-product-name {
+    font-size: 14px;
+    padding: 9px 4px 5px;
+  }
+  .pilot-app-shell .menu-admin-intro {
+    align-items: flex-start;
+  }
+  .pilot-app-shell .menu-category-heading {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .product-photo-dialog {
+    padding: 16px;
+  }
+  .product-photo-dialog footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.pilot-app-shell .pos-catalog-scroll {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: 14px;
+}
+.pilot-app-shell .pos-catalog-scroll .pos-category,
+.pilot-app-shell .pos-catalog-scroll .pos-grid {
+  display: contents;
+}
+.pilot-app-shell .pos-catalog-scroll .pos-category > h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.pilot-app-shell .pos-catalog-empty {
+  grid-column: 1/-1;
+}
+.pilot-app-shell .pos-product .pos-product-category {
+  color: #77806d;
+  font: 500 11px/1.3 var(--restaurant-sans);
+  padding: 10px 7px 0;
+}
+.pilot-app-shell .pos-product .pos-product-name {
+  padding-top: 4px;
+  min-height: 46px;
+}
+.pilot-app-shell .menu-category-heading {
+  background: transparent;
+}
+@media (max-width: 600px) {
+  .pilot-app-shell .pos-catalog-scroll {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .pilot-app-shell .pos-cart {
+    height: auto;
+    min-height: 0;
+    gap: 10px;
+    padding: 16px;
+  }
+  .pilot-app-shell .pos-empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 0;
+    padding: 8px 0;
+  }
+  .pilot-app-shell .pos-empty-cart > svg {
+    width: 76px;
+    height: 58px;
+  }
+  .pilot-app-shell .pos-empty-cart p {
+    text-align: left;
+    margin: 0;
+  }
+  .pilot-app-shell .pos-cart-lines:empty {
+    display: none;
+  }
+  .pilot-app-shell .pos-cart-heading h2 {
+    margin: 4px 0;
+  }
+}
