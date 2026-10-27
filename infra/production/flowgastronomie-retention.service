@@ -1,0 +1,10 @@
+[Unit]
+Description=FlowGastronomie operational retention and freshness check
+Requires=docker.service
+After=docker.service network-online.target
+
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+ExecStart=/bin/sh /opt/flowgastronomie/current/infra/production/host-job.sh retention

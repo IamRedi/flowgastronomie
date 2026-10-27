@@ -1,0 +1,49 @@
+# Match the verified SSE baseline. Do not log credential-bearing URLs/cookies.
+log_format operational '$remote_addr $request_method $status $request_time';
+access_log /var/log/nginx/access.log operational;
+
+server {
+    listen 8080 default_server;
+    server_name _;
+    location = /proxy-health { access_log off; return 200 'ok'; }
+    location / { return 444; }
+}
+
+server {
+    listen 8080;
+    server_name ${API_HOST};
+    client_max_body_size 10m;
+
+    location / {
+        proxy_pass http://api:4000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        # Replace client-supplied forwarding headers at this single trusted edge.
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 75s;
+        proxy_send_timeout 75s;
+        gzip off;
+    }
+}
+
+server {
+    listen 8080;
+    server_name ${WEB_HOST};
+    client_max_body_size 10m;
+
+    location / {
+        proxy_pass http://web:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 75s;
+    }
+}

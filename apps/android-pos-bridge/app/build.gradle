@@ -1,0 +1,13 @@
+plugins { id 'com.android.application' }
+def webUrl = providers.gradleProperty('posBaseUrl').getOrElse('https://pos.example.invalid')
+def apiUrl = providers.gradleProperty('apiBaseUrl').getOrElse('https://api.example.invalid')
+def literal = { value -> '"' + value.replace('\\', '\\\\').replace('"', '\\"') + '"' }
+android {
+    namespace 'com.flowgastronomie.hardware'
+    compileSdk 35
+    defaultConfig { applicationId 'com.flowgastronomie.hardware'; minSdk 33; targetSdk 35; versionCode 1; versionName '1.0.0'; buildConfigField 'String', 'POS_BASE_URL', literal(webUrl); buildConfigField 'String', 'API_BASE_URL', literal(apiUrl) }
+    buildFeatures { buildConfig true }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    buildTypes { debug { applicationIdSuffix '.debug' }; release { minifyEnabled false } }
+}
+dependencies { implementation 'androidx.webkit:webkit:1.12.1' }

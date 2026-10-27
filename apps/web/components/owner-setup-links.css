@@ -1,0 +1,22 @@
+.owner-setup-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+.owner-setup-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #bccbbc;
+  border-radius: 8px;
+  color: #294c3d;
+  background: #fffdf8;
+  font-size: 14px;
+  text-decoration: none;
+}
+.owner-setup-links a:focus-visible {
+  outline: 3px solid #567b53;
+  outline-offset: 3px;
+}

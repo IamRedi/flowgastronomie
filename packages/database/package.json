@@ -1,0 +1,34 @@
+{
+  "name": "@flowgastronomie/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "demo:workspace": "dotenv -e ../../.env -- tsx src/run-demo-workspaces.ts",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --exclude \"src/**/*.integration.test.ts\"",
+    "test:integration": "vitest run src/online-order-repository.integration.test.ts src/operational-order-repository.integration.test.ts src/core-journeys.integration.test.ts src/database-readiness.integration.test.ts src/staff-cost-repository.integration.test.ts src/staff-report-repository.integration.test.ts src/operational-retention.integration.test.ts src/staff-schedule-repository.integration.test.ts src/reservation-repository.integration.test.ts src/staff-order-repository.integration.test.ts src/counter-sale-repository.integration.test.ts src/hardware-repository.integration.test.ts",
+    "db:generate": "dotenv -e ../../.env -- prisma generate",
+    "db:migrate": "dotenv -e ../../.env -- prisma migrate dev",
+    "db:seed": "dotenv -e ../../.env -- tsx prisma/seed.ts",
+    "retention:run": "dotenv -e ../../.env -- tsx src/run-operational-retention.ts",
+    "retention:check": "dotenv -e ../../.env -- tsx src/check-operational-retention.ts"
+  },
+  "dependencies": {
+    "@flowgastronomie/domain": "*",
+    "@prisma/client": "6.19.3",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.2",
+    "dotenv-cli": "11.0.0",
+    "prisma": "6.19.3",
+    "tsx": "4.23.9",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  }
+}

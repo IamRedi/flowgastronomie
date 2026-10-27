@@ -1,0 +1,83 @@
+{
+  "name": "flowgastronomie",
+  "version": "0.1.0",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "Shared SaaS platform for specialized gastronomy products",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "lab:prepare": "node tools/operations-lab/runtime/cli.mjs prepare",
+    "lab:start": "node tools/operations-lab/runtime/cli.mjs start",
+    "lab:stop": "node tools/operations-lab/runtime/cli.mjs stop",
+    "lab:status": "node tools/operations-lab/runtime/cli.mjs status",
+    "lab:restart": "node tools/operations-lab/runtime/cli.mjs restart",
+    "lab:runtime:backup": "node tools/operations-lab/runtime/backup.mjs",
+    "lab:runtime:restore:test": "node tools/operations-lab/runtime/restore.mjs",
+    "lab:runtime:hardening:test": "node tools/operations-lab/runtime/acceptance.mjs",
+    "lab:init": "node tools/operations-lab/command.mjs init",
+    "lab:generate": "node tools/operations-lab/command.mjs generate",
+    "lab:api": "node tools/operations-lab/command.mjs api",
+    "lab:web": "node tools/operations-lab/command.mjs web",
+    "lab:day": "node tools/operations-lab/command.mjs day",
+    "lab:normal": "node tools/operations-lab/command.mjs normal",
+    "lab:worker": "node tools/operations-lab/command.mjs worker",
+    "lab:runtime:acceptance": "node tools/operations-lab/runtime-acceptance.mjs",
+    "lab:backup": "node tools/operations-lab/command.mjs backup",
+    "lab:test": "node tools/operations-lab/command.mjs test",
+    "lab:browser": "node tools/operations-lab/command.mjs browser",
+    "lab:acceptance": "node tools/operations-lab/acceptance.mjs",
+    "dev": "npm run dev --workspace=@flowgastronomie/web",
+    "dev:web": "npm run dev --workspace=@flowgastronomie/web",
+    "dev:api": "npm run dev --workspace=@flowgastronomie/api",
+    "db:generate": "npm run db:generate --workspace=@flowgastronomie/database",
+    "db:migrate": "npm run db:migrate --workspace=@flowgastronomie/database",
+    "db:seed": "npm run db:seed --workspace=@flowgastronomie/database",
+    "test:pilot": "playwright test --config playwright.pilot.config.ts",
+    "test:creative": "playwright test --config playwright.creative.config.ts && dotenv -e .env -- node tests/creative/run-db-gate.mjs",
+    "test:setup": "dotenv -e .env -- node tests/setup/run-db-gate.mjs si0 && dotenv -e .env -- node tests/setup/run-db-gate.mjs si1 && dotenv -e .env -- node tests/setup/run-db-gate.mjs si2 && dotenv -e .env -- node tests/setup/run-browser-gate.mjs",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node --test tests/operations/dependency-security.test.mjs tests/operations/process-command.test.mjs tools/operations-lab/evidence.test.mjs tools/operations-lab/runtime-checkpoints.test.mjs tools/operations-lab/runtime/common.test.mjs && npm run test --workspaces --if-present",
+    "test:integration": "npm run test:integration --workspaces --if-present",
+    "test:e2e": "node tests/operations/e2e-run.mjs",
+    "test:security": "node tests/operations/static-security-check.mjs && npm audit --omit=dev --audit-level=high",
+    "test:sse-proxy": "dotenv -e .env -- node tests/operations/sse-proxy-smoke.mjs",
+    "test:backup-restore": "dotenv -e .env -- node tests/operations/backup-restore-rehearsal.mjs",
+    "test:production-package": "node tests/operations/production-package-gate.mjs",
+    "release:verify": "dotenv -e .env -- node tests/operations/release-evidence.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run format:check && npm run typecheck && npm run test && npm run build",
+    "test:premium": "dotenv -e .env -- node tests/premium/run-db-gate.mjs && playwright test --config playwright.premium.config.ts",
+    "test:import-v2": "dotenv -e .env -- node tests/import-v2/run-gate.mjs",
+    "test:workforce": "dotenv -e .env -- node tests/workforce/run-legacy-gate.mjs && dotenv -e .env -- node tests/workforce/run-db-gate.mjs && dotenv -e .env -- node tests/workforce/run-browser-gate.mjs",
+    "test:workforce:wf2": "dotenv -e .env -- node tests/workforce-wf2/run-upgrade-gate.mjs && dotenv -e .env -- node tests/workforce-wf2/run-db-gate.mjs && dotenv -e .env -- node tests/workforce-wf2/run-browser-gate.mjs",
+    "test:workforce:wf3": "dotenv -e .env -- node tests/workforce-wf3/run-upgrade-gate.mjs && dotenv -e .env -- node tests/workforce-wf3/run-db-gate.mjs && dotenv -e .env -- node tests/workforce-wf3/run-browser-gate.mjs",
+    "test:workforce:wf4": "dotenv -e .env -- node tests/workforce-wf4/run-gate.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "dotenv-cli": "11.0.0",
+    "esbuild": "0.28.2",
+    "pm2": "7.0.4",
+    "prettier": "3.9.6",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.2",
+    "pm2": {
+      "js-yaml": "4.3.2",
+      "chokidar": "4.0.3"
+    },
+    "get-uri": {
+      "basic-ftp": "6.2.3"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+ALTER INDEX "OrderStationTicket_tenantId_venueId_station_status_createdAt_id"
+RENAME TO "OrderStationTicket_tenantId_venueId_station_status_createdA_idx";
+
+ALTER INDEX "ServiceSignal_tenantId_venueId_assignedMembershipId_claimedAt_i"
+RENAME TO "ServiceSignal_tenantId_venueId_assignedMembershipId_claimed_idx";

@@ -1,0 +1,146 @@
+.signup-wizard {
+  scroll-margin-top: 24px;
+  min-width: 0;
+}
+.signup-wizard [hidden] {
+  display: none !important;
+}
+.signup-wizard fieldset {
+  min-width: 0;
+}
+.signup-wizard select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+}
+.signup-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 0;
+  gap: 12px;
+  list-style: none;
+  margin: 0 0 24px;
+}
+.signup-progress li {
+  font-size: 12px;
+  line-height: 1.5;
+  border-top: 2px solid #d6ded6;
+  padding-top: 10px;
+  color: #56665b;
+}
+.signup-progress span {
+  display: block;
+  font-weight: 700;
+}
+.signup-progress [aria-current] {
+  border-color: #284f3e;
+  color: #183a2a;
+}
+.signup-wizard h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 32px;
+  margin: 0;
+}
+.signup-draft-note {
+  font-size: 13px;
+  color: #4d6154;
+  line-height: 1.6;
+}
+.signup-wizard details {
+  border: 1px solid #cbd6cd;
+  border-radius: 8px;
+  padding: 12px;
+}
+.signup-wizard summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.signup-wizard details label {
+  margin-block: 12px;
+}
+.signup-region-summary {
+  padding: 12px 16px;
+  background: #edf3ec;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+.signup-style-preview {
+  max-height: 600px;
+  overflow: auto;
+}
+.signup-review dl {
+  margin: 0;
+}
+.signup-review dl div {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #d9e1d8;
+}
+.signup-review dt {
+  font-size: 13px;
+  color: #556758;
+}
+.signup-review dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.signup-step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.signup-step-actions .button {
+  width: auto;
+  min-height: 48px;
+}
+.signup-wizard :focus-visible {
+  outline: 3px solid #537b55;
+  outline-offset: 3px;
+}
+@media (max-width: 580px) {
+  .signup-progress {
+    gap: 6px;
+  }
+  .signup-progress li {
+    font-size: 11px;
+  }
+  .signup-review dl div {
+    grid-template-columns: 1fr;
+  }
+}
+
+.signup-card,
+.signup-layout > * {
+  min-width: 0;
+}
+.signup-wizard input {
+  min-width: 0;
+  max-width: 100%;
+}
+.signup-wizard label {
+  min-width: 0;
+}
+.signup-wizard details {
+  min-width: 0;
+}
+.signup-page .nav {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+@media (max-width: 580px) {
+  .signup-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .signup-card {
+    padding: 24px 18px;
+  }
+  .signup-page .language-switcher {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}

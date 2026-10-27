@@ -1,0 +1,24 @@
+name: restaurantflow-operations-lab
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: restaurantflow_operations_lab
+      POSTGRES_USER: operations_lab
+      POSTGRES_PASSWORD: operations_lab_local_only
+    ports:
+      - "127.0.0.1:55439:5432"
+    volumes:
+      - operations-lab-postgres:/var/lib/postgresql/data
+      - ./tools/operations-lab/init.sql:/docker-entrypoint-initdb.d/operations-lab.sql:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U operations_lab -d restaurantflow_operations_lab",
+        ]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+volumes:
+  operations-lab-postgres:

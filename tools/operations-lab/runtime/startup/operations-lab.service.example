@@ -1,0 +1,17 @@
+[Unit]
+Description=Reviewed local Operations Lab launcher
+After=docker.service network.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=REPLACE_WITH_LOCAL_OWNER
+Environment=LAB_RUNTIME_ROOT=REPLACE_WITH_ABSOLUTE_RUNTIME_ROOT
+ExecStart=REPLACE_WITH_NODE REPLACE_WITH_PINNED_CODE/tools/operations-lab/runtime/cli.mjs start
+ExecStop=REPLACE_WITH_NODE REPLACE_WITH_PINNED_CODE/tools/operations-lab/runtime/cli.mjs stop
+TimeoutStartSec=180
+TimeoutStopSec=240
+
+[Install]
+WantedBy=multi-user.target

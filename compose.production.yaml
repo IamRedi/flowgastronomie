@@ -1,0 +1,158 @@
+name: flowgastronomie
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-operations: &operations
+  image: flowgastronomie-operations:${RELEASE_TAG:?Set an immutable release tag}
+  build:
+    context: .
+    dockerfile: infra/production/api.Dockerfile
+    target: operations
+  profiles: [operations]
+  restart: "no"
+  logging: *logging
+  networks: [application]
+
+services:
+  api:
+    image: flowgastronomie-api:${RELEASE_TAG:?Set an immutable release tag}
+    build:
+      context: .
+      dockerfile: infra/production/api.Dockerfile
+      target: runtime
+    environment:
+      NODE_ENV: production
+      API_PORT: "4000"
+      DATABASE_URL: ${DATABASE_URL:?Set the Neon application connection}
+      WEB_ORIGIN: ${WEB_ORIGIN:?Set the exact public web origin}
+      TRUST_PROXY: 172.30.42.2
+      READINESS_TIMEOUT_MS: ${READINESS_TIMEOUT_MS:-2000}
+      TRANSACTIONAL_EMAIL_PROVIDER: ${TRANSACTIONAL_EMAIL_PROVIDER:?Choose brevo or disabled explicitly}
+      BREVO_API_KEY: ${BREVO_API_KEY:-}
+      TRANSACTIONAL_EMAIL_FROM_ADDRESS: ${TRANSACTIONAL_EMAIL_FROM_ADDRESS:-}
+      TRANSACTIONAL_EMAIL_FROM_NAME: ${TRANSACTIONAL_EMAIL_FROM_NAME:-FlowGastronomie}
+      TRANSACTIONAL_EMAIL_TIMEOUT_MS: ${TRANSACTIONAL_EMAIL_TIMEOUT_MS:-5000}
+      HARDWARE_SIMULATOR_ENABLED: "false"
+      HARDWARE_COMMAND_PRIVATE_KEY_BASE64: ${HARDWARE_COMMAND_PRIVATE_KEY_BASE64:-}
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          infra/production/healthcheck.mjs,
+          "http://127.0.0.1:4000/ready",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    init: true
+    logging: *logging
+    networks: [application]
+
+  web:
+    image: flowgastronomie-web:${RELEASE_TAG:?Set an immutable release tag}
+    build:
+      context: .
+      dockerfile: infra/production/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?Set the public API origin before building}
+    environment:
+      API_URL: http://api:4000
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?Set the public API origin}
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          infra/production/healthcheck.mjs,
+          "http://127.0.0.1:3000/sq",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    init: true
+    logging: *logging
+    networks: [application]
+
+  proxy:
+    image: nginx:1.30.4-alpine
+    environment:
+      WEB_HOST: ${WEB_HOST:?Set the web hostname without scheme or port}
+      API_HOST: ${API_HOST:?Set a distinct same-site API hostname}
+      NGINX_ENVSUBST_FILTER: ^(WEB_HOST|API_HOST)$$
+    volumes:
+      - ./infra/production/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    # M1 is a loopback-only HTTP package. Real TLS/edge exposure is M2.
+    ports: ["127.0.0.1:${PROXY_HTTP_PORT:-8080}:8080"]
+    depends_on:
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          CMD-SHELL,
+          "wget -q -O - http://127.0.0.1:8080/proxy-health >/dev/null",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    logging: *logging
+    networks:
+      application:
+        ipv4_address: 172.30.42.2
+
+  migrate:
+    <<: *operations
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DIRECT:?Set the direct migration/backup connection}
+
+  retention:
+    <<: *operations
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:?Set the application connection}
+    command: [node, dist/production/retention-run.mjs]
+
+  retention-check:
+    <<: *operations
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:?Set the application connection}
+    command: [node, dist/production/retention-check.mjs]
+
+  backup:
+    image: flowgastronomie-backup:${RELEASE_TAG:?Set an immutable release tag}
+    build:
+      context: .
+      dockerfile: infra/production/api.Dockerfile
+      target: backup
+    profiles: [operations]
+    environment:
+      DATABASE_URL_DIRECT: ${DATABASE_URL_DIRECT:?Set the direct backup connection}
+    volumes:
+      - ${BACKUP_DIRECTORY:?Set an absolute protected host backup directory}:/backups
+    restart: "no"
+    logging: *logging
+    networks: [application]
+
+networks:
+  application:
+    ipam:
+      config:
+        - subnet: 172.30.42.0/28
+          # Reserve .2 for the trusted proxy even when jobs/API start first.
+          ip_range: 172.30.42.8/29
