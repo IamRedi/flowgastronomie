@@ -1,8 +1,11 @@
 ﻿import { createRequire } from "node:module";
-import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnCommandSync } from "../operations/process-command.mjs";
+import {
+  baselineMigrations,
+  baselineSchema,
+} from "../operations/prisma-baseline.mjs";
 const require = createRequire(import.meta.url),
   { PrismaClient } = require("@prisma/client");
 const source = new URL(process.env.DATABASE_URL ?? "");
@@ -18,22 +21,11 @@ const directory = resolve("artifacts/workforce/legacy-prisma-" + Date.now());
 mkdirSync(join(directory, "migrations"), { recursive: true });
 writeFileSync(
   join(directory, "schema.prisma"),
-  execFileSync("git", [
-    "show",
-    "50edc7cb45690fc48fbdb803b11ab104a0930d62:packages/database/prisma/schema.prisma",
-  ]),
+  baselineSchema("50edc7cb45690fc48fbdb803b11ab104a0930d62"),
 );
-const baselineNames = execFileSync(
-  "git",
-  [
-    "ls-tree",
-    "--name-only",
-    "50edc7cb45690fc48fbdb803b11ab104a0930d62:packages/database/prisma/migrations",
-  ],
-  { encoding: "utf8" },
-)
-  .trim()
-  .split("\n");
+const baselineNames = baselineMigrations(
+  "50edc7cb45690fc48fbdb803b11ab104a0930d62",
+);
 for (const name of baselineNames) {
   if (name === "migration_lock.toml") {
     copyFileSync(

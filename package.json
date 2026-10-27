@@ -35,6 +35,7 @@
     "db:generate": "npm run db:generate --workspace=@flowgastronomie/database",
     "db:migrate": "npm run db:migrate --workspace=@flowgastronomie/database",
     "db:seed": "npm run db:seed --workspace=@flowgastronomie/database",
+    "demo:showcase": "node scripts/demo-showcase.mjs",
     "test:pilot": "playwright test --config playwright.pilot.config.ts",
     "test:creative": "playwright test --config playwright.creative.config.ts && dotenv -e .env -- node tests/creative/run-db-gate.mjs",
     "test:setup": "dotenv -e .env -- node tests/setup/run-db-gate.mjs si0 && dotenv -e .env -- node tests/setup/run-db-gate.mjs si1 && dotenv -e .env -- node tests/setup/run-db-gate.mjs si2 && dotenv -e .env -- node tests/setup/run-browser-gate.mjs",

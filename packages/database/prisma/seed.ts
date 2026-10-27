@@ -108,6 +108,10 @@ await prisma.$transaction([
     where: { tenantId },
     data: { taxCategoryId: null },
   }),
+  // Photos added by scripts/demo-showcase.mjs restrict venue deletion.
+  prisma.productMedia.deleteMany({ where: { tenantId } }),
+  prisma.venueMedia.deleteMany({ where: { tenantId } }),
+  prisma.mediaAsset.deleteMany({ where: { tenantId } }),
   prisma.tenant.deleteMany({ where: { id: tenantId } }),
 ]);
 
@@ -541,7 +545,7 @@ await prisma.area.create({
     id: "demo-area-terrace",
     tenantId,
     venueId,
-    name: "Terrace",
+    name: "Terrasse",
   },
 });
 
@@ -1170,7 +1174,7 @@ await prisma.order.create({
           unitPriceMinor: 2090,
           station: StationType.KITCHEN,
           variantId: "variant-pizza-large",
-          variantName: "E madhe 40 cm + Burrata",
+          variantName: "Groß 40 cm + Burrata",
         },
         {
           id: "demo-live-order-item-bar-07",

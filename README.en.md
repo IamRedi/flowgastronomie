@@ -1,10 +1,50 @@
 # FlowGastronomie · RestaurantFlow
 
-**Restaurant software that digitises only what the venue actually needs.** Guests scan the table QR code, read the menu in their language, order or call for service. Staff see in Service Radar where to go first, the kitchen receives only its own items, and the owner reads the daily report in the evening. The venue decides per area, table or time of day how much of this it switches on. Waiters are not replaced.
+[![CI](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml/badge.svg)](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml)
+
+**Restaurant software that digitises only what the venue actually needs.** Table QR menus in four languages, Service Radar, counter sales, kitchen and bar stations, online ordering and the venue's own website run on one core. The venue decides per area, table or time of day how much of this it switches on. Waiters are not replaced.
+
+![Counter sales with stone-oven pizzas and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
+
+**[Deutsche Version](README.md)** · **As of 27 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+
+## At a glance
+
+- **At the table:** guests scan the QR code, read the menu in their language with EU allergens, order or call for service.
+- **In service:** Service Radar sorts tables by waiting time and required action. Counter sales cover the counter, pickup and cash or card payment.
+- **In the kitchen and bar:** each station sees only its own items and marks them ready.
+- **For the owner:** daily report with payment reconciliation, menu editor, website builder, staff schedule and time clock.
+- **Status:** in pilot use on a dedicated server. A fiscal POS with TSE is not included. What exactly is tested is listed [below](#what-is-implemented-today) and in the [verification record](EVIDENCE.md).
 
 RestaurantFlow is the first product of the FlowGastronomie platform. PizzeriaFlow, BarFlow, CaféFlow and ImbissFlow are planned on the same core.
 
-**[Deutsche Version](README.md)** · **As of 27 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)**
+## Screenshots
+
+All images come from the running application with the fictitious demo venue "Restaurant Olive": `npm run db:seed` creates it, and `npm run demo:showcase` plays through an evening of service via the real API (product photos, tables, an open register, orders in every kitchen state, payments, calls from the table). None are mockups. The UI language shown is German.
+
+| Owner home                                                                                               | Counter sales                                                                                                       |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| ![Owner home with live queue, today's revenue and open actions](docs/assets/screenshots/startseite.webp) | ![Counter sales with stone-oven pizzas, table 06 and three items in the basket](docs/assets/screenshots/kasse.webp) |
+
+| Service Radar                                                                                                    | Kitchen                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| ![Service Radar with a new order, a bill request and a service call](docs/assets/screenshots/service-radar.webp) | ![Kitchen board with orders in the states new, preparing and ready](docs/assets/screenshots/kueche.webp) |
+
+| Menu editor                                                                                             | Daily report                                                                                                      |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| ![Menu editor with photos, allergens and variants](docs/assets/screenshots/speisekarte-verwaltung.webp) | ![Daily report with nine orders, recorded payments and reconciliation](docs/assets/screenshots/tagesbericht.webp) |
+
+| Venue website                                                                                           | Website builder                                                                                   |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| ![Public website of Restaurant Olive with hero photo and gallery](docs/assets/screenshots/website.webp) | ![Website builder with three designs for the venue](docs/assets/screenshots/website-builder.webp) |
+
+![Template picker with nine venue types and three styles](docs/assets/screenshots/vorlagen.webp)
+
+### At the table (phone, 390 px)
+
+| Menu after scanning the QR code                                                                                                                        | Website                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| <img src="docs/assets/screenshots/mobil-speisekarte.webp" alt="Stone-oven pizzas for table 07 on a phone with size, extras and allergens" width="300"> | <img src="docs/assets/screenshots/mobil-website.webp" alt="Restaurant Olive website on a phone" width="300"> |
 
 ## What is implemented today
 
@@ -22,32 +62,6 @@ RestaurantFlow is the first product of the FlowGastronomie platform. PizzeriaFlo
 Many small restaurants choose between a paper pad and a large POS system that reshapes their whole service. Something is missing in between: a system that helps only where it gets busy. On the terrace guests may order themselves, in the dining room the waiter stays, and at lunchtime only the counter runs. That is exactly what a venue configures in RestaurantFlow.
 
 > **Digitise only what you need, without changing how your restaurant works.**
-
-## Screenshots
-
-All images come from the running application with the fictitious demo venue "Restaurant Olive" from `npm run db:seed`. None are mockups. The UI language shown is German.
-
-| Venue website                                                                                                | Templates for nine venue types                                                                   |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| ![Public website of Restaurant Olive with navigation and order button](docs/assets/screenshots/website.webp) | ![Template picker with nine venue types and three styles](docs/assets/screenshots/vorlagen.webp) |
-
-| Counter sales                                                                                       | Service Radar                                                                                                 |
-| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| ![Counter sales with product tiles by category and a new order](docs/assets/screenshots/kasse.webp) | ![Service Radar sorts tables by waiting time and required action](docs/assets/screenshots/service-radar.webp) |
-
-| Menu editor                                                                                                               | Kitchen                                                                               |
-| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| ![Menu editor with categories, allergens, variants and availability](docs/assets/screenshots/speisekarte-verwaltung.webp) | ![Kitchen view with an open order from table 07](docs/assets/screenshots/kueche.webp) |
-
-| Website builder                                                                                   | Daily report                                                                                                      |
-| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| ![Website builder with three designs for the venue](docs/assets/screenshots/website-builder.webp) | ![Daily report with order value, recorded payments and reconciliation](docs/assets/screenshots/tagesbericht.webp) |
-
-### At the table (phone, 390 px)
-
-| Menu after scanning the QR code                                                                                                    | Website                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| <img src="docs/assets/screenshots/mobil-speisekarte.webp" alt="Menu for table 07 on a phone with allergens and price" width="300"> | <img src="docs/assets/screenshots/mobil-website.webp" alt="Restaurant Olive website on a phone" width="300"> |
 
 ## Architecture
 
@@ -87,6 +101,7 @@ npm run db:migrate
 npm run db:seed
 npm run dev:api      # http://localhost:4000
 npm run dev:web      # http://localhost:3000
+npm run demo:showcase  # optional: play through an evening of service
 ```
 
 Then open:

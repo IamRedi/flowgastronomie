@@ -95,10 +95,12 @@ function priceLabel(amount: number, currency: string, locale: Locale) {
 export function StaffMenuClient({
   locale,
   labels,
+  allergenLabels,
 }: {
   locale: Locale;
   labels: Dictionary["menuAdmin"];
   staffLabels: Dictionary["staff"];
+  allergenLabels: Dictionary["menuPage"]["allergenLabels"];
 }) {
   const c = productPhotoCopy(locale);
   const [photos, setPhotos] = useState<Record<string, CanonicalMediaReference>>(
@@ -580,16 +582,20 @@ export function StaffMenuClient({
                               )}
                               {product.published ? "" : ` · ${labels.draft}`}
                               {product.variantCount > 0
-                                ? ` · ${product.variantCount} variants`
+                                ? ` · ${labels.variants}: ${product.variantCount}`
                                 : ""}
                               {product.modifierGroupCount > 0
-                                ? ` · ${product.modifierGroupCount} option groups`
+                                ? ` · ${labels.modifierGroups}: ${product.modifierGroupCount}`
                                 : ""}
                             </p>
                             {product.allergens.length > 0 && (
                               <div className="allergen-list">
                                 {product.allergens.map((allergen) => (
-                                  <span key={allergen}>{allergen}</span>
+                                  <span key={allergen}>
+                                    {allergenLabels[
+                                      allergen as keyof typeof allergenLabels
+                                    ] ?? allergen}
+                                  </span>
                                 ))}
                               </div>
                             )}

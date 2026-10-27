@@ -1,9 +1,12 @@
 ﻿import { createRequire } from "node:module";
-import { execFileSync } from "node:child_process";
-import { mkdirSync, writeFileSync, copyFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnCommandSync } from "../operations/process-command.mjs";
+import {
+  baselineMigrations,
+  baselineSchema,
+} from "../operations/prisma-baseline.mjs";
 const require = createRequire(import.meta.url),
   { PrismaClient } = require("@prisma/client"),
   baseline = "e2c067d08024a7c10292e84e4bfc91b8ca366912";
@@ -18,20 +21,8 @@ url.searchParams.set("schema", schema);
 const env = { ...process.env, DATABASE_URL: url.toString() },
   directory = resolve("artifacts/workforce-wf3/upgrade-prisma-" + Date.now());
 mkdirSync(join(directory, "migrations"), { recursive: true });
-writeFileSync(
-  join(directory, "schema.prisma"),
-  execFileSync("git", [
-    "show",
-    baseline + ":packages/database/prisma/schema.prisma",
-  ]),
-);
-const names = execFileSync(
-  "git",
-  ["ls-tree", "--name-only", baseline + ":packages/database/prisma/migrations"],
-  { encoding: "utf8" },
-)
-  .trim()
-  .split("\n");
+writeFileSync(join(directory, "schema.prisma"), baselineSchema(baseline));
+const names = baselineMigrations(baseline);
 for (const name of names) {
   if (name === "migration_lock.toml") {
     copyFileSync(
@@ -43,13 +34,9 @@ for (const name of names) {
   mkdirSync(join(directory, "migrations", name), { recursive: true });
   writeFileSync(
     join(directory, "migrations", name, "migration.sql"),
-    execFileSync("git", [
-      "show",
-      baseline +
-        ":packages/database/prisma/migrations/" +
-        name +
-        "/migration.sql",
-    ]),
+    readFileSync(
+      join("packages/database/prisma/migrations", name, "migration.sql"),
+    ),
   );
 }
 const db = new PrismaClient({ datasourceUrl: url.toString() });
