@@ -8,6 +8,9 @@
 
 **[Deutsche Version](README.md)** · **As of 27 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
 
+
+> **Evidence and limitations:** Pilot-stage operation with documented local tests and CI checks. The included point-of-sale functionality does not provide German TSE fiscal integration. Tested workflows, optional integrations and outstanding approvals are identified separately. [Verification record (German)](EVIDENCE.md).
+
 ## At a glance
 
 - **At the table:** guests scan the QR code, read the menu in their language with EU allergens, order or call for service.
