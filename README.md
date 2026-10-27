@@ -8,7 +8,6 @@
 
 **[English version](README.en.md)** · **Stand: 27. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
 
-
 > **Nachweisstand und Grenzen:** Pilotbetrieb mit dokumentierten lokalen Tests und CI-Prüfungen. Die enthaltene Kassenfunktion ist keine für den deutschen Fiskalbetrieb integrierte TSE-Kasse. Getestete Abläufe, optionale Integrationen und offene Freigaben sind getrennt ausgewiesen. [Prüfprotokoll](EVIDENCE.md).
 
 ## Auf einen Blick
