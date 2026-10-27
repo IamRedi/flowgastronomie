@@ -4,7 +4,7 @@
 
 **Restaurant-Software, die nur das digitalisiert, was der Betrieb wirklich braucht.** Tisch-QR mit Speisekarte in vier Sprachen, Service Radar, Kasse, Küche und Bar, Online-Bestellung und die eigene Website laufen auf einem Kern. Der Betrieb entscheidet pro Bereich, Tisch oder Uhrzeit, wie viel davon er einschaltet. Kellner werden nicht ersetzt.
 
-![Kasse mit Steinofenpizzen und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
+![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
 
 **[English version](README.en.md)** · **Stand: 27. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
 
@@ -28,11 +28,11 @@ Website des Lokals, Anmeldung, Startseite, eine Bestellung für Tisch 06 an der 
 
 ## Einblick in die Anwendung
 
-Alle Bilder stammen aus der laufenden Anwendung mit dem fiktiven Demo-Betrieb „Restaurant Olive“: `npm run db:seed` legt ihn an, `npm run demo:showcase` spielt über die echte API einen Abend im Service durch (Produktfotos, Tische, offene Kasse, Bestellungen in jedem Küchenstatus, Zahlungen, Rufe vom Tisch). Es sind keine Mockups.
+Alle Bilder stammen aus der laufenden Anwendung mit dem fiktiven Demo-Betrieb „Restaurant Olive“: `npm run db:seed` legt ihn an, `npm run demo:showcase` spielt über die echte API einen Abend im Service durch (Speisekarte mit Foto zu jedem Gericht, Tische, offene Kasse, Bestellungen in jedem Küchenstatus, Zahlungen, Rufe vom Tisch). Es sind keine Mockups.
 
-| Startseite des Inhabers                                                                                         | Kasse                                                                                                       |
-| --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| ![Startseite mit Live-Warteschlange, Tagesumsatz und offenen Aktionen](docs/assets/screenshots/startseite.webp) | ![Kasse mit Steinofenpizzen, Tisch 06 und drei Positionen im Warenkorb](docs/assets/screenshots/kasse.webp) |
+| Startseite des Inhabers                                                                                         | Kasse                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| ![Startseite mit Live-Warteschlange, Tagesumsatz und offenen Aktionen](docs/assets/screenshots/startseite.webp) | ![Kasse mit Fotos aller Gerichte, Tisch 06 und drei Pizzen im Warenkorb](docs/assets/screenshots/kasse.webp) |
 
 | Service Radar                                                                                                     | Küche                                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |

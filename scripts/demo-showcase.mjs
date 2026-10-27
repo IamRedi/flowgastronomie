@@ -59,18 +59,26 @@ await call("POST", "/v1/auth/login", {
   password: "Demo1234!",
 });
 
-// 1. Extra dishes that match the photos shipped in this repository.
+// 1. A trattoria menu where every dish has a matching photo shipped in this
+// repository. Seed dishes without a photo are taken off the menu below.
+const dish = (de, en, it, sq) =>
+  [
+    ["de", ...de],
+    ["en", ...en],
+    ["it", ...it],
+    ["sq", ...sq],
+  ].map(([locale, name, description]) => ({ locale, name, description }));
 const extra = [
   [
     "demo-category-pizza",
     1490,
     "KITCHEN",
     "prosciutto",
-    names(
-      "Prosciutto e rucola",
-      "Prosciutto & rocket",
-      "Prosciutto e rucola",
-      "Prosciutto me rukola",
+    dish(
+      ["Prosciutto e rucola", "Prosciutto crudo, Rucola, Grana Padano"],
+      ["Prosciutto & rocket", "Prosciutto crudo, rocket, Grana Padano"],
+      ["Prosciutto e rucola", "Prosciutto crudo, rucola, Grana Padano"],
+      ["Prosciutto me rukola", "Proshutë, rukola, Grana Padano"],
     ),
   ],
   [
@@ -78,18 +86,50 @@ const extra = [
     1390,
     "KITCHEN",
     "vegetariana",
-    names("Vegetariana", "Vegetariana", "Vegetariana", "Vegjetariane"),
+    dish(
+      ["Vegetariana", "Zucchini, Paprika, Aubergine, Mozzarella"],
+      ["Vegetariana", "Courgette, peppers, aubergine, mozzarella"],
+      ["Vegetariana", "Zucchine, peperoni, melanzane, mozzarella"],
+      ["Vegjetariane", "Kungulleshkë, speca, patëllxhan, mocarela"],
+    ),
+  ],
+  [
+    "demo-category-pizza",
+    1450,
+    "KITCHEN",
+    "pizza-1",
+    dish(
+      ["Bufala", "Büffelmozzarella, Kirschtomaten, Basilikum"],
+      ["Bufala", "Buffalo mozzarella, cherry tomatoes, basil"],
+      ["Bufala", "Mozzarella di bufala, pomodorini, basilico"],
+      ["Bufala", "Mocarela bualli, domate qershi, borzilok"],
+    ),
   ],
   [
     "demo-category-starters",
     890,
     "KITCHEN",
     "salad",
-    names(
-      "Insalata mista",
-      "Mixed salad",
-      "Insalata mista",
-      "Sallatë e përzier",
+    dish(
+      ["Insalata mista", "Blattsalate, Tomaten, Gurke, Hausdressing"],
+      ["Mixed salad", "Leaf salad, tomatoes, cucumber, house dressing"],
+      ["Insalata mista", "Insalata, pomodori, cetrioli, condimento della casa"],
+      [
+        "Sallatë e përzier",
+        "Sallatë jeshile, domate, kastravec, salcë e shtëpisë",
+      ],
+    ),
+  ],
+  [
+    "demo-category-desserts",
+    790,
+    "KITCHEN",
+    "desserts-1",
+    dish(
+      ["Schokoladentorte", "Dunkle Schokolade, hausgemacht"],
+      ["Chocolate cake", "Dark chocolate, homemade"],
+      ["Torta al cioccolato", "Cioccolato fondente, fatta in casa"],
+      ["Tortë me çokollatë", "Çokollatë e zezë, e bërë në shtëpi"],
     ),
   ],
   [
@@ -97,25 +137,47 @@ const extra = [
     260,
     "BAR",
     "coffee-1",
-    names("Espresso", "Espresso", "Espresso", "Espresso"),
+    dish(
+      ["Espresso", "Aus der Siebträgermaschine"],
+      ["Espresso", "From the lever machine"],
+      ["Espresso", "Dalla macchina a leva"],
+      ["Espresso", "Nga makina me levë"],
+    ),
   ],
   [
     "demo-category-bar",
     340,
     "BAR",
     "coffee-2",
-    names("Cappuccino", "Cappuccino", "Cappuccino", "Kapuçino"),
+    dish(
+      ["Cappuccino", "Mit frisch aufgeschäumter Milch"],
+      ["Cappuccino", "With freshly steamed milk"],
+      ["Cappuccino", "Con latte montato al momento"],
+      ["Kapuçino", "Me qumësht të shkumëzuar"],
+    ),
   ],
   [
     "demo-category-bar",
     650,
     "BAR",
     "wine-2",
-    names(
-      "Hauswein rot 0,2 l",
-      "House red 0.2 l",
-      "Vino rosso 0,2 l",
-      "Verë e kuqe 0,2 l",
+    dish(
+      ["Hauswein rot 0,2 l", "Montepulciano d'Abruzzo"],
+      ["House red 0.2 l", "Montepulciano d'Abruzzo"],
+      ["Vino rosso 0,2 l", "Montepulciano d'Abruzzo"],
+      ["Verë e kuqe 0,2 l", "Montepulciano d'Abruzzo"],
+    ),
+  ],
+  [
+    "demo-category-bar",
+    350,
+    "BAR",
+    "drink",
+    dish(
+      ["Cola 0,33 l", "Eiskalt aus der Flasche"],
+      ["Cola 0.33 l", "Ice-cold from the bottle"],
+      ["Cola 0,33 l", "Ghiacciata, in bottiglia"],
+      ["Kola 0,33 l", "E ftohtë, në shishe"],
     ),
   ],
 ];
@@ -138,6 +200,9 @@ const images = {
   "coffee-1": "showcases/products/coffee-1.webp",
   "coffee-2": "showcases/products/coffee-2.webp",
   "wine-2": "showcases/products/wine-2.webp",
+  "pizza-1": "showcases/products/pizza-1.webp",
+  "desserts-1": "showcases/products/desserts-1.webp",
+  drink: "pilot/demo-food/drink.webp",
 };
 for (const [
   index,
@@ -172,6 +237,65 @@ for (const [productId, file] of Object.entries(photos))
     await readFile(join(publicDir, file)),
   );
 console.log(`Photos: ${Object.keys(photos).length} products`);
+
+// Without cocktails on the menu, the bar category is simply "drinks".
+const bar = (await call("GET", "/v1/staff/menu")).categories.find(
+  (category) => category.id === "demo-category-bar",
+);
+await call("PUT", "/v1/staff/menu/categories/demo-category-bar", {
+  published: true,
+  sortOrder: bar.sortOrder,
+  translations: [
+    { locale: "de", name: "Getränke" },
+    { locale: "en", name: "Drinks" },
+    { locale: "it", name: "Bevande" },
+    { locale: "sq", name: "Pije" },
+  ],
+});
+
+// Seed dishes without a matching photo leave the menu, and so does a
+// category that ends up empty. The products stay in the database.
+const catalog = await call("GET", "/v1/staff/menu");
+for (const category of catalog.categories) {
+  let visible = 0;
+  for (const product of category.products) {
+    if (photos[product.id]) {
+      visible += 1;
+      continue;
+    }
+    if (!product.published && !product.available) continue;
+    await call(
+      "PUT",
+      `/v1/staff/menu/products/${encodeURIComponent(product.id)}`,
+      {
+        categoryId: product.categoryId,
+        priceMinor: product.priceMinor,
+        sortOrder: product.sortOrder,
+        available: false,
+        published: false,
+        station: product.station,
+        translations: product.translations.map(
+          ({ locale, name, description }) => ({
+            locale,
+            name,
+            description: description ?? null,
+          }),
+        ),
+        expectedRevision: product.revision,
+      },
+    );
+  }
+  if (visible === 0 && category.published)
+    await call(
+      "PUT",
+      `/v1/staff/menu/categories/${encodeURIComponent(category.id)}`,
+      {
+        published: false,
+        sortOrder: category.sortOrder,
+        translations: category.translations,
+      },
+    );
+}
 
 // 2. A small dining room next to the seeded terrace table 07.
 const setup = await call("GET", "/v1/staff/setup");
@@ -276,7 +400,7 @@ const served = [
   ],
   [
     "TAKEAWAY",
-    [item(p("Prosciutto e rucola")), item(p("Espresso"), 2)],
+    [item(p("Prosciutto e rucola")), item(p("Cola 0,33 l"), 2)],
     null,
     "CARD",
   ],
@@ -293,8 +417,7 @@ const served = [
   [
     "DINE_IN",
     [
-      item(p("Burrata der Saison")),
-      item(p("Rigatoni al ragù"), 2),
+      item(p("Bufala"), 2),
       item(p("Klassisches Tiramisù"), 2),
       item(p("Cappuccino"), 2),
     ],
@@ -303,7 +426,7 @@ const served = [
   ],
   [
     "TAKEAWAY",
-    [item(p("Tartufo bianco")), item(p("Vanille-Panna-cotta"))],
+    [item(p("Tartufo bianco")), item(p("Schokoladentorte"))],
     null,
     "CARD",
   ],
@@ -317,9 +440,9 @@ await advance(
   await order(
     "DINE_IN",
     [
-      item(p("Gegrillter Wolfsbarsch")),
-      item(p("Rindercarpaccio")),
-      item(p("Mediterraner Spritz"), 2),
+      item(p("Tartufo bianco")),
+      item(p("Insalata mista")),
+      item(p("Hauswein rot 0,2 l"), 2),
     ],
     "01",
   ),
@@ -328,11 +451,7 @@ await advance(
 await advance(
   await order(
     "DINE_IN",
-    [
-      item(p("Diavola")),
-      item(p("Margherita 2.0")),
-      item(p("Alkoholfreier Garden"), 2),
-    ],
+    [item(p("Diavola")), item(p("Margherita 2.0")), item(p("Cola 0,33 l"), 2)],
     "03",
   ),
   "READY",
@@ -340,11 +459,7 @@ await advance(
 await advance(
   await order(
     "DINE_IN",
-    [
-      item(p("Knusprige Calamari")),
-      item(p("Trüffel-Arancini")),
-      item(p("Mediterraner Spritz"), 2),
-    ],
+    [item(p("Bufala")), item(p("Prosciutto e rucola")), item(p("Espresso"), 2)],
     "05",
   ),
   "NEW",
