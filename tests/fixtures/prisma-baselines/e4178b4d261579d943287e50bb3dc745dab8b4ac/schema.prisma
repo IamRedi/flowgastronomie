@@ -1,0 +1,2190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MembershipRole {
+  OWNER
+  MANAGER
+  WAITER
+  BAR
+  KITCHEN
+}
+
+enum Locale {
+  EN
+  DE
+  IT
+  SQ
+}
+
+enum ServiceMode {
+  MENU_ONLY
+  CALL_AND_REQUEST
+  ORDER_AND_CONFIRM
+  SELF_ORDER
+  ORDER_AND_PAY
+  BAR
+  TAKEAWAY
+}
+
+enum SessionStatus {
+  OPEN
+  CLOSED
+}
+
+enum OrderStatus {
+  NEW
+  ACCEPTED
+  PREPARING
+  READY
+  SERVED
+  CANCELLED
+}
+
+enum OrderStatusEventKind {
+  INITIAL
+  TRANSITION
+}
+
+enum OperationalOrderKind {
+  TABLE
+  ONLINE
+}
+
+enum OperationalOrderEventType {
+  ORDER_CREATED
+  ORDER_STATUS_CHANGED
+}
+
+enum IngredientBaseUnit {
+  GRAM
+  MILLILITER
+  PIECE
+}
+
+enum IngredientQuantityUnit {
+  GRAM
+  KILOGRAM
+  MILLILITER
+  LITER
+  PIECE
+}
+
+enum StationType {
+  BAR
+  KITCHEN
+  DESSERT
+}
+
+enum ServiceSignalType {
+  NEW_ORDER
+  WAITER_CALL
+  BILL_REQUEST
+  WATER_REQUEST
+}
+
+enum AllergenCode {
+  GLUTEN
+  CRUSTACEANS
+  EGGS
+  FISH
+  PEANUTS
+  SOY
+  MILK
+  NUTS
+  CELERY
+  MUSTARD
+  SESAME
+  SULPHITES
+  LUPIN
+  MOLLUSCS
+}
+
+enum ScheduleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum OperationalTaskScope {
+  VENUE
+  SHIFT
+  TABLE
+  ORDER
+}
+
+enum OperationalTaskPriority {
+  LOW
+  NORMAL
+  HIGH
+}
+
+enum ReservationStatus {
+  REQUESTED
+  CONFIRMED
+  SEATED
+  COMPLETED
+  REJECTED
+  CANCELLED
+  NO_SHOW
+}
+
+enum StaffShiftStatus {
+  OPEN
+  CLOSED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD_AT_COUNTER
+  CARD_AT_TABLE
+  OTHER
+}
+
+enum PaymentRecordStatus {
+  RECORDED
+  VOIDED
+}
+
+enum ProductionTicketStatus {
+  NEW
+  PREPARING
+  READY
+  SERVED
+}
+
+enum OrderSource {
+  GUEST_QR
+  STAFF_TABLET
+}
+
+enum OnlineFulfillmentType {
+  PICKUP
+  DELIVERY
+  CATERING
+}
+
+enum OnlineOrderStatus {
+  PENDING_CONFIRMATION
+  ACCEPTED
+  PREPARING
+  READY
+  OUT_FOR_DELIVERY
+  COMPLETED
+  REJECTED
+  CANCELLED
+}
+
+enum OnlineOrderMessageAuthor {
+  GUEST
+  STAFF
+}
+
+enum SubscriptionPlan {
+  WEBSITE
+  SMART_SERVICE
+  RESTAURANT_PRO
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+}
+
+enum WebsiteStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum WebsiteDomainStatus {
+  PENDING
+  VERIFIED
+  ACTIVE
+  FAILED
+}
+
+enum WebsiteAssetKind {
+  LOGO
+  HERO
+}
+
+enum BillingInvoiceStatus {
+  OPEN
+  PAID
+  VOID
+}
+
+enum PlanChangeStatus {
+  PENDING
+  APPLIED
+  CANCELLED
+}
+
+enum TenantKind {
+  REAL
+  DEMO
+  LOCAL_PILOT
+  LEGACY_CI
+}
+
+model BusinessProvision {
+  requestKeyHash String @id
+  fingerprint String
+  tenantId String @unique
+  venueId String
+  ownerId String
+  profileSnapshot Json
+  createdAt DateTime @default(now())
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  venue Venue @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Restrict)
+  owner User @relation(fields: [tenantId, ownerId], references: [tenantId, id], onDelete: Restrict)
+}
+
+model Tenant {
+  demoWorkspace DemoWorkspace?
+  retiredAt DateTime?
+  hardwareDevices  HardwareDevice[]
+  printJobs        PrintJob[]
+  hardwareCommands HardwareCommandRecord[]
+  cashSessions     CashSession[]
+  receipts         Receipt[]
+  receiptSequences ReceiptSequence[]
+  taxCategories    TaxCategory[]
+  id               String                          @id @default(cuid())
+  name             String
+  kind             TenantKind @default(REAL)
+  businessProfileId String?
+  businessProfileVersion Int?
+  provision BusinessProvision?
+  slug             String                          @unique
+  createdAt        DateTime                        @default(now())
+  updatedAt        DateTime                        @updatedAt
+  venues           Venue[]
+  memberships      Membership[]
+  users            User[]
+  staffSessions    StaffSession[]
+  staffShifts      StaffShift[]
+  auditEvents      AuditEvent[]
+  paymentRecords   PaymentRecord[]
+  staffInvitations StaffInvitation[]
+  subscription     Subscription?
+  entitlements     Entitlement[]
+  usageRecords     SubscriptionUsage[]
+  websites         VenueWebsite[]
+  websiteDomains   WebsiteDomain[]
+  websiteAssets    WebsiteAsset[]
+  websiteRevisions WebsitePublicationRevision[]
+  billingProfile   OrganizationBillingProfile?
+  billingInvoices  BillingInvoice[]
+  planChanges      SubscriptionPlanChangeRequest[]
+  venueLaunches    VenueLaunch[]
+  customerProfiles CustomerProfile[]
+}
+
+model DemoWorkspace {
+  profileId String @id
+  generation Int @default(1)
+  tenantId String @unique
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id            String         @id @default(cuid())
+  tenantId      String
+  email         String
+  displayName   String
+  passwordHash  String
+  active        Boolean        @default(true)
+  tenant        Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  memberships   Membership[]
+  staffSessions StaffSession[]
+  provisions BusinessProvision[]
+
+  @@unique([tenantId, email])
+  @@unique([tenantId, id])
+  @@index([tenantId])
+}
+
+model Membership {
+  cashSessions           CashSession[]
+  id                     String                  @id @default(cuid())
+  tenantId               String
+  venueId                String
+  userId                 String
+  role                   MembershipRole
+  active                 Boolean                 @default(true)
+  tenant                 Tenant                  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                  Venue                   @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  user                   User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  staffSessions          StaffSession[]
+  staffProfile           StaffProfile?
+  staffShifts            StaffShift[]
+  scheduleAssignments    ScheduleAssignment[]
+  staffAvailabilityNotes StaffAvailabilityNote[]
+
+  @@unique([venueId, userId])
+  @@index([tenantId])
+}
+
+model StaffSession {
+  id           String     @id @default(cuid())
+  tenantId     String
+  venueId      String
+  userId       String
+  membershipId String
+  tokenHash    String     @unique
+  createdAt    DateTime   @default(now())
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue        Venue      @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, userId, expiresAt])
+}
+
+model Venue {
+  workforceStations          String[]                     @default(["KITCHEN", "SERVICE", "BAR", "COUNTER", "DELIVERY"])
+  workforceConfigVersion     Int                          @default(0)
+  workforceTemplates         WorkforceShiftTemplate[]
+  smartSetup                 SmartSetup?
+  importSessions             ImportSession[]
+  city                       String?
+  entrance                   String?
+  mediaAssets                MediaAsset[]
+  media                      VenueMedia[]
+  creativeProjects           CreativeProject[]
+  creativeAssets             CreativeAsset[]
+  hardwareDevices            HardwareDevice[]
+  printJobs                  PrintJob[]
+  hardwareCommands           HardwareCommandRecord[]
+  cashSessions               CashSession[]
+  receipts                   Receipt[]
+  receiptSequence            ReceiptSequence?
+  taxCategories              TaxCategory[]
+  id                         String                       @id @default(cuid())
+  tenantId                   String
+  name                       String
+  slug                       String
+  countryCode                String?
+  timezone                   String                       @default("Europe/Berlin")
+  currency                   String                       @default("EUR")
+  defaultLocale              Locale                       @default(SQ)
+  defaultServiceMode         ServiceMode                  @default(MENU_ONLY)
+  onlinePickupEnabled        Boolean                      @default(true)
+  pickupLeadMinutes          Int?
+  onlineDeliveryEnabled      Boolean                      @default(true)
+  onlineCateringEnabled      Boolean                      @default(true)
+  reservationCapacity        Int                          @default(40)
+  reservationDurationMinutes Int                          @default(120)
+  reservationAutoConfirm     Boolean                      @default(false)
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  tenant                     Tenant                       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  memberships                Membership[]
+  staffSessions              StaffSession[]
+  areas                      Area[]
+  tables                     DiningTable[]
+  categories                 MenuCategory[]
+  categoryTranslations       MenuCategoryTranslation[]
+  products                   Product[]
+  productTranslations        ProductTranslation[]
+  sessions                   TableSession[]
+  orders                     Order[]
+  onlineOrders               OnlineOrder[]
+  deliveryZones              DeliveryZone[]
+  signals                    ServiceSignal[]
+  staffShifts                StaffShift[]
+  auditEvents                AuditEvent[]
+  paymentRecords             PaymentRecord[]
+  staffInvitations           StaffInvitation[]
+  website                    VenueWebsite?
+  websiteDomain              WebsiteDomain?
+  websiteAssets              WebsiteAsset[]
+  websiteRevisions           WebsitePublicationRevision[]
+  launch                     VenueLaunch?
+  schedules                  VenueSchedule[]
+  scheduleAssignments        ScheduleAssignment[]
+  availabilityNotes          StaffAvailabilityNote[]
+  operationalTasks           OperationalTask[]
+  handoverNotes              ShiftHandoverNote[]
+  reservations               Reservation[]
+  customerProfiles           CustomerProfile[]
+  provisions                 BusinessProvision[]
+
+  @@unique([tenantId, id])
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+}
+
+model SmartSetup {
+  id                    String         @id @default(cuid())
+  tenantId              String
+  venueId               String
+  profileId             String
+  profileVersion        Int
+  step                  Int            @default(1)
+  status                String         @default("IN_PROGRESS")
+  skipped               String[]       @default([])
+  appliedProfiles       String[]       @default([])
+  version               Int            @default(0)
+  activeImportSessionId String?
+  mediaStep             Int            @default(1)
+  mediaStatus           String         @default("PENDING")
+  mediaDraft            Json?
+  updatedBy             String
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  venue                 Venue          @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Cascade)
+  activeImportSession   ImportSession? @relation(fields: [tenantId, venueId, activeImportSessionId], references: [tenantId, venueId, id], onDelete: Restrict)
+
+  @@unique([tenantId, venueId])
+}
+
+model ImportSession {
+  businessData         Json?
+  businessReceipt      Json?
+  id                   String         @id @default(cuid())
+  tenantId             String
+  venueId              String
+  requestKey           String
+  locale               Locale
+  status               String         @default("DETECTED")
+  version              Int            @default(0)
+  extractionState      String         @default("PENDING")
+  extractionKey        String?
+  extractionAttempts   Int            @default(0)
+  extractionStartedAt  DateTime?
+  extractionFinishedAt DateTime?
+  provider             String?
+  model                String?
+  provenance           Json?
+  proposal             Json?
+  errorCode            String?
+  importedAt           DateTime?
+  importedBy           String?
+  createdBy            String
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  venue                Venue          @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Cascade)
+  setups               SmartSetup[]
+  sources              ImportSource[]
+  items                ImportItem[]
+
+  @@unique([tenantId, venueId, id])
+  @@unique([tenantId, venueId, requestKey])
+  @@index([tenantId, venueId, createdAt])
+}
+
+model ImportSource {
+  sourceUrl     String?
+  method        String        @default("DOCUMENT")
+  id            String        @id @default(cuid())
+  tenantId      String
+  venueId       String
+  sessionId     String
+  filename      String
+  mimeType      String
+  contentHash   String
+  byteSize      Int
+  pageCount     Int
+  mediaAssetId  String?
+  documentBytes Bytes?
+  createdAt     DateTime      @default(now())
+  session       ImportSession @relation(fields: [tenantId, venueId, sessionId], references: [tenantId, venueId, id], onDelete: Cascade)
+  mediaAsset    MediaAsset?   @relation(fields: [tenantId, venueId, mediaAssetId], references: [tenantId, venueId, id], onDelete: Restrict)
+
+  @@unique([tenantId, venueId, id])
+  @@unique([tenantId, venueId, sessionId, contentHash])
+}
+
+model ImportItem {
+  id                String        @id @default(cuid())
+  tenantId          String
+  venueId           String
+  sessionId         String
+  proposalItemId    String
+  status            String        @default("NEEDS_REVIEW")
+  original          Json
+  reviewed          Json
+  approvedBy        String?
+  approvedAt        DateTime?
+  importedProductId String?
+  updatedAt         DateTime      @updatedAt
+  session           ImportSession @relation(fields: [tenantId, venueId, sessionId], references: [tenantId, venueId, id], onDelete: Cascade)
+  importedProduct   Product?      @relation(fields: [tenantId, venueId, importedProductId], references: [tenantId, venueId, id], onDelete: Restrict)
+
+  @@unique([tenantId, venueId, id])
+  @@unique([tenantId, venueId, sessionId, proposalItemId])
+}
+
+model VenueWebsite {
+  premiumStyleId String?
+  id           String                       @id @default(cuid())
+  tenantId     String
+  venueId      String                       @unique
+  publicSlug   String                       @unique
+  status       WebsiteStatus                @default(DRAFT)
+  primaryColor String                       @default("#17382f")
+  accentColor  String                       @default("#ed6b37")
+  logoUrl      String?
+  heroImageUrl String?
+  phone        String?
+  contactEmail String?
+  address      String?
+  instagramUrl String?
+  facebookUrl  String?
+  openingHours Json
+  publishedAt  DateTime?
+  createdAt    DateTime                     @default(now())
+  updatedAt    DateTime                     @updatedAt
+  tenant       Tenant                       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue        Venue                        @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  translations VenueWebsiteTranslation[]
+  domain       WebsiteDomain?
+  assets       WebsiteAsset[]
+  revisions    WebsitePublicationRevision[]
+
+  @@index([tenantId, status])
+}
+
+model WebsiteDomain {
+  id                String              @id @default(cuid())
+  tenantId          String
+  venueId           String              @unique
+  websiteId         String              @unique
+  hostname          String              @unique
+  status            WebsiteDomainStatus @default(PENDING)
+  verificationToken String
+  lastCheckedAt     DateTime?
+  verifiedAt        DateTime?
+  activatedAt       DateTime?
+  failureReason     String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  tenant            Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue             Venue               @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  website           VenueWebsite        @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status])
+}
+
+model WebsiteAsset {
+  id         String           @id @default(cuid())
+  tenantId   String
+  venueId    String
+  websiteId  String
+  kind       WebsiteAssetKind
+  mimeType   String
+  byteLength Int
+  bytes      Bytes
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  tenant     Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue      Venue            @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  website    VenueWebsite     @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@unique([websiteId, kind])
+  @@index([tenantId, venueId])
+}
+
+model WebsitePublicationRevision {
+  id                      String       @id @default(cuid())
+  tenantId                String
+  venueId                 String
+  websiteId               String
+  revision                Int
+  snapshot                Json
+  publishedByUserId       String
+  publishedByMembershipId String
+  publishedAt             DateTime     @default(now())
+  tenant                  Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                   Venue        @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  website                 VenueWebsite @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@unique([websiteId, revision])
+  @@index([tenantId, venueId, publishedAt])
+}
+
+model VenueLaunch {
+  id                   String    @id @default(cuid())
+  tenantId             String
+  venueId              String    @unique
+  rehearsalConfirmedAt DateTime?
+  rehearsalByUserId    String?
+  launchedAt           DateTime?
+  launchedByUserId     String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  tenant               Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, launchedAt])
+}
+
+model VenueWebsiteTranslation {
+  id             String       @id @default(cuid())
+  tenantId       String
+  venueId        String
+  websiteId      String
+  locale         Locale
+  heroTitle      String
+  heroSubtitle   String
+  storyTitle     String
+  storyBody      String
+  seoTitle       String
+  seoDescription String
+  website        VenueWebsite @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@unique([websiteId, locale])
+  @@index([tenantId, venueId, locale])
+}
+
+model Area {
+  id                  String        @id @default(cuid())
+  tenantId            String
+  venueId             String
+  name                String
+  serviceModeOverride ServiceMode?
+  venue               Venue         @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  tables              DiningTable[]
+
+  @@unique([venueId, name])
+  @@index([tenantId, venueId])
+}
+
+model DiningTable {
+  id                  String            @id @default(cuid())
+  tenantId            String
+  venueId             String
+  areaId              String?
+  label               String
+  qrTokenHash         String            @unique
+  qrRevokedAt         DateTime?
+  serviceModeOverride ServiceMode?
+  venue               Venue             @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  area                Area?             @relation(fields: [areaId], references: [id], onDelete: SetNull)
+  sessions            TableSession[]
+  signals             ServiceSignal[]
+  assignments         TableAssignment[]
+  reservations        Reservation[]
+  orders              Order[]
+
+  @@unique([venueId, label])
+  @@index([tenantId, venueId])
+}
+
+model MenuCategory {
+  id           String                    @id @default(cuid())
+  tenantId     String
+  venueId      String
+  sortOrder    Int                       @default(0)
+  published    Boolean                   @default(false)
+  venue        Venue                     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  products     Product[]
+  translations MenuCategoryTranslation[]
+
+  @@index([tenantId, venueId, published])
+}
+
+model MenuCategoryTranslation {
+  id         String       @id @default(cuid())
+  tenantId   String
+  venueId    String
+  categoryId String
+  locale     Locale
+  name       String
+  venue      Venue        @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+  @@index([tenantId, venueId, locale])
+}
+
+model Product {
+  archivedAt      DateTime?
+  importItems      ImportItem[]
+  dataProvenance Json?
+  media ProductMedia[]
+  taxCategoryId    String?
+  taxCategory      TaxCategory?           @relation(fields: [taxCategoryId], references: [id], onDelete: Restrict)
+  id               String                 @id @default(cuid())
+  tenantId         String
+  venueId          String
+  categoryId       String
+  priceMinor       Int
+  currency         String                 @default("EUR")
+  sortOrder        Int                    @default(0)
+  available        Boolean                @default(true)
+  published        Boolean                @default(false)
+  station          StationType
+  venue            Venue                  @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  category         MenuCategory           @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  translations     ProductTranslation[]
+  orderItems       OrderItem[]
+  onlineOrderItems OnlineOrderItem[]
+  variants         ProductVariant[]
+  modifierGroups   ProductModifierGroup[]
+  allergens        ProductAllergen[]
+  recipe           Recipe?
+
+  @@index([tenantId, venueId, categoryId, published])
+  @@unique([tenantId, venueId, id])
+}
+
+enum MediaSource {
+  UPLOAD
+  IMPORT
+  GENERATED
+  DEMO
+  SYSTEM
+}
+
+enum VenueMediaRole {
+  LOGO
+  HERO
+  GALLERY
+  PROFILE
+}
+
+enum ProductMediaRole {
+  PRIMARY
+  GALLERY
+}
+
+model MediaAsset {
+  importSources        ImportSource[]
+  id String @id @default(cuid())
+  tenantId String
+  venueId String
+  source MediaSource
+  sourceKey String
+  mimeType String
+  width Int
+  height Int
+  contentHash String
+  storageLocation String @default("DATABASE")
+  bytes Bytes
+  provenance Json
+  approvedForPublicUse Boolean @default(false)
+  createdByUserId String
+  approvedByUserId String
+  approvedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  venue Venue @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Restrict)
+  venueMedia VenueMedia[]
+  productMedia ProductMedia[]
+  @@unique([tenantId, venueId, id])
+  @@unique([tenantId, venueId, sourceKey])
+}
+
+model VenueMedia {
+  id String @id @default(cuid())
+  tenantId String
+  venueId String
+  mediaAssetId String
+  role VenueMediaRole
+  sortOrder Int @default(0)
+  venue Venue @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Restrict)
+  asset MediaAsset @relation(fields: [tenantId, venueId, mediaAssetId], references: [tenantId, venueId, id], onDelete: Restrict)
+  @@unique([tenantId, venueId, role, sortOrder])
+}
+
+model ProductMedia {
+  id String @id @default(cuid())
+  tenantId String
+  venueId String
+  productId String
+  mediaAssetId String
+  role ProductMediaRole
+  sortOrder Int @default(0)
+  product Product @relation(fields: [tenantId, venueId, productId], references: [tenantId, venueId, id], onDelete: Restrict)
+  asset MediaAsset @relation(fields: [tenantId, venueId, mediaAssetId], references: [tenantId, venueId, id], onDelete: Restrict)
+  @@unique([tenantId, venueId, productId, role, sortOrder])
+}
+
+model ProductVariant {
+  id              String                      @id @default(cuid())
+  tenantId        String
+  venueId         String
+  productId       String
+  priceDeltaMinor Int                         @default(0)
+  sortOrder       Int                         @default(0)
+  available       Boolean                     @default(true)
+  isDefault       Boolean                     @default(false)
+  product         Product                     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  translations    ProductVariantTranslation[]
+
+  @@index([tenantId, venueId, productId, available])
+}
+
+model ProductVariantTranslation {
+  id        String         @id @default(cuid())
+  variantId String
+  locale    Locale
+  name      String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([variantId, locale])
+}
+
+model ProductModifierGroup {
+  id           String                            @id @default(cuid())
+  tenantId     String
+  venueId      String
+  productId    String
+  minSelect    Int                               @default(0)
+  maxSelect    Int                               @default(1)
+  sortOrder    Int                               @default(0)
+  product      Product                           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  translations ProductModifierGroupTranslation[]
+  options      ProductModifierOption[]
+
+  @@index([tenantId, venueId, productId])
+}
+
+model ProductModifierGroupTranslation {
+  id      String               @id @default(cuid())
+  groupId String
+  locale  Locale
+  name    String
+  group   ProductModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, locale])
+}
+
+model ProductModifierOption {
+  id              String                             @id @default(cuid())
+  tenantId        String
+  venueId         String
+  groupId         String
+  priceDeltaMinor Int                                @default(0)
+  sortOrder       Int                                @default(0)
+  available       Boolean                            @default(true)
+  group           ProductModifierGroup               @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  translations    ProductModifierOptionTranslation[]
+
+  @@index([tenantId, venueId, groupId, available])
+}
+
+model ProductModifierOptionTranslation {
+  id       String                @id @default(cuid())
+  optionId String
+  locale   Locale
+  name     String
+  option   ProductModifierOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([optionId, locale])
+}
+
+model ProductAllergen {
+  productId String
+  allergen  AllergenCode
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, allergen])
+}
+
+model ProductTranslation {
+  id          String  @id @default(cuid())
+  tenantId    String
+  venueId     String
+  productId   String
+  locale      Locale
+  name        String
+  description String?
+  venue       Venue   @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+  @@index([tenantId, venueId, locale])
+}
+
+model TableSession {
+  id             String          @id @default(cuid())
+  tenantId       String
+  venueId        String
+  tableId        String
+  status         SessionStatus   @default(OPEN)
+  activeTableKey String?         @unique
+  openedAt       DateTime        @default(now())
+  closedAt       DateTime?
+  venue          Venue           @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  table          DiningTable     @relation(fields: [tableId], references: [id], onDelete: Restrict)
+  guests         TableGuest[]
+  orders         Order[]
+  signals        ServiceSignal[]
+  paymentRecords PaymentRecord[]
+
+  @@index([tenantId, venueId, tableId, status])
+}
+
+model Reservation {
+  id                     String            @id @default(cuid())
+  tenantId               String
+  venueId                String
+  idempotencyKey         String
+  status                 ReservationStatus @default(REQUESTED)
+  guestName              String
+  phone                  String
+  email                  String?
+  locale                 Locale            @default(SQ)
+  requestedFor           DateTime
+  partySize              Int
+  guestNotes             String?
+  tableId                String?
+  customerProfileId      String?
+  bookingDurationMinutes Int               @default(120)
+  statusChangedAt        DateTime          @default(now())
+  statusChangedByUserId  String?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  personalDataRedactedAt DateTime?
+  venue                  Venue             @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  table                  DiningTable?      @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  customerProfile        CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@unique([tenantId, venueId, idempotencyKey])
+  @@index([tenantId, venueId, requestedFor, status])
+  @@index([tenantId, venueId, tableId, requestedFor])
+  @@index([customerProfileId])
+}
+
+model CustomerProfile {
+  id              String        @id @default(cuid())
+  tenantId        String
+  venueId         String
+  displayName     String
+  emailNormalized String?
+  phoneNormalized String?
+  preferredLocale Locale        @default(SQ)
+  internalNotes   String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue           Venue         @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  reservations    Reservation[]
+  onlineOrders    OnlineOrder[]
+
+  @@index([tenantId, venueId, emailNormalized])
+  @@index([tenantId, venueId, phoneNormalized])
+}
+
+model TableGuest {
+  id              String          @id @default(cuid())
+  tenantId        String
+  venueId         String
+  tableSessionId  String
+  tokenHash       String          @unique
+  createdAt       DateTime        @default(now())
+  lastSeenAt      DateTime        @default(now())
+  tokenRedactedAt DateTime?
+  tableSession    TableSession    @relation(fields: [tableSessionId], references: [id], onDelete: Cascade)
+  orders          Order[]
+  signals         ServiceSignal[]
+
+  @@index([tenantId, venueId, tableSessionId])
+}
+
+model Order {
+  counterPayment           PaymentRecord?
+  id                       String               @id @default(cuid())
+  tenantId                 String
+  venueId                  String
+  tableSessionId           String?
+  guestId                  String?
+  tableId                  String?
+  staffOrderKey            String?              @unique
+  idempotencyKey           String
+  status                   OrderStatus          @default(NEW)
+  version                  Int                  @default(1)
+  totalMinor               Int
+  currency                 String               @default("EUR")
+  source                   OrderSource          @default(GUEST_QR)
+  createdByUserId          String?
+  createdByMembershipId    String?
+  createdByShiftId         String?
+  serviceOwnerUserId       String?
+  serviceOwnerMembershipId String?
+  serviceOwnerShiftId      String?
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
+  venue                    Venue                @relation(fields: [venueId], references: [id], onDelete: Restrict)
+  tableSession             TableSession?        @relation(fields: [tableSessionId], references: [id], onDelete: Restrict)
+  guest                    TableGuest?          @relation(fields: [guestId], references: [id], onDelete: Restrict)
+  table                    DiningTable?         @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  items                    OrderItem[]
+  statusEvents             OrderStatusEvent[]
+  signals                  ServiceSignal[]
+  productionTickets        OrderStationTicket[]
+
+  @@unique([tableSessionId, guestId, idempotencyKey])
+  @@index([tenantId, venueId, status, createdAt])
+  @@index([tenantId, venueId, tableId, createdAt])
+  @@index([serviceOwnerMembershipId, status])
+}
+
+model OrderStatusEvent {
+  id                String               @id @default(cuid())
+  tenantId          String
+  venueId           String
+  orderId           String
+  status            OrderStatus
+  kind              OrderStatusEventKind
+  actorUserId       String?
+  actorMembershipId String?
+  actorShiftId      String?
+  createdAt         DateTime             @default(now())
+  order             Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, orderId, createdAt])
+}
+
+model OperationalOrderEvent {
+  id                String                    @id @default(cuid())
+  tenantId          String
+  venueId           String
+  orderId           String
+  orderKind         OperationalOrderKind
+  type              OperationalOrderEventType
+  source            String
+  fulfillment       String
+  status            String
+  totalMinor        Int
+  currency          String
+  actorUserId       String?
+  actorMembershipId String?
+  actorShiftId      String?
+  occurredAt        DateTime                  @default(now())
+
+  @@index([tenantId, venueId, occurredAt])
+  @@index([tenantId, venueId, orderKind, orderId, occurredAt])
+}
+
+model Ingredient {
+  id          String              @id @default(cuid())
+  tenantId    String
+  venueId     String
+  name        String
+  baseUnit    IngredientBaseUnit
+  allergens   AllergenCode[]      @default([])
+  active      Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  prices      SupplierItemPrice[]
+  recipeItems RecipeIngredient[]
+
+  @@unique([venueId, name])
+  @@index([tenantId, venueId, active])
+}
+
+model Recipe {
+  id                 String             @id @default(cuid())
+  tenantId           String
+  venueId            String
+  productId          String             @unique
+  yieldBasisPoints   Int                @default(10000)
+  wastageBasisPoints Int                @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  product            Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ingredients        RecipeIngredient[]
+
+  @@index([tenantId, venueId, productId])
+}
+
+model RecipeIngredient {
+  id                String     @id @default(cuid())
+  tenantId          String
+  venueId           String
+  recipeId          String
+  ingredientId      String
+  quantityBaseUnits Int
+  recipe            Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient        Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@unique([recipeId, ingredientId])
+  @@index([tenantId, venueId, ingredientId])
+}
+
+model Supplier {
+  id          String              @id @default(cuid())
+  tenantId    String
+  venueId     String
+  name        String
+  contactName String?
+  phone       String?
+  email       String?
+  address     String?
+  active      Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  prices      SupplierItemPrice[]
+
+  @@unique([venueId, name])
+  @@index([tenantId, venueId, active])
+}
+
+model SupplierItemPrice {
+  id            String                 @id @default(cuid())
+  tenantId      String
+  venueId       String
+  supplierId    String
+  ingredientId  String
+  packQuantity  Int
+  unit          IngredientQuantityUnit
+  priceMinor    Int
+  currency      String                 @default("EUR")
+  effectiveFrom DateTime
+  createdAt     DateTime               @default(now())
+  supplier      Supplier               @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  ingredient    Ingredient             @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, venueId, ingredientId, effectiveFrom])
+  @@index([tenantId, venueId, supplierId, effectiveFrom])
+}
+
+model OrderStationTicket {
+  id                   String                 @id @default(cuid())
+  tenantId             String
+  venueId              String
+  orderId              String
+  station              StationType
+  status               ProductionTicketStatus @default(NEW)
+  version              Int                    @default(1)
+  assignedMembershipId String?
+  assignedUserId       String?
+  assignedShiftId      String?
+  assignedByUserId     String?
+  claimedAt            DateTime?
+  readyAt              DateTime?
+  servedAt             DateTime?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  order                Order                  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, station])
+  @@index([tenantId, venueId, station, status, createdAt])
+  @@index([assignedMembershipId, status])
+}
+
+model OrderItem {
+  taxSnapshot    Json?
+  id             String              @id @default(cuid())
+  orderId        String
+  productId      String
+  productName    String
+  quantity       Int
+  unitPriceMinor Int
+  station        StationType
+  notes          String?
+  variantId      String?
+  variantName    String?
+  order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product             @relation(fields: [productId], references: [id], onDelete: Restrict)
+  modifiers      OrderItemModifier[]
+
+  @@index([orderId, station])
+}
+
+model OrderItemModifier {
+  id               String    @id @default(cuid())
+  orderItemId      String
+  modifierOptionId String
+  groupName        String
+  optionName       String
+  priceDeltaMinor  Int
+  orderItem        OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+  @@index([orderItemId])
+}
+
+model OnlineOrder {
+  id                     String                       @id @default(cuid())
+  tenantId               String
+  venueId                String
+  idempotencyKey         String
+  referenceCode          String                       @unique
+  trackingTokenHash      String                       @unique
+  fulfillmentType        OnlineFulfillmentType
+  status                 OnlineOrderStatus            @default(PENDING_CONFIRMATION)
+  locale                 Locale                       @default(SQ)
+  totalMinor             Int
+  currency               String                       @default("EUR")
+  contactName            String
+  contactPhone           String
+  contactEmail           String?
+  customerProfileId      String?
+  requestedFor           DateTime
+  deliveryAddressLine    String?
+  productionNotBefore    DateTime?
+  deliveryPostalCode     String?
+  deliveryCity           String?
+  deliveryZoneId         String?
+  deliveryFeeMinor       Int                          @default(0)
+  cateringGuestCount     Int?
+  guestNotes             String?
+  decisionNote           String?
+  decidedAt              DateTime?
+  decidedByUserId        String?
+  decidedByMembershipId  String?
+  createdAt              DateTime                     @default(now())
+  updatedAt              DateTime                     @updatedAt
+  personalDataRedactedAt DateTime?
+  venue                  Venue                        @relation(fields: [venueId], references: [id], onDelete: Restrict)
+  deliveryZone           DeliveryZone?                @relation(fields: [deliveryZoneId], references: [id], onDelete: SetNull)
+  customerProfile        CustomerProfile?             @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+  items                  OnlineOrderItem[]
+  statusEvents           OnlineOrderStatusEvent[]
+  messages               OnlineOrderMessage[]
+  productionTickets      OnlineOrderStationTicket[]
+  counterPayment         PaymentRecord?
+  receipt                Receipt?
+  recoverySessions       OnlineOrderRecoverySession[]
+
+  @@unique([tenantId, venueId, idempotencyKey])
+  @@index([tenantId, venueId, status, requestedFor])
+  @@index([customerProfileId])
+}
+
+model OnlineOrderRecoverySession {
+  id            String      @id @default(cuid())
+  tenantId      String
+  venueId       String
+  onlineOrderId String
+  tokenHash     String      @unique
+  expiresAt     DateTime
+  createdAt     DateTime    @default(now())
+  onlineOrder   OnlineOrder @relation(fields: [onlineOrderId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, expiresAt])
+  @@index([expiresAt])
+}
+
+model DeliveryZone {
+  id                String        @id @default(cuid())
+  tenantId          String
+  venueId           String
+  name              String
+  postalPrefixes    String[]
+  feeMinor          Int           @default(0)
+  minimumOrderMinor Int           @default(0)
+  active            Boolean       @default(true)
+  sortOrder         Int           @default(0)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  venue             Venue         @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  onlineOrders      OnlineOrder[]
+
+  @@index([tenantId, venueId, active, sortOrder])
+}
+
+model OnlineOrderItem {
+  taxSnapshot    Json?
+  id             String                    @id @default(cuid())
+  onlineOrderId  String
+  productId      String
+  productName    String
+  quantity       Int
+  unitPriceMinor Int
+  station        StationType
+  notes          String?
+  variantId      String?
+  variantName    String?
+  onlineOrder    OnlineOrder               @relation(fields: [onlineOrderId], references: [id], onDelete: Cascade)
+  product        Product                   @relation(fields: [productId], references: [id], onDelete: Restrict)
+  modifiers      OnlineOrderItemModifier[]
+
+  @@index([onlineOrderId, station])
+}
+
+model OnlineOrderItemModifier {
+  id                String          @id @default(cuid())
+  onlineOrderItemId String
+  modifierOptionId  String
+  groupName         String
+  optionName        String
+  priceDeltaMinor   Int
+  onlineOrderItem   OnlineOrderItem @relation(fields: [onlineOrderItemId], references: [id], onDelete: Cascade)
+
+  @@index([onlineOrderItemId])
+}
+
+model OnlineOrderStationTicket {
+  id            String                 @id @default(cuid())
+  tenantId      String
+  venueId       String
+  onlineOrderId String
+  station       StationType
+  status        ProductionTicketStatus @default(NEW)
+  version       Int                    @default(1)
+  readyAt       DateTime?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  onlineOrder   OnlineOrder            @relation(fields: [onlineOrderId], references: [id], onDelete: Cascade)
+
+  @@unique([onlineOrderId, station])
+  @@index([tenantId, venueId, station, status, createdAt])
+}
+
+model OnlineOrderStatusEvent {
+  id                String            @id @default(cuid())
+  onlineOrderId     String
+  status            OnlineOrderStatus
+  note              String?
+  actorUserId       String?
+  actorMembershipId String?
+  createdAt         DateTime          @default(now())
+  onlineOrder       OnlineOrder       @relation(fields: [onlineOrderId], references: [id], onDelete: Cascade)
+
+  @@index([onlineOrderId, createdAt])
+}
+
+model OnlineOrderMessage {
+  id                String                   @id @default(cuid())
+  onlineOrderId     String
+  author            OnlineOrderMessageAuthor
+  body              String
+  actorUserId       String?
+  actorMembershipId String?
+  createdAt         DateTime                 @default(now())
+  onlineOrder       OnlineOrder              @relation(fields: [onlineOrderId], references: [id], onDelete: Cascade)
+
+  @@index([onlineOrderId, createdAt])
+}
+
+model ServiceSignal {
+  id                    String            @id @default(cuid())
+  tenantId              String
+  venueId               String
+  tableId               String
+  tableSessionId        String
+  guestId               String?
+  orderId               String?
+  idempotencyKey        String?
+  type                  ServiceSignalType
+  createdAt             DateTime          @default(now())
+  acknowledgedAt        DateTime?
+  acknowledgedByUserId  String?
+  acknowledgedByShiftId String?
+  assignedMembershipId  String?
+  assignedUserId        String?
+  assignedShiftId       String?
+  assignedByUserId      String?
+  claimedAt             DateTime?
+  venue                 Venue             @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  table                 DiningTable       @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  tableSession          TableSession      @relation(fields: [tableSessionId], references: [id], onDelete: Cascade)
+  guest                 TableGuest?       @relation(fields: [guestId], references: [id], onDelete: SetNull)
+  order                 Order?            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId])
+  @@unique([tableSessionId, guestId, idempotencyKey])
+  @@index([tenantId, venueId, acknowledgedAt, createdAt])
+  @@index([tenantId, venueId, assignedMembershipId, claimedAt])
+}
+
+model StaffProfile {
+  version               Int                       @default(0)
+  workPhone             String?
+  jobTitle              String                    @default("")
+  employmentStartedOn   String?
+  employmentEndedOn     String?
+  employmentStatus      String                    @default("ACTIVE")
+  stations              String[]                  @default([])
+  skills                String[]                  @default([])
+  recurringAvailability Json                      @default("[]")
+  annualLeaveDays       Int                       @default(0)
+  contracts             StaffEmploymentContract[]
+  history               StaffProfileRevision[]
+  documents             StaffWorkDocument[]
+  id                    String                    @id @default(cuid())
+  tenantId              String
+  venueId               String
+  userId                String
+  membershipId          String                    @unique
+  preferredLocale       Locale                    @default(SQ)
+  avatarUrl             String?
+  employeeRef           String?
+  membership            Membership                @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, venueId, id])
+  @@index([tenantId, venueId, userId])
+}
+
+model VenueSchedule {
+  version           Int                  @default(0)
+  publishedVersion  Int?
+  publishedSnapshot Json?
+  revisions         ScheduleRevision[]
+  id                String               @id @default(cuid())
+  tenantId          String
+  venueId           String
+  weekStartsOn      DateTime
+  status            ScheduleStatus       @default(DRAFT)
+  publishedAt       DateTime?
+  publishedByUserId String?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  venue             Venue                @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  assignments       ScheduleAssignment[]
+
+  @@unique([tenantId, venueId, id])
+  @@unique([venueId, weekStartsOn])
+  @@index([tenantId, venueId, weekStartsOn])
+}
+
+model ScheduleAssignment {
+  version            Int                           @default(0)
+  userId             String?
+  station            String                        @default("SERVICE")
+  breakMinutes       Int                           @default(0)
+  requiredSkills     String[]                      @default([])
+  note               String                        @default("")
+  cancelledAt        DateTime?
+  id                 String                        @id @default(cuid())
+  tenantId           String
+  venueId            String
+  scheduleId         String
+  membershipId       String?
+  role               MembershipRole
+  startsAt           DateTime
+  endsAt             DateTime
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
+  schedule           VenueSchedule                 @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  membership         Membership?                   @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  venue              Venue                         @relation(fields: [venueId], references: [id])
+  publicationChanges PublishedAssignmentRevision[]
+
+  @@unique([tenantId, venueId, id])
+  @@index([tenantId, venueId, membershipId, startsAt, endsAt])
+  @@index([scheduleId, startsAt])
+}
+
+model StaffAvailabilityNote {
+  id              String     @id @default(cuid())
+  tenantId        String
+  venueId         String
+  membershipId    String
+  startsAt        DateTime
+  endsAt          DateTime
+  note            String
+  createdByUserId String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  venue           Venue      @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  membership      Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, membershipId, startsAt, endsAt])
+}
+
+model OperationalTask {
+  id                    String                  @id @default(cuid())
+  tenantId              String
+  venueId               String
+  scope                 OperationalTaskScope
+  scopeId               String?
+  title                 String
+  dueAt                 DateTime?
+  priority              OperationalTaskPriority @default(NORMAL)
+  assigneeMembershipId  String?
+  completedAt           DateTime?
+  completedByUserId     String?
+  createdByUserId       String
+  createdByMembershipId String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  venue                 Venue                   @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, completedAt, dueAt])
+  @@index([tenantId, venueId, assigneeMembershipId, completedAt])
+}
+
+model ShiftHandoverNote {
+  id                    String   @id @default(cuid())
+  tenantId              String
+  venueId               String
+  shiftId               String?
+  body                  String
+  createdByUserId       String
+  createdByMembershipId String
+  createdAt             DateTime @default(now())
+  venue                 Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, createdAt])
+  @@index([tenantId, venueId, shiftId])
+}
+
+model StaffInvitation {
+  id              String         @id @default(cuid())
+  tenantId        String
+  venueId         String
+  email           String
+  role            MembershipRole
+  preferredLocale Locale         @default(SQ)
+  tokenHash       String         @unique
+  invitedByUserId String
+  expiresAt       DateTime
+  acceptedAt      DateTime?
+  createdAt       DateTime       @default(now())
+  tenant          Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue           Venue          @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, email, acceptedAt])
+}
+
+model StaffShift {
+  cashSessions     CashSession[]
+  id               String            @id @default(cuid())
+  tenantId         String
+  venueId          String
+  userId           String
+  membershipId     String
+  status           StaffShiftStatus  @default(OPEN)
+  activeShiftKey   String?           @unique
+  startedAt        DateTime          @default(now())
+  endedAt          DateTime?
+  openingNote      String?
+  closingNote      String?
+  tenant           Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue            Venue             @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  membership       Membership        @relation(fields: [membershipId], references: [id], onDelete: Restrict)
+  assignments      TableAssignment[]
+  recordedPayments PaymentRecord[]   @relation("RecordedPaymentShift")
+  voidedPayments   PaymentRecord[]   @relation("VoidedPaymentShift")
+
+  @@index([tenantId, venueId, userId, status, startedAt])
+}
+
+model TableAssignment {
+  id             String      @id @default(cuid())
+  tenantId       String
+  venueId        String
+  tableId        String
+  shiftId        String
+  activeTableKey String?     @unique
+  assignedAt     DateTime    @default(now())
+  endedAt        DateTime?
+  table          DiningTable @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  shift          StaffShift  @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, shiftId, endedAt])
+}
+
+model AuditEvent {
+  id                String   @id @default(cuid())
+  tenantId          String
+  venueId           String
+  actorUserId       String
+  actorMembershipId String
+  actorShiftId      String?
+  action            String
+  entityType        String
+  entityId          String
+  metadata          Json
+  createdAt         DateTime @default(now())
+  tenant            Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue             Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, createdAt])
+  @@index([actorUserId, actorShiftId, createdAt])
+  @@index([entityType, entityId, createdAt])
+}
+
+enum RetentionRunStatus {
+  STARTED
+  COMPLETED
+  FAILED
+}
+
+enum LegalHoldTarget {
+  ONLINE_ORDER
+  RESERVATION
+  CUSTOMER_PROFILE
+}
+
+model RetentionLegalHold {
+  id                     String          @id @default(cuid())
+  tenantId               String
+  venueId                String
+  target                 LegalHoldTarget
+  targetId               String
+  reason                 String
+  reviewAt               DateTime
+  expiresAt              DateTime
+  createdByUserId        String
+  createdByMembershipId  String
+  releasedAt             DateTime?
+  releasedByUserId       String?
+  releasedByMembershipId String?
+  createdAt              DateTime        @default(now())
+
+  @@index([tenantId, venueId, target, targetId, expiresAt])
+}
+
+model RetentionRun {
+  id          String             @id @default(cuid())
+  status      RetentionRunStatus @default(STARTED)
+  startedAt   DateTime           @default(now())
+  completedAt DateTime?
+  summary     Json?
+  errorCode   String?
+
+  @@index([status, startedAt])
+}
+
+model PaymentRecord {
+  id                     String              @id @default(cuid())
+  tenantId               String
+  venueId                String
+  tableSessionId         String?
+  orderId                String?             @unique
+  order                  Order?              @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  onlineOrderId          String?             @unique
+  onlineOrder            OnlineOrder?        @relation(fields: [onlineOrderId], references: [id], onDelete: Restrict)
+  cashSessionId          String?
+  cashSession            CashSession?        @relation(fields: [cashSessionId], references: [id], onDelete: Restrict)
+  receivedMinor          Int?
+  changeMinor            Int?
+  counterPaymentKey      String?             @unique
+  receipt                Receipt?
+  amountMinor            Int
+  currency               String
+  method                 PaymentMethod
+  status                 PaymentRecordStatus @default(RECORDED)
+  recordedByUserId       String
+  recordedByMembershipId String
+  recordedByShiftId      String
+  recordedAt             DateTime            @default(now())
+  externalReference      String?
+  idempotencyKey         String
+  voidedByUserId         String?
+  voidedByMembershipId   String?
+  voidedByShiftId        String?
+  voidedAt               DateTime?
+  voidReason             String?
+  tenant                 Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                  Venue               @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  tableSession           TableSession?       @relation(fields: [tableSessionId], references: [id], onDelete: Restrict)
+  recordedByShift        StaffShift          @relation("RecordedPaymentShift", fields: [recordedByShiftId], references: [id], onDelete: Restrict)
+  voidedByShift          StaffShift?         @relation("VoidedPaymentShift", fields: [voidedByShiftId], references: [id], onDelete: Restrict)
+
+  @@unique([tableSessionId, recordedByUserId, idempotencyKey])
+  @@index([tenantId, venueId, tableSessionId, status])
+  @@index([recordedByUserId, recordedByShiftId, recordedAt])
+}
+
+model Subscription {
+  id                           String                          @id @default(cuid())
+  tenantId                     String                          @unique
+  plan                         SubscriptionPlan
+  status                       SubscriptionStatus              @default(TRIALING)
+  trialStartedAt               DateTime?
+  trialEndsAt                  DateTime?
+  currentPeriodStartedAt       DateTime?
+  currentPeriodEndsAt          DateTime?
+  billingProvider              String?
+  billingCustomerReference     String?
+  billingSubscriptionReference String?
+  createdAt                    DateTime                        @default(now())
+  updatedAt                    DateTime                        @updatedAt
+  tenant                       Tenant                          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  entitlements                 Entitlement[]
+  usageRecords                 SubscriptionUsage[]
+  invoices                     BillingInvoice[]
+  planChanges                  SubscriptionPlanChangeRequest[]
+
+  @@index([status, trialEndsAt])
+}
+
+model OrganizationBillingProfile {
+  id           String   @id @default(cuid())
+  tenantId     String   @unique
+  legalName    String
+  billingEmail String
+  addressLine1 String
+  postalCode   String
+  city         String
+  countryCode  String
+  vatId        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+}
+
+model BillingInvoice {
+  id             String               @id @default(cuid())
+  tenantId       String
+  subscriptionId String
+  number         String               @unique
+  status         BillingInvoiceStatus
+  amountMinor    Int
+  currency       String               @default("EUR")
+  periodStart    DateTime
+  periodEnd      DateTime
+  issuedAt       DateTime
+  dueAt          DateTime
+  paidAt         DateTime?
+  externalUrl    String?
+  createdAt      DateTime             @default(now())
+  tenant         Tenant               @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  subscription   Subscription         @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, issuedAt])
+}
+
+model SubscriptionPlanChangeRequest {
+  id                      String           @id @default(cuid())
+  tenantId                String
+  subscriptionId          String
+  currentPlan             SubscriptionPlan
+  requestedPlan           SubscriptionPlan
+  status                  PlanChangeStatus @default(PENDING)
+  requestedByUserId       String
+  requestedByMembershipId String
+  requestedAt             DateTime         @default(now())
+  resolvedAt              DateTime?
+  tenant                  Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  subscription            Subscription     @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status, requestedAt])
+}
+
+model Entitlement {
+  id             String       @id @default(cuid())
+  tenantId       String
+  subscriptionId String
+  featureKey     String
+  enabled        Boolean      @default(false)
+  limitInt       Int?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  tenant         Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, featureKey])
+  @@index([tenantId, featureKey, enabled])
+}
+
+model SubscriptionUsage {
+  id             String       @id @default(cuid())
+  tenantId       String
+  subscriptionId String
+  usageKey       String
+  quantity       Int          @default(0)
+  measuredAt     DateTime     @default(now())
+  tenant         Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, usageKey])
+  @@index([tenantId, usageKey])
+}
+
+enum CashSessionStatus {
+  OPEN
+  CLOSED
+}
+
+enum ReceiptStatus {
+  FINALIZED
+}
+
+model CashSession {
+  id                   String            @id @default(cuid())
+  tenantId             String
+  venueId              String
+  openedByMembershipId String
+  shiftId              String
+  openedAt             DateTime          @default(now())
+  closedAt             DateTime?
+  closedByMembershipId String?
+  closedByShiftId      String?
+  openingCashMinor     Int
+  expectedCashMinor    Int?
+  countedCashMinor     Int?
+  differenceMinor      Int?
+  status               CashSessionStatus @default(OPEN)
+  activeVenueKey       String?           @unique
+  openingNote          String?
+  closingNote          String?
+  tenant               Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                Venue             @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  openedBy             Membership        @relation(fields: [openedByMembershipId], references: [id], onDelete: Restrict)
+  shift                StaffShift        @relation(fields: [shiftId], references: [id], onDelete: Restrict)
+  payments             PaymentRecord[]
+
+  @@index([tenantId, venueId, status])
+}
+
+model TaxCategory {
+  id                      String    @id @default(cuid())
+  tenantId                String
+  venueId                 String
+  code                    String
+  rateBasisPoints         Int
+  dineInRateBasisPoints   Int?
+  takeawayRateBasisPoints Int?
+  tenant                  Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                   Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  products                Product[]
+
+  @@unique([venueId, code])
+  @@index([tenantId, venueId])
+}
+
+model ReceiptSequence {
+  venueId    String @id
+  tenantId   String
+  lastNumber Int    @default(0)
+  venue      Venue  @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  tenant     Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+}
+
+model Receipt {
+  printJobs            PrintJob[]
+  id                   String        @id @default(cuid())
+  tenantId             String
+  venueId              String
+  orderId              String?       @unique
+  onlineOrderId        String?       @unique
+  paymentId            String        @unique
+  sequence             Int
+  number               String
+  issuedAt             DateTime      @default(now())
+  finalizedAt          DateTime      @default(now())
+  status               ReceiptStatus @default(FINALIZED)
+  snapshot             Json
+  // P4 extension only. Never populated in P2.
+  fiscalTransactionId  String?
+  tseSerial            String?
+  signatureCounter     BigInt?
+  signature            String?
+  transactionStartedAt DateTime?
+  transactionEndedAt   DateTime?
+  verificationPayload  String?
+  exportReference      String?
+  tenant               Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue                Venue         @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  payment              PaymentRecord @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  onlineOrder          OnlineOrder?  @relation(fields: [onlineOrderId], references: [id], onDelete: Restrict)
+
+  @@unique([venueId, sequence])
+  @@unique([venueId, number])
+  @@index([tenantId, venueId, issuedAt])
+}
+
+enum PrintJobStatus {
+  QUEUED
+  PRINTING
+  PRINTED
+  FAILED
+}
+
+model HardwareDevice {
+  id           String                  @id @default(cuid())
+  tenantId     String
+  venueId      String
+  displayName  String
+  mode         String
+  fingerprint  String                  @unique
+  publicKey    String?
+  capabilities Json
+  pairedAt     DateTime                @default(now())
+  lastSeen     DateTime?
+  active       Boolean                 @default(true)
+  autoPrint    Boolean                 @default(false)
+  autoDrawer   Boolean                 @default(false)
+  tenant       Tenant                  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue        Venue                   @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  jobs         PrintJob[]
+  commands     HardwareCommandRecord[]
+
+  @@index([tenantId, venueId, active])
+}
+
+model PrintJob {
+  id            String         @id @default(cuid())
+  tenantId      String
+  venueId       String
+  receiptId     String
+  deviceId      String
+  requestKey    String         @unique
+  status        PrintJobStatus @default(QUEUED)
+  attempts      Int            @default(0)
+  lastErrorCode String?
+  createdAt     DateTime       @default(now())
+  printedAt     DateTime?
+  commandId     String?        @unique
+  tenant        Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue         Venue          @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  receipt       Receipt        @relation(fields: [receiptId], references: [id], onDelete: Restrict)
+  device        HardwareDevice @relation(fields: [deviceId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, venueId, receiptId, createdAt])
+}
+
+model HardwareCommandRecord {
+  id         String         @id @default(cuid())
+  tenantId   String
+  venueId    String
+  deviceId   String
+  receiptId  String?
+  kind       String
+  requestKey String         @unique
+  payload    Json
+  result     Json?
+  createdAt  DateTime       @default(now())
+  expiresAt  DateTime
+  tenant     Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  venue      Venue          @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  device     HardwareDevice @relation(fields: [deviceId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, venueId, deviceId, createdAt])
+}
+
+model CreativeProject {
+  id                String                 @id @default(cuid())
+  tenantId          String
+  venueId           String
+  title             String
+  format            String
+  locale            String
+  status            String                 @default("DRAFT")
+  version           Int                    @default(0)
+  document          Json
+  currentRevisionId String?
+  createdBy         String
+  updatedBy         String
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  venue             Venue                  @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Cascade)
+  revisions         CreativeRevision[]
+  exports           CreativeExport[]
+  conversations     CreativeConversation[]
+  jobs              CreativeJob[]
+
+  @@unique([tenantId, venueId, id])
+  @@index([tenantId, venueId, updatedAt])
+}
+
+model CreativeRevision {
+  id               String           @id @default(cuid())
+  tenantId         String
+  venueId          String
+  projectId        String
+  number           Int
+  document         Json
+  sourceSummary    Json
+  actor            String
+  createdBy        String
+  name             String?
+  parentRevisionId String?
+  createdAt        DateTime         @default(now())
+  project          CreativeProject  @relation(fields: [tenantId, venueId, projectId], references: [tenantId, venueId, id], onDelete: Cascade)
+  exports          CreativeExport[]
+
+  @@unique([projectId, number])
+  @@unique([tenantId, venueId, projectId, id])
+  @@index([tenantId, venueId, projectId])
+}
+
+model CreativeAsset {
+  id                   String   @id @default(cuid())
+  tenantId             String
+  venueId              String
+  name                 String
+  source               String
+  mimeType             String
+  width                Int
+  height               Int
+  contentHash          String
+  storageKey           String
+  provenance           Json
+  approvedForPublicUse Boolean  @default(false)
+  approvedBy           String?
+  createdBy            String
+  createdAt            DateTime @default(now())
+  venue                Venue    @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, createdAt])
+}
+
+model CreativeExport {
+  id            String           @id @default(cuid())
+  tenantId      String
+  venueId       String
+  projectId     String
+  revisionId    String
+  outputType    String
+  snapshot      Json
+  snapshotHash  String
+  contentHash   String
+  specification Json
+  storageKey    String
+  requestKey    String
+  createdBy     String
+  createdAt     DateTime         @default(now())
+  project       CreativeProject  @relation(fields: [tenantId, venueId, projectId], references: [tenantId, venueId, id], onDelete: Cascade)
+  revision      CreativeRevision @relation(fields: [tenantId, venueId, projectId, revisionId], references: [tenantId, venueId, projectId, id], onDelete: Cascade)
+
+  @@unique([tenantId, venueId, projectId, requestKey])
+  @@index([tenantId, venueId, projectId, createdAt])
+}
+
+model CreativeConversation {
+  id        String          @id @default(cuid())
+  tenantId  String
+  venueId   String
+  projectId String
+  message   String
+  summary   String
+  patch     Json
+  createdBy String
+  createdAt DateTime        @default(now())
+  project   CreativeProject @relation(fields: [tenantId, venueId, projectId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, projectId, createdAt])
+}
+
+model CreativeJob {
+  id         String          @id @default(cuid())
+  tenantId   String
+  venueId    String
+  projectId  String
+  requestKey String
+  category   String
+  state      String          @default("PENDING")
+  provider   String
+  model      String
+  resultId   String?
+  usage      Json
+  durationMs Int             @default(0)
+  createdBy  String
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  project    CreativeProject @relation(fields: [tenantId, venueId, projectId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@unique([tenantId, venueId, projectId, requestKey])
+  @@index([tenantId, venueId, createdAt])
+}
+
+model StaffEmploymentContract {
+  id                   String       @id @default(cuid())
+  tenantId             String
+  venueId              String
+  profileId            String
+  version              Int
+  effectiveFrom        String
+  employmentType       String
+  weeklyTargetMinutes  Int
+  monthlyTargetMinutes Int?
+  countryCode          String
+  terms                String
+  createdByUserId      String
+  createdAt            DateTime     @default(now())
+  profile              StaffProfile @relation(fields: [tenantId, venueId, profileId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@unique([profileId, version])
+  @@index([tenantId, venueId, profileId, effectiveFrom])
+}
+
+model StaffWorkDocument {
+  id              String       @id @default(cuid())
+  tenantId        String
+  venueId         String
+  profileId       String
+  title           String
+  kind            String
+  expiresOn       String?
+  filename        String
+  mimeType        String
+  ciphertext      Bytes
+  nonce           Bytes
+  authTag         Bytes
+  byteLength      Int
+  createdByUserId String
+  createdAt       DateTime     @default(now())
+  profile         StaffProfile @relation(fields: [tenantId, venueId, profileId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, profileId])
+}
+
+model ScheduleRevision {
+  publicationChanges PublishedAssignmentRevision[]
+  id                 String                        @id @default(cuid())
+  tenantId           String
+  venueId            String
+  scheduleId         String
+  version            Int
+  status             ScheduleStatus
+  before             Json
+  after              Json
+  changes            Json
+  publicationEvent   Json?
+  createdByUserId    String
+  createdAt          DateTime                      @default(now())
+  schedule           VenueSchedule                 @relation(fields: [tenantId, venueId, scheduleId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@unique([tenantId, venueId, id])
+  @@unique([scheduleId, version])
+  @@index([tenantId, venueId, scheduleId])
+}
+
+model WorkforceShiftTemplate {
+  id              String   @id @default(cuid())
+  tenantId        String
+  venueId         String
+  name            String
+  station         String
+  startMinute     Int
+  durationMinutes Int
+  breakMinutes    Int
+  requiredSkills  String[] @default([])
+  createdAt       DateTime @default(now())
+  venue           Venue    @relation(fields: [tenantId, venueId], references: [tenantId, id], onDelete: Cascade)
+
+  @@index([tenantId, venueId])
+}
+
+model StaffProfileRevision {
+  id              String       @id @default(cuid())
+  tenantId        String
+  venueId         String
+  profileId       String
+  version         Int
+  before          Json
+  after           Json
+  createdByUserId String
+  createdAt       DateTime     @default(now())
+  profile         StaffProfile @relation(fields: [tenantId, venueId, profileId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@unique([profileId, version])
+  @@index([tenantId, venueId, profileId])
+}
+
+model PublishedAssignmentRevision {
+  id           String             @id @default(cuid())
+  sequence     BigInt             @unique @default(autoincrement())
+  tenantId     String
+  venueId      String
+  assignmentId String
+  revisionId   String
+  before       Json?
+  after        Json?
+  timezone     String
+  venueName    String
+  createdAt    DateTime           @default(now())
+  assignment   ScheduleAssignment @relation(fields: [tenantId, venueId, assignmentId], references: [tenantId, venueId, id], onDelete: Cascade)
+  revision     ScheduleRevision   @relation(fields: [tenantId, venueId, revisionId], references: [tenantId, venueId, id], onDelete: Cascade)
+
+  @@index([tenantId, venueId, assignmentId, sequence])
+}

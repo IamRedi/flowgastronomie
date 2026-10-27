@@ -60,9 +60,26 @@ test("website pickup joins Orders, Kitchen and counter receipt without a second 
   await expect(page.locator("select option")).toHaveCount(1);
   await page.getByPlaceholder("Name").fill("Pilot pickup guest");
   await page.getByPlaceholder("Phone").fill("+49 30 5550100");
-  await expect(
-    page.getByRole("button", { name: "As soon as possible", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+  const asap = page.getByRole("button", {
+    name: "As soon as possible",
+    exact: true,
+  });
+  await expect(asap).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("pickup-selection")).not.toHaveText(
+    /Finding available pickup times/,
+  );
+  // The demo venue opens at 17:00, so outside opening hours ASAP is disabled
+  // and the guest has to take the first offered slot instead.
+  if (await asap.isDisabled()) {
+    await page
+      .getByRole("button", { name: "Choose a time", exact: true })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Choose a time", exact: true })
+      .locator(".pickup-slots button")
+      .first()
+      .click();
+  }
   await page.getByRole("button", { name: "Review order", exact: true }).click();
   await page
     .getByRole("button", { name: "Confirm order", exact: true })

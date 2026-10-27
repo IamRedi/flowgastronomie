@@ -1,10 +1,58 @@
 # FlowGastronomie · RestaurantFlow
 
-**Software für Restaurants, die nur das digitalisiert, was der Betrieb wirklich braucht.** Gäste scannen den QR-Code am Tisch und sehen die Speisekarte in ihrer Sprache, bestellen oder rufen den Service. Das Team sieht im Service Radar, wo es zuerst hin muss, die Küche bekommt nur ihre Positionen, und der Inhaber sieht am Abend den Tagesbericht. Der Betrieb entscheidet pro Bereich, Tisch oder Uhrzeit, wie viel davon er einschaltet. Kellner werden nicht ersetzt.
+[![CI](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml/badge.svg)](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml)
+
+**Restaurant-Software, die nur das digitalisiert, was der Betrieb wirklich braucht.** Tisch-QR mit Speisekarte in vier Sprachen, Service Radar, Kasse, Küche und Bar, Online-Bestellung und die eigene Website laufen auf einem Kern. Der Betrieb entscheidet pro Bereich, Tisch oder Uhrzeit, wie viel davon er einschaltet. Kellner werden nicht ersetzt.
+
+![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
+
+**[English version](README.en.md)** · **Stand: 27. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+
+## Auf einen Blick
+
+- **Am Tisch:** Gäste scannen den QR-Code, lesen die Karte in ihrer Sprache mit EU-Allergenen, bestellen oder rufen den Service.
+- **Im Service:** Das Service Radar sortiert Tische nach Wartezeit und nötiger Aktion. Die Kasse übernimmt Theke, Abholung und Bar- oder Kartenzahlung.
+- **In Küche und Bar:** Jede Station sieht nur ihre Positionen und meldet sie als fertig.
+- **Für den Inhaber:** Tagesbericht mit Zahlungsabgleich, Speisekarten-Editor, Website-Builder, Dienstplan und Stempeluhr.
+- **Stand:** Läuft im Pilotbetrieb auf einem eigenen Server. Eine Fiskalkasse mit TSE ist nicht enthalten. Was genau getestet ist, steht [unten](#was-heute-umgesetzt-ist) und im [Prüfprotokoll](EVIDENCE.md).
 
 RestaurantFlow ist das erste Produkt der Plattform FlowGastronomie. PizzeriaFlow, BarFlow, CaféFlow und ImbissFlow sollen auf demselben Kern folgen.
 
-**[English version](README.en.md)** · **Stand: 27. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)**
+### Rundgang in 30 Sekunden
+
+Website des Lokals, Anmeldung, Startseite, eine Bestellung für Tisch 06 an der Kasse, dieselbe Bestellung im Küchenmonitor, Service Radar und Tagesbericht. Aufgenommen am lokalen Produktionsbuild mit dem fiktiven Demo-Betrieb.
+
+![Rundgang: Website, Startseite, Bestellung an der Kasse, Küchenmonitor, Service Radar und Tagesbericht](docs/assets/video/rundgang.webp)
+
+[Als Video (MP4, 1,3 MB)](docs/assets/video/rundgang.mp4)
+
+## Einblick in die Anwendung
+
+Alle Bilder stammen aus der laufenden Anwendung mit dem fiktiven Demo-Betrieb „Restaurant Olive“: `npm run db:seed` legt ihn an, `npm run demo:showcase` spielt über die echte API einen Abend im Service durch (Speisekarte mit Foto zu jedem Gericht, Tische, offene Kasse, Bestellungen in jedem Küchenstatus, Zahlungen, Rufe vom Tisch). Es sind keine Mockups.
+
+| Startseite des Inhabers                                                                                         | Kasse                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| ![Startseite mit Live-Warteschlange, Tagesumsatz und offenen Aktionen](docs/assets/screenshots/startseite.webp) | ![Kasse mit Fotos aller Gerichte, Tisch 06 und drei Pizzen im Warenkorb](docs/assets/screenshots/kasse.webp) |
+
+| Service Radar                                                                                                     | Küche                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| ![Service Radar mit neuer Bestellung, Rechnungswunsch und Serviceruf](docs/assets/screenshots/service-radar.webp) | ![Küchenmonitor mit Bestellungen in den Status Neu, In Zubereitung und Fertig](docs/assets/screenshots/kueche.webp) |
+
+| Speisekarte verwalten                                                                                           | Tagesbericht                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| ![Speisekarten-Editor mit Fotos, Allergenen und Varianten](docs/assets/screenshots/speisekarte-verwaltung.webp) | ![Tagesbericht mit neun Bestellungen, erfassten Zahlungen und Abgleich](docs/assets/screenshots/tagesbericht.webp) |
+
+| Website des Lokals                                                                                          | Website-Builder                                                                                           |
+| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| ![Öffentliche Website von Restaurant Olive mit Titelbild und Galerie](docs/assets/screenshots/website.webp) | ![Website-Builder mit drei Designs für den eigenen Betrieb](docs/assets/screenshots/website-builder.webp) |
+
+![Vorlagen-Auswahl mit neun Betriebsarten und drei Stilen](docs/assets/screenshots/vorlagen.webp)
+
+### Am Tisch (Handy, 390 px)
+
+| Speisekarte nach QR-Scan                                                                                                                            | Website                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| <img src="docs/assets/screenshots/mobil-speisekarte.webp" alt="Steinofenpizzen von Tisch 07 am Handy mit Größe, Extras und Allergenen" width="300"> | <img src="docs/assets/screenshots/mobil-website.webp" alt="Website von Restaurant Olive am Handy" width="300"> |
 
 ## Was heute umgesetzt ist
 
@@ -22,32 +70,6 @@ RestaurantFlow ist das erste Produkt der Plattform FlowGastronomie. PizzeriaFlow
 Viele kleine Restaurants stehen vor der Wahl zwischen Papierblock und einem großen Kassensystem, das den ganzen Ablauf umkrempelt. Dazwischen fehlt etwas: ein System, das nur dort hilft, wo es gerade eng wird. Auf der Terrasse dürfen Gäste selbst bestellen, im Saal bleibt der Kellner, und mittags läuft nur die Theke. Genau das konfiguriert der Betrieb in RestaurantFlow.
 
 > **Digitalisiere nur, was du brauchst, ohne zu ändern, wie dein Restaurant funktioniert.**
-
-## Einblick in die Anwendung
-
-Alle Bilder stammen aus der laufenden Anwendung mit dem fiktiven Demo-Betrieb „Restaurant Olive“ aus `npm run db:seed`. Es sind keine Mockups.
-
-| Website des Lokals                                                                                                 | Vorlagen für neun Betriebsarten                                                                   |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| ![Öffentliche Website von Restaurant Olive mit Navigation und Bestell-Knopf](docs/assets/screenshots/website.webp) | ![Vorlagen-Auswahl mit neun Betriebsarten und drei Stilen](docs/assets/screenshots/vorlagen.webp) |
-
-| Kasse                                                                                               | Service Radar                                                                                                  |
-| --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| ![Kasse mit Produktkacheln nach Kategorie und neuer Bestellung](docs/assets/screenshots/kasse.webp) | ![Service Radar sortiert Tische nach Wartezeit und nötiger Aktion](docs/assets/screenshots/service-radar.webp) |
-
-| Speisekarte verwalten                                                                                                               | Küche                                                                                     |
-| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| ![Speisekarten-Editor mit Kategorien, Allergenen, Varianten und Verfügbarkeit](docs/assets/screenshots/speisekarte-verwaltung.webp) | ![Küchenansicht mit offener Bestellung von Tisch 07](docs/assets/screenshots/kueche.webp) |
-
-| Website-Builder                                                                                           | Tagesbericht                                                                                                 |
-| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| ![Website-Builder mit drei Designs für den eigenen Betrieb](docs/assets/screenshots/website-builder.webp) | ![Tagesbericht mit Bestellwert, erfassten Zahlungen und Abgleich](docs/assets/screenshots/tagesbericht.webp) |
-
-### Am Tisch (Handy, 390 px)
-
-| Speisekarte nach QR-Scan                                                                                                                | Website                                                                                                        |
-| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| <img src="docs/assets/screenshots/mobil-speisekarte.webp" alt="Speisekarte von Tisch 07 am Handy mit Allergenen und Preis" width="300"> | <img src="docs/assets/screenshots/mobil-website.webp" alt="Website von Restaurant Olive am Handy" width="300"> |
 
 ## Architektur
 
@@ -87,6 +109,7 @@ npm run db:migrate
 npm run db:seed
 npm run dev:api      # http://localhost:4000
 npm run dev:web      # http://localhost:3000
+npm run demo:showcase  # optional: einen Abend im Service durchspielen
 ```
 
 Danach öffnen:

@@ -1054,7 +1054,7 @@
     "unavailable": "Hardware unavailable",
     "done": "Done",
     "receiptPrinting": "Receipt printing",
-    "simulator": "Simulator ? no physical output",
+    "simulator": "Simulator · no physical output",
     "print": "Print receipt",
     "retry": "Retry print",
     "reprint": "Reprint receipt",

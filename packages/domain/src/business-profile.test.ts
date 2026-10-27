@@ -93,7 +93,7 @@ it("requires complete localized categories with stable keys across every profile
 it("distinguishes synthetic demos, local pilots and real businesses", () => {
   expect(businessIdentityLabel("DEMO")).toBe("DEMO");
   expect(businessIdentityLabel("LOCAL_PILOT")).toBe("LOCAL PILOT");
-  expect(businessIdentityLabel("LEGACY_CI")).toBe("LEGACY CI FIXTURE");
+  expect(businessIdentityLabel("LEGACY_CI")).toBe("DEMO SEED");
   expect(businessIdentityLabel("REAL")).toBeNull();
 });
 
