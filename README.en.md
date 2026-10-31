@@ -6,7 +6,19 @@
 
 ![Counter sales with photos of every dish and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
 
-**[Deutsche Version](README.md)** · **As of 27 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+**[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+
+## Public website · 31 October 2026
+
+The [Albanian homepage](https://123serve.de/sq), [pricing page](https://123serve.de/sq/pricing) and [Service Radar demo](https://123serve.de/sq/demo/radar) now have distinct browser titles and search descriptions. Large headings and visible page content stay the same. This does not establish an improvement in search rankings.
+
+The application remains in pilot operation. Fiscal LIVE and physical-device acceptance are separate gates. This screenshot shows the public demo with fictitious sample tables, not client records.
+
+![Public Service Radar demo with fictitious tables](docs/assets/public-radar-20261031.png)
+
+## Verified improvement cycle with Findbar
+
+Findbar detected repeated browser titles and search descriptions on three SQ pages. Six concrete proposals were implemented with approval and checked publicly: ten URLs, then zero confirmed findings. [Case study with before/after evidence](docs/case-studies/findbar-flowgastronomie/README.md).
 
 ## At a glance
 

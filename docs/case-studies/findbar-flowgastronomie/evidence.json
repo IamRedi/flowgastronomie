@@ -1,0 +1,68 @@
+{
+  "caseId": "findbar-flowgastronomie-20261031",
+  "newAuditPerformedForDocumentation": false,
+  "changes": [
+    {
+      "url": "https://123serve.de/sq",
+      "field": "title",
+      "before": "FlowGastronomie — Teknologji adaptive për gastronominë",
+      "after": "Teknologji që përshtatet me lokalin. Jo e kundërta. | FlowGastronomie"
+    },
+    {
+      "url": "https://123serve.de/sq",
+      "field": "description",
+      "before": "RestaurantFlow nga FlowGastronomie: website, menu me QR, porosi dhe Service Radar për restorante në katër gjuhë. Produktet për piceri, bare dhe kafene janë të planifikuara.",
+      "after": "Teknologji që përshtatet me lokalin. Jo e kundërta. Menu, tavolina dhe porosi në një sistem të vetëm."
+    },
+    {
+      "url": "https://123serve.de/sq/pricing",
+      "field": "title",
+      "before": "FlowGastronomie — Teknologji adaptive për gastronominë",
+      "after": "Fillo me atë që i duhet lokalit tënd. | FlowGastronomie"
+    },
+    {
+      "url": "https://123serve.de/sq/pricing",
+      "field": "description",
+      "before": "RestaurantFlow nga FlowGastronomie: website, menu me QR, porosi dhe Service Radar për restorante në katër gjuhë. Produktet për piceri, bare dhe kafene janë të planifikuara.",
+      "after": "Fillo me atë që i duhet lokalit tënd. Për lokale që duan prezencë profesionale online dhe menu digjitale shumëgjuhëshe."
+    },
+    {
+      "url": "https://123serve.de/sq/demo/radar",
+      "field": "title",
+      "before": "FlowGastronomie — Teknologji adaptive për gastronominë",
+      "after": "Service Radar | FlowGastronomie"
+    },
+    {
+      "url": "https://123serve.de/sq/demo/radar",
+      "field": "description",
+      "before": "RestaurantFlow nga FlowGastronomie: website, menu me QR, porosi dhe Service Radar për restorante në katër gjuhë. Produktet për piceri, bare dhe kafene janë të planifikuara.",
+      "after": "Service Radar Sinjalet renditen sipas kohës së pritjes dhe veprimit të nevojshëm."
+    }
+  ],
+  "limits": [
+    "Static HTML checks; no search-ranking, AI-visibility, indexing or Core Web Vitals measurement.",
+    "Findbar remains a local application awaiting final owner UAT.",
+    "The developer published the Flow changes after explicit owner authorisation; this was not an autonomous Findbar production publish."
+  ],
+  "before": {
+    "at": "2026-10-30T22:29:49.509Z",
+    "pagesChecked": 10,
+    "confirmedFieldFindings": 6,
+    "groupedTopics": 2,
+    "transport": "public_http"
+  },
+  "after": {
+    "at": "2026-10-31T17:54:15.524Z",
+    "pagesChecked": 10,
+    "confirmedFieldFindings": 0,
+    "transport": "public_http",
+    "ai": "not_connected"
+  },
+  "publicationAt": "2026-10-31T17:53:46.732707+00:00",
+  "verification": {
+    "releaseGatesPassed": 16,
+    "operationsLab": "passed",
+    "localBrowserTestsPassed": 59,
+    "originalFindbarTablesPreserved": 21
+  }
+}
