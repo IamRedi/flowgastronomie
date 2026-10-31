@@ -16,6 +16,10 @@ The application remains in pilot operation. Fiscal LIVE and physical-device acce
 
 ![Public Service Radar demo with fictitious tables](docs/assets/public-radar-20261031.png)
 
+## Verified improvement cycle with Findbar
+
+Findbar detected repeated browser titles and search descriptions on three SQ pages. Six concrete proposals were implemented with approval and checked publicly: ten URLs, then zero confirmed findings. [Case study with before/after evidence](docs/case-studies/findbar-flowgastronomie/README.md).
+
 ## At a glance
 
 - **At the table:** guests scan the QR code, read the menu in their language with EU allergens, order or call for service.
