@@ -102,7 +102,6 @@ Die Veröffentlichung in diesem Fall war ein ausdrücklich autorisierter Entwick
 
 Die 100 % im Profil beziehen sich auf 30 von 30 Basischecks in sechs geeigneten öffentlichen Seiten. Die Prüfung besuchte insgesamt zehn URLs. Das Ergebnis belegt keine Suchplatzierung, AI-Empfehlung, Indexierung oder Core Web Vitals. Findbar bleibt eine lokale Anwendung für die finale OWNER_UAT; Fiskal-LIVE und Geräteabnahme von Flow sind getrennte Freigaben.
 
-
 ## Belege
 
 [Six exact before/after values and measurement scope](evidence.json).

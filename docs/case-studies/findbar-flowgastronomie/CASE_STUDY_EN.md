@@ -102,7 +102,6 @@ Sixteen release gates and Operations Lab passed. Local browser tests passed 59/5
 
 The profile’s 100% refers to 30 of 30 basic checks on six eligible public pages. The audit visited ten URLs overall. This result does not establish search rankings, AI recommendations, indexing or Core Web Vitals. Findbar remains a local application awaiting final OWNER_UAT; Flow fiscal LIVE and device acceptance remain separate approvals.
 
-
 ## Evidence
 
 [Six exact before/after values and measurement scope](evidence.json).
