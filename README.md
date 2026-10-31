@@ -6,7 +6,15 @@
 
 ![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
 
-**[English version](README.en.md)** · **Stand: 27. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+**[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+
+## Öffentliche Website · 31. Oktober 2026
+
+Die [albanische Startseite](https://123serve.de/sq), [Preisseite](https://123serve.de/sq/pricing) und [Service-Radar-Demo](https://123serve.de/sq/demo/radar) haben jetzt eigene Browsertitel und Suchbeschreibungen. Die großen Überschriften und der sichtbare Seiteninhalt bleiben gleich. Daraus folgt keine Zusage zu Suchplatzierungen.
+
+Die Anwendung bleibt im Pilotbetrieb. Fiskal-LIVE und Geräteabnahme sind getrennte Freigaben. Die folgende Aufnahme zeigt die öffentliche Demo mit fiktiven Beispiel-Tischen, keine Kundendatensätze.
+
+![Öffentliche Service-Radar-Demo mit fiktiven Tischen](docs/assets/public-radar-20261031.png)
 
 ## Auf einen Blick
 
