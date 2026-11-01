@@ -1,6 +1,6 @@
 # Prüfprotokoll / Verification record
 
-**Stand: 27. Oktober 2026.** Dieses Protokoll trennt, was gemessen wurde, von dem, was nur im Code vorhanden ist. Zahlen ohne Quelle gibt es hier nicht.
+**Stand: 2. November 2026.** Dieses Protokoll trennt, was gemessen wurde, von dem, was nur im Code vorhanden ist. Zahlen ohne Quelle gibt es hier nicht.
 
 ## Automatisierte Prüfungen
 
@@ -54,3 +54,24 @@ Erster Lauf nach der Veröffentlichung ([Run 40495443530](https://github.com/Iam
 The existing pilot website was connected through its existing domain verification lifecycle and shared public edge. Fresh backup: local dump/media SHA256 and full remote SHA256 PASS. Exact prior API/web images, source and overlay retained; candidate/rollback configuration checks PASS, no migration. Only API/web containers recreated; other application containers and protected environment remained unchanged.
 
 Scoped validation: four CORS boundary tests and three custom-domain routing tests PASS; web/API typechecks and required API/web image builds PASS. Live checks: valid apex/www TLS, HTTP/www redirects, DE/EN/IT/SQ pages, 37 existing products, privacy/imprint routes, guest JSON preflight and platform login entry. Custom-domain CORS denied for auth/staff/workspace paths. Footer Login retains the existing credentials and role checks; phone and tablet layout checked. No new orders, payments, invoices, fiscal signatures or hardware tests. These are scoped operational checks, not a new full-platform CI pass. Client identity, domains, billing and screenshots remain private.
+
+## 2 November 2026 — private production storefront presentation
+
+Nine focused public-presentation tests, changed web typecheck/format checks and
+the required web image build PASS. DE/EN/IT/SQ HTTP 200; 37 canonical product
+IDs, names, descriptions, prices and availability unchanged. All 37 products use
+the existing editable media path. In-store notice and Google map opt-in/rendering
+verified in live Chrome; phone 390 px and tablet 768 px have no page-width overflow.
+The informational site's TEST notice is scoped separately from unchanged POS /
+fiscal TEST. All public order channels are OFF server-side.
+
+Fresh local dump/media and full remote backup hashes verified; prior web image
+and source retained, rollback configuration checked. Only web recreated; API,
+protected environment, schema and unrelated runtimes preserved. No new orders,
+payments, invoices or signatures; no global test suite or physical-device test.
+After owner sign-in, authenticated POS/Orders/Settings smoke PASS; the POS TEST
+warning remains and Orders retains Kitchen access. This is operational evidence
+from the private version, not a claim
+that the public source snapshot contains the private fiscal implementation.
+Customer identity, addresses, master photos, screenshots and infrastructure
+details remain private. Public demo media and Beta / 80 are unchanged.
