@@ -47,3 +47,10 @@ Erster Lauf nach der Veröffentlichung ([Run 40495443530](https://github.com/Iam
 - Diese Fassung wurde ohne den Git-Verlauf des privaten Arbeits-Repositorys veröffentlicht. Dort enthaltene Unterlagen eines Pilotbetriebs, interne Arbeitsnotizen und Prüfberichte mit Screenshots sind nicht enthalten.
 - Speisenbilder unter `apps/web/public/pilot/demo-food` sind generiert. Produktfotos in den Vorlagen stammen von Unsplash (Unsplash-Lizenz); jede Quelle steht in [`apps/web/public/showcases/products/sources.json`](apps/web/public/showcases/products/sources.json).
 - Texte, Gestaltung und Code: Redion Cekrezi. Es wird keine Nutzungslizenz über die [LICENSE](LICENSE) hinaus gewährt.
+
+
+## 1 November 2026 — private production custom-domain pilot
+
+The existing pilot website was connected through its existing domain verification lifecycle and shared public edge. Fresh backup: local dump/media SHA256 and full remote SHA256 PASS. Exact prior API/web images, source and overlay retained; candidate/rollback configuration checks PASS, no migration. Only API/web containers recreated; other application containers and protected environment remained unchanged.
+
+Scoped validation: four CORS boundary tests and three custom-domain routing tests PASS; web/API typechecks and required API/web image builds PASS. Live checks: valid apex/www TLS, HTTP/www redirects, DE/EN/IT/SQ pages, 37 existing products, privacy/imprint routes, guest JSON preflight and platform login entry. Custom-domain CORS denied for auth/staff/workspace paths. Footer Login retains the existing credentials and role checks; phone and tablet layout checked. No new orders, payments, invoices, fiscal signatures or hardware tests. These are scoped operational checks, not a new full-platform CI pass. Client identity, domains, billing and screenshots remain private.

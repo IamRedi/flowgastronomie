@@ -6,7 +6,13 @@
 
 ![Counter sales with photos of every dish and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
 
-**[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+**[Deutsche Version](README.md)** · **As of 1 November 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+
+## Custom domain in the pilot · 1 November 2026
+
+The existing pilot website now runs on a verified custom domain with HTTPS and automatic certificate renewal. A small Login link leads to the existing platform POS sign-in; accounts and roles stay unchanged. Guest APIs allow verified domains, while staff and workspace APIs retain the platform-origin boundary.
+
+DNS, TLS, four languages and the login entry were checked against the running pilot. The implementation remains in the private operational repository; this showcase receives anonymized evidence only. Fiscal LIVE and physical-device acceptance remain pending.
 
 ## Public website · 31 October 2026
 

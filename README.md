@@ -6,7 +6,13 @@
 
 ![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
 
-**[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+**[English version](README.en.md)** · **Stand: 1. November 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+
+## Eigene Domain im Pilot · 1. November 2026
+
+Die bestehende Pilotwebsite ist über eine verifizierte eigene Domain mit HTTPS und automatischer Zertifikatserneuerung erreichbar. Ein kleiner Login-Link führt zur bisherigen POS-Anmeldung auf der Plattform; Konten und Rollen bleiben gleich. Gast-APIs erlauben verifizierte Domains, Mitarbeiter- und Verwaltungs-APIs bleiben auf den Plattform-Ursprung begrenzt.
+
+DNS, TLS, vier Sprachen und der Login-Einstieg wurden am laufenden Pilot geprüft. Die technischen Änderungen liegen in der privaten Betriebsfassung; hier werden nur die anonymisierten Nachweise ergänzt. Fiskal-LIVE und physische Geräte sind weiterhin nicht freigegeben.
 
 ## Öffentliche Website · 31. Oktober 2026
 
