@@ -1,6 +1,22 @@
 # Projektstand
 
-**Stand: 27. Oktober 2026.** Was erreicht ist, was offen ist und wie das Projekt dahin kam. Belege zu jeder Zahl stehen in [EVIDENCE.md](../EVIDENCE.md).
+**Stand: 2. November 2026.** Was erreicht ist, was offen ist und wie das Projekt dahin kam. Belege zu jeder Zahl stehen in [EVIDENCE.md](../EVIDENCE.md).
+
+## Aktueller Betriebsnachweis · 2. November 2026
+
+Die private Betriebsfassung bietet die überarbeitete mehrsprachige Pilotwebsite,
+gemeinsame bearbeitbare Produktbilder, Google Maps nach ausdrücklichem Laden und
+einen Hinweis auf den Verkauf im Lokal. Öffentliche Bestellung serverseitig OFF;
+POS/Fiskalisierung TEST. Neun gezielte Präsentationstests, Web-Typprüfung und der
+erforderliche Web-Build bestanden; HTTP- und Browser-Smoke für die öffentliche
+Website bestanden. Kein neuer globaler Testlauf, keine Schemaänderung.
+Bestehender Kern, Mandant und Infrastruktur bleiben erhalten. Beta / 80 bleibt
+unverändert. Details: [EVIDENCE.md](../EVIDENCE.md). Die folgenden älteren
+Zusammenfassungen beschreiben ihren jeweils datierten Stand.
+
+## Neuer Betriebsnachweis · 1. November 2026
+
+Bestehende Pilotwebsite auf verifizierter eigener HTTPS-Domain, automatische ACME-Erneuerung, vier Sprachen und Link zur vorhandenen POS-Anmeldung. Nur Gast-APIs erlauben verifizierte Website-Ursprünge. Kein neuer Mandant oder Server, keine Änderung an Fiskal-LIVE, Bankzahlungen oder Gerätefreigaben. Umsetzung in der privaten Betriebsfassung; öffentliche Beschreibung ohne Kundendaten. Ältere Zusammenfassungen unten bleiben datierte Historie.
 
 ## Kurzfassung
 

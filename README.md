@@ -6,7 +6,27 @@
 
 ![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
 
-**[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+**[English version](README.en.md)** · **Stand: 2. November 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+
+## Öffentliche Pilotwebsite · 2. November 2026
+
+Die bestehende Website hat eine warme responsive Gestaltung, bearbeitbare
+Produktbilder aus derselben Speisekarte und eine erst auf Wunsch geladene
+Google-Karte. Der Bestellbutton erklärt den aktuellen Verkauf vor Ort und die
+kommende Online-Bestellung. Öffentliche Bestellungen sind serverseitig aus.
+Die Informationsseite zeigt keinen TEST-Hinweis; POS und Fiskalisierung bleiben
+TEST. Vier Sprachen, 37 unveränderte Produkte und die Darstellung auf Telefon
+und Tablet wurden im laufenden Pilot geprüft.
+
+Die technische Umsetzung und Betriebsbilder bleiben in der privaten
+Betriebsfassung. Die öffentlichen Aufnahmen unten zeigen weiterhin ausschließlich
+fiktive Demodaten. Gesamtstatus: **Beta / 80**, Fiskal-LIVE und Geräteabnahme offen.
+
+## Eigene Domain im Pilot · 1. November 2026
+
+Die bestehende Pilotwebsite ist über eine verifizierte eigene Domain mit HTTPS und automatischer Zertifikatserneuerung erreichbar. Ein kleiner Login-Link führt zur bisherigen POS-Anmeldung auf der Plattform; Konten und Rollen bleiben gleich. Gast-APIs erlauben verifizierte Domains, Mitarbeiter- und Verwaltungs-APIs bleiben auf den Plattform-Ursprung begrenzt.
+
+DNS, TLS, vier Sprachen und der Login-Einstieg wurden am laufenden Pilot geprüft. Die technischen Änderungen liegen in der privaten Betriebsfassung; hier werden nur die anonymisierten Nachweise ergänzt. Fiskal-LIVE und physische Geräte sind weiterhin nicht freigegeben.
 
 ## Öffentliche Website · 31. Oktober 2026
 
@@ -104,7 +124,7 @@ Mehr dazu in [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.
 
 ## Qualität und Sicherheit
 
-- **CI auf jedem Pull Request:** Formatprüfung, Typprüfung, Unit-Tests, Integrationstests gegen eine frische PostgreSQL, Browser-Tests der Kernabläufe in vier Sprachen, SSE-Proxy-Test, Backup- und Wiederherstellungsprobe, Android-Build, gitleaks.
+- **Lokale Prüfungen; Cloud-CI nur ausdrücklich gestartet:** Formatprüfung, Typprüfung, Unit-Tests, Integrationstests gegen eine frische PostgreSQL, Browser-Tests der Kernabläufe in vier Sprachen, SSE-Proxy-Test, Backup- und Wiederherstellungsprobe, Android-Build, gitleaks.
 - **Sicherheit:** scrypt-Passwörter, serverseitige Sitzungen mit nur gehashtem Token in der Datenbank, Tisch-QR-Codes als nicht erratbare Tokens, Rate-Limits für alle öffentlichen Schreibzugriffe, Schutz gegen SSRF beim Website-Import. Bedrohungsmodell und bekannte Restrisiken stehen offen in [SECURITY.md](SECURITY.md).
 - **Keine echten Daten.** Das Repository enthält keine echten Gäste, Mitarbeitenden oder Betriebe. Der Demo-Betrieb, seine Adresse, Telefonnummer und das Team sind erfunden.
 
@@ -142,7 +162,7 @@ Weitere Demo-Wege, Prüfungen und die Repository-Karte: [docs/OPERATIONS.md](doc
 
 ## Wie dieses Projekt entsteht
 
-FlowGastronomie wird von Redion Cekrezi entwickelt, mit KI-Agenten als Werkzeug: Der Mensch entscheidet, was gebaut wird, prüft jedes Ergebnis und gibt es frei; die Agenten schreiben Code, Tests und Dokumentation in kleinen Pull Requests, die nur mit grüner CI gemergt werden. Jede größere Entscheidung steht mit Datum im [Entscheidungslog](docs/product/DECISIONS.md).
+FlowGastronomie wird von Redion Cekrezi entwickelt, mit KI-Agenten als Werkzeug: Der Mensch entscheidet, was gebaut wird, prüft jedes Ergebnis und gibt es frei; die Agenten schreiben Code, Tests und Dokumentation in kleinen Pull Requests, die nur mit den erforderlichen Prüfnachweisen und Freigaben gemergt werden. Jede größere Entscheidung steht mit Datum im [Entscheidungslog](docs/product/DECISIONS.md).
 
 ## Dokumentation
 
@@ -159,3 +179,5 @@ FlowGastronomie wird von Redion Cekrezi entwickelt, mit KI-Agenten als Werkzeug:
 ## Lizenz
 
 Quellcode zum Lesen und Bewerten, nicht zur Nutzung im Betrieb: siehe [LICENSE](LICENSE). Für eine Nutzung oder Zusammenarbeit bitte über [GitHub](https://github.com/IamRedi) Kontakt aufnehmen.
+
+Verification execution: [LOCAL_CI_POLICY.md](LOCAL_CI_POLICY.md). Existing test, security, review and operational release requirements remain in force.

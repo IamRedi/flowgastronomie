@@ -6,7 +6,26 @@
 
 ![Counter sales with photos of every dish and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
 
-**[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+**[Deutsche Version](README.md)** · **As of 2 November 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+
+## Public pilot storefront · 2 November 2026
+
+The existing website has a warm responsive presentation, editable product photos
+from the same menu and a Google map loaded only on request. Its order button
+explains current in-store service and upcoming online ordering. Public ordering
+is disabled on the server. The information site omits the TEST notice; POS and
+fiscal processing remain TEST. Four languages, 37 unchanged products and phone
+and tablet layouts were checked against the running pilot.
+
+Implementation and business screenshots stay in the private operational
+repository. The public images below continue to show fictitious demo data only.
+Overall status: **Beta / 80**; fiscal LIVE and device acceptance remain pending.
+
+## Custom domain in the pilot · 1 November 2026
+
+The existing pilot website now runs on a verified custom domain with HTTPS and automatic certificate renewal. A small Login link leads to the existing platform POS sign-in; accounts and roles stay unchanged. Guest APIs allow verified domains, while staff and workspace APIs retain the platform-origin boundary.
+
+DNS, TLS, four languages and the login entry were checked against the running pilot. The implementation remains in the private operational repository; this showcase receives anonymized evidence only. Fiscal LIVE and physical-device acceptance remain pending.
 
 ## Public website · 31 October 2026
 
@@ -104,7 +123,7 @@ More in [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md).
 
 ## Quality and security
 
-- **CI on every pull request:** format check, type check, unit tests, integration tests against a fresh PostgreSQL, browser tests of the core journeys in four languages, SSE proxy test, backup and restore rehearsal, Android build, gitleaks.
+- **Local verification; explicit cloud CI only:** format check, type check, unit tests, integration tests against a fresh PostgreSQL, browser tests of the core journeys in four languages, SSE proxy test, backup and restore rehearsal, Android build, gitleaks.
 - **Security:** scrypt passwords, server-side sessions with only a hashed token in the database, table QR codes as unguessable tokens, rate limits on every public write, SSRF protection in the website import. The threat model and known residual risks are documented openly in [SECURITY.md](SECURITY.md) (German).
 - **No real data.** The repository contains no real guests, staff or venues. The demo venue, its address, phone number and team are invented.
 
@@ -142,8 +161,10 @@ More demo routes, checks and the repository map: [docs/OPERATIONS.md](docs/OPERA
 
 ## How this project is built
 
-FlowGastronomie is developed by Redion Cekrezi with AI agents as tools: the human decides what gets built, reviews every result and approves it; the agents write code, tests and documentation in small pull requests that are merged only with green CI. Every major decision is recorded with its date in the [decision log](docs/product/DECISIONS.md).
+FlowGastronomie is developed by Redion Cekrezi with AI agents as tools: the human decides what gets built, reviews every result and approves it; the agents write code, tests and documentation in small pull requests that are merged only with the required verification evidence and approvals. Every major decision is recorded with its date in the [decision log](docs/product/DECISIONS.md).
 
 ## License
 
 Source code for reading and evaluation, not for production use: see [LICENSE](LICENSE). For use or collaboration, please get in touch via [GitHub](https://github.com/IamRedi).
+
+Verification execution: [LOCAL_CI_POLICY.md](LOCAL_CI_POLICY.md). Existing test, security, review and operational release requirements remain in force.
