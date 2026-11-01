@@ -1,7 +1,10 @@
 name: Operations Lab
+# Routine development verification runs directly on laptop/mini PC.
+# Explicit cloud verification only; all jobs and required assertions remain.
+# See LOCAL_CI_POLICY.md. Operational workflows have separate contracts.
 on:
-  pull_request:
   workflow_dispatch:
+
 concurrency:
   group: operations-lab-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
