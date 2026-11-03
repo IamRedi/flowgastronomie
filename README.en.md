@@ -20,6 +20,8 @@ The application remains in pilot operation. Fiscal LIVE and physical-device acce
 
 Findbar detected repeated browser titles and search descriptions on three SQ pages. Six concrete proposals were implemented with approval and checked publicly: ten URLs, then zero confirmed findings. [Case study with before/after evidence](docs/case-studies/findbar-flowgastronomie/README.md).
 
+> **Evidence and limitations:** Pilot-stage operation with documented local tests and CI checks. The included point-of-sale functionality does not provide German TSE fiscal integration. Tested workflows, optional integrations and outstanding approvals are identified separately. [Verification record (German)](EVIDENCE.md).
+
 ## At a glance
 
 - **At the table:** guests scan the QR code, read the menu in their language with EU allergens, order or call for service.

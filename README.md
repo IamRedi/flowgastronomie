@@ -20,6 +20,8 @@ Die Anwendung bleibt im Pilotbetrieb. Fiskal-LIVE und Geräteabnahme sind getren
 
 Findbar erkannte wiederholte Browsertitel und Suchbeschreibungen auf drei SQ-Seiten. Sechs konkrete Vorschläge wurden mit Freigabe umgesetzt und öffentlich geprüft: zehn URLs, danach null bestätigte Befunde. [Fallstudie mit Vorher/Nachher-Belegen](docs/case-studies/findbar-flowgastronomie/README.md).
 
+> **Nachweisstand und Grenzen:** Pilotbetrieb mit dokumentierten lokalen Tests und CI-Prüfungen. Die enthaltene Kassenfunktion ist keine für den deutschen Fiskalbetrieb integrierte TSE-Kasse. Getestete Abläufe, optionale Integrationen und offene Freigaben sind getrennt ausgewiesen. [Prüfprotokoll](EVIDENCE.md).
+
 ## Auf einen Blick
 
 - **Am Tisch:** Gäste scannen den QR-Code, lesen die Karte in ihrer Sprache mit EU-Allergenen, bestellen oder rufen den Service.
