@@ -12,6 +12,10 @@
 
 The native presentation is published and verified in DE/EN/IT/SQ. [Publication receipt](docs/P2_PUBLICATION_20261105.md). Product limits and historical application evidence remain explicit.
 
+## Public legal pages · 5 November 2026
+
+Adela’s own [imprint](https://pizzeriaadela.de/en/venue/pizzeria-adela/imprint) and [privacy notice](https://pizzeriaadela.de/en/venue/pizzeria-adela/privacy) are published in DE/EN/IT/SQ and checked on desktop/phone. Confirmed public business identity, no private tax number.37products, API and fiscal TEST/online-ordering OFF remain unchanged. [Receipt](docs/P2_PUBLICATION_20261105.md).
+
 ## Website and languages · 5 November 2026
 
 Explore the platform in [German](https://123serve.de/de), [English](https://123serve.de/en), [Italian](https://123serve.de/it) and [Albanian](https://123serve.de/sq). The homepage, pricing and Service Radar demo have distinct titles, descriptions and language references. Published venue websites retain their verified native domain and approved menu.
