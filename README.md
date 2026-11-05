@@ -12,6 +12,10 @@
 
 Die native Vorstellung ist in DE/EN/IT/SQ veröffentlicht und geprüft. [Veröffentlichungsnachweis](docs/P2_PUBLICATION_20261105.md). Produktgrenzen und historische Teststände bleiben ausdrücklich erhalten.
 
+## Rechtliche Website-Seiten · 5 November 2026
+
+Adelas eigene [Impressums-](https://pizzeriaadela.de/de/venue/pizzeria-adela/imprint) und [Datenschutzseiten](https://pizzeriaadela.de/de/venue/pizzeria-adela/privacy) sind in DE/EN/IT/SQ veröffentlicht und auf Desktop/Handy geprüft. Bestätigte öffentliche Betriebsdaten, keine private Steuernummer.37Produkte, API und Fiskal-TEST/Online-Bestellung AUS bleiben unverändert. [Receipt](docs/P2_PUBLICATION_20261105.md).
+
 ## Website und Sprachen · 5. November 2026
 
 Die Plattform stellt sich auf [Deutsch](https://123serve.de/de), [Englisch](https://123serve.de/en), [Italienisch](https://123serve.de/it) und [Albanisch](https://123serve.de/sq) vor. Startseite, Preise und Service-Radar-Demo erhalten eigene Titel, Beschreibungen und Sprachverweise. Veröffentlichte Lokal-Websites behalten ihre eigene verifizierte Domain und freigegebene Speisekarte.
