@@ -8,13 +8,17 @@
 
 **[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
 
+## P2 online · 5 November 2026
+
+The native presentation is published and verified in DE/EN/IT/SQ. [Publication receipt](docs/P2_PUBLICATION_20261105.md). Product limits and historical application evidence remain explicit.
+
 ## Website and languages · 5 November 2026
 
 Explore the platform in [German](https://123serve.de/de), [English](https://123serve.de/en), [Italian](https://123serve.de/it) and [Albanian](https://123serve.de/sq). The homepage, pricing and Service Radar demo have distinct titles, descriptions and language references. Published venue websites retain their verified native domain and approved menu.
 
 Operation remains a controlled pilot. Ordering channels are enabled per venue; POS and the fiscal connection are checked separately in TEST. Fiscal LIVE and online payments are not activated. A public website or demo does not establish physical-device or fiscal acceptance.
 
-P2 is a separately checked presentation candidate. Application code in this public snapshot and its earlier verification retain their stated revisions and dates. Publication and anonymous online readback are separate evidence in the existing presentation report; preparation is not a live PASS.
+The P2 native presentations were published on the existing domains and anonymously verified on 5 November 2026. Application code and historical test counts in this public snapshot retain their original revisions. Presentation acceptance does not establish commercial, fiscal, legal or device acceptance.
 
 After a material product milestone, reconcile the native introduction, portfolio card and affected showcase copy together. Record a justified `NO_CONTENT_CHANGE` for internal work instead of inventing product news.
 
