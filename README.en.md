@@ -8,6 +8,20 @@
 
 **[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
 
+## P2 online · 5 November 2026
+
+The native presentation is published and verified in DE/EN/IT/SQ. [Publication receipt](docs/P2_PUBLICATION_20261105.md). Product limits and historical application evidence remain explicit.
+
+## Website and languages · 5 November 2026
+
+Explore the platform in [German](https://123serve.de/de), [English](https://123serve.de/en), [Italian](https://123serve.de/it) and [Albanian](https://123serve.de/sq). The homepage, pricing and Service Radar demo have distinct titles, descriptions and language references. Published venue websites retain their verified native domain and approved menu.
+
+Operation remains a controlled pilot. Ordering channels are enabled per venue; POS and the fiscal connection are checked separately in TEST. Fiscal LIVE and online payments are not activated. A public website or demo does not establish physical-device or fiscal acceptance.
+
+The P2 native presentations were published on the existing domains and anonymously verified on 5 November 2026. Application code and historical test counts in this public snapshot retain their original revisions. Presentation acceptance does not establish commercial, fiscal, legal or device acceptance.
+
+After a material product milestone, reconcile the native introduction, portfolio card and affected showcase copy together. Record a justified `NO_CONTENT_CHANGE` for internal work instead of inventing product news.
+
 ## Public website · 31 October 2026
 
 The [Albanian homepage](https://123serve.de/sq), [pricing page](https://123serve.de/sq/pricing) and [Service Radar demo](https://123serve.de/sq/demo/radar) now have distinct browser titles and search descriptions. Large headings and visible page content stay the same. This does not establish an improvement in search rankings.
@@ -104,7 +118,7 @@ More in [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md).
 
 ## Quality and security
 
-- **CI on every pull request:** format check, type check, unit tests, integration tests against a fresh PostgreSQL, browser tests of the core journeys in four languages, SSE proxy test, backup and restore rehearsal, Android build, gitleaks.
+- **Verification scope (cloud opt-in; routine checks local):** format check, type check, unit tests, integration tests against a fresh PostgreSQL, browser tests of the core journeys in four languages, SSE proxy test, backup and restore rehearsal, Android build, gitleaks.
 - **Security:** scrypt passwords, server-side sessions with only a hashed token in the database, table QR codes as unguessable tokens, rate limits on every public write, SSRF protection in the website import. The threat model and known residual risks are documented openly in [SECURITY.md](SECURITY.md) (German).
 - **No real data.** The repository contains no real guests, staff or venues. The demo venue, its address, phone number and team are invented.
 
