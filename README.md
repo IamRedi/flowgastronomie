@@ -8,6 +8,16 @@
 
 **[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
 
+## Website und Sprachen · 5. November 2026
+
+Die Plattform stellt sich auf [Deutsch](https://123serve.de/de), [Englisch](https://123serve.de/en), [Italienisch](https://123serve.de/it) und [Albanisch](https://123serve.de/sq) vor. Startseite, Preise und Service-Radar-Demo erhalten eigene Titel, Beschreibungen und Sprachverweise. Veröffentlichte Lokal-Websites behalten ihre eigene verifizierte Domain und freigegebene Speisekarte.
+
+Der aktuelle Betrieb bleibt ein kontrollierter Pilot: Bestellkanäle werden je Lokal freigeschaltet; Kasse/Fiskalanbindung werden separat in TEST geprüft. Fiskal-LIVE und Online-Zahlungen sind nicht aktiviert. Eine öffentliche Website oder Demo bedeutet keine Geräte- oder Fiskalabnahme.
+
+Die P2-Vorstellung ist ein eigener, lokal geprüfter Präsentationsstand. Der Anwendungscode dieses öffentlichen Snapshots und seine bisherigen Testnachweise behalten ihre angegebenen Revisionen und Daten. Veröffentlichung und anonymer Online-Readback werden separat im bestehenden Präsentationsbericht geführt; aus der Vorbereitung folgt kein Live-PASS.
+
+Nach jedem wesentlichen Produktfortschritt werden native Vorstellung, Portfolio-Karte und betroffene Showcase-Texte gemeinsam abgeglichen. Interne Änderungen erhalten einen begründeten `NO_CONTENT_CHANGE` statt erfundener Produktneuigkeiten.
+
 ## Öffentliche Website · 31. Oktober 2026
 
 Die [albanische Startseite](https://123serve.de/sq), [Preisseite](https://123serve.de/sq/pricing) und [Service-Radar-Demo](https://123serve.de/sq/demo/radar) haben jetzt eigene Browsertitel und Suchbeschreibungen. Die großen Überschriften und der sichtbare Seiteninhalt bleiben gleich. Daraus folgt keine Zusage zu Suchplatzierungen.
@@ -104,7 +114,7 @@ Mehr dazu in [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.
 
 ## Qualität und Sicherheit
 
-- **CI auf jedem Pull Request:** Formatprüfung, Typprüfung, Unit-Tests, Integrationstests gegen eine frische PostgreSQL, Browser-Tests der Kernabläufe in vier Sprachen, SSE-Proxy-Test, Backup- und Wiederherstellungsprobe, Android-Build, gitleaks.
+- **Verifikationsumfang (Cloud opt-in; Routineprüfungen lokal):** Formatprüfung, Typprüfung, Unit-Tests, Integrationstests gegen eine frische PostgreSQL, Browser-Tests der Kernabläufe in vier Sprachen, SSE-Proxy-Test, Backup- und Wiederherstellungsprobe, Android-Build, gitleaks.
 - **Sicherheit:** scrypt-Passwörter, serverseitige Sitzungen mit nur gehashtem Token in der Datenbank, Tisch-QR-Codes als nicht erratbare Tokens, Rate-Limits für alle öffentlichen Schreibzugriffe, Schutz gegen SSRF beim Website-Import. Bedrohungsmodell und bekannte Restrisiken stehen offen in [SECURITY.md](SECURITY.md).
 - **Keine echten Daten.** Das Repository enthält keine echten Gäste, Mitarbeitenden oder Betriebe. Der Demo-Betrieb, seine Adresse, Telefonnummer und das Team sind erfunden.
 
@@ -159,3 +169,5 @@ FlowGastronomie wird von Redion Cekrezi entwickelt, mit KI-Agenten als Werkzeug:
 ## Lizenz
 
 Quellcode zum Lesen und Bewerten, nicht zur Nutzung im Betrieb: siehe [LICENSE](LICENSE). Für eine Nutzung oder Zusammenarbeit bitte über [GitHub](https://github.com/IamRedi) Kontakt aufnehmen.
+
+[by RediON](https://www.redioncekrezi.de/)
