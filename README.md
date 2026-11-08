@@ -1,5 +1,9 @@
 # FlowGastronomie · RestaurantFlow
 
+## Premium-Website veröffentlicht · 8. November 2026
+
+Die neue [Produktwebsite](https://123serve.de/de) ist in DE/EN/IT/SQ online. RestaurantFlow, PizzeriaFlow, ImbissFlow und BarFlow haben eigene öffentliche Beispieldemos; [Pakete](https://123serve.de/de/pricing) zeigen ausschließlich „Preis auf Anfrage“. Web-only-Veröffentlichung mit frischem geprüftem Backup, isoliertem Drill und geprüftem Rollback. API, bestehende Lokal-Websites, Daten und Fiskal-TEST bleiben unverändert. Dies ist keine fiskalische LIVE- oder Geräteabnahme.
+
 [![CI](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml/badge.svg)](https://github.com/IamRedi/flowgastronomie/actions/workflows/ci.yml)
 
 **Restaurant-Software, die nur das digitalisiert, was der Betrieb wirklich braucht.** Tisch-QR mit Speisekarte in vier Sprachen, Service Radar, Kasse, Küche und Bar, Online-Bestellung und die eigene Website laufen auf einem Kern. Der Betrieb entscheidet pro Bereich, Tisch oder Uhrzeit, wie viel davon er einschaltet. Kellner werden nicht ersetzt.
