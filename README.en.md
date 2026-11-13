@@ -1,5 +1,9 @@
 # FlowGastronomie · RestaurantFlow
 
+## Clearer setup for new venues · 13 November 2026
+
+Public home and pricing now answer three buyer questions in DE/EN/IT/SQ: requesting price/setup, safe sample demos, and separate cash-register/online-payment/fiscal-LIVE prerequisites. Enquiry activates no operational functions. The real GeoFindbar cycle retains eight unchanged questions and actual agent answers before/after publication; no paid API or claimed visibility uplift. [Verification](docs/FLOW_GEO_CLIENT_20261113.md).
+
 ## Premium website published · 8 November 2026
 
 The new [product website](https://123serve.de/en) is online in DE/EN/IT/SQ. RestaurantFlow, PizzeriaFlow, ImbissFlow and BarFlow each have a public sample-data demo; [packages](https://123serve.de/en/pricing) show prices on request. Web-only publication used a fresh verified backup, isolated drill and checked rollback. The API, existing venue websites, data and fiscal TEST remain unchanged. This does not establish fiscal LIVE or physical-device acceptance.

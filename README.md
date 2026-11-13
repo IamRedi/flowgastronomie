@@ -1,5 +1,9 @@
 # FlowGastronomie · RestaurantFlow
 
+## Klarer Einstieg für neue Betriebe · 13. November 2026
+
+Die öffentliche Start- und Paketeseite beantwortet jetzt drei Käuferfragen in DE/EN/IT/SQ: Preis/Einrichtung anfragen, sichere Beispieldemo und die getrennten Voraussetzungen für Kasse, Online-Zahlung und Fiskal-LIVE. Der Kontakt aktiviert keine Betriebsfunktionen. Der reale GeoFindbar-Zyklus mit acht unveränderten Fragen und Agentenantworten vor/nach Veröffentlichung ist dokumentiert; keine bezahlte API, kein behaupteter Sichtbarkeitsgewinn. [Prüfnachweis](docs/FLOW_GEO_CLIENT_20261113.md).
+
 ## Premium-Website veröffentlicht · 8. November 2026
 
 Die neue [Produktwebsite](https://123serve.de/de) ist in DE/EN/IT/SQ online. RestaurantFlow, PizzeriaFlow, ImbissFlow und BarFlow haben eigene öffentliche Beispieldemos; [Pakete](https://123serve.de/de/pricing) zeigen ausschließlich „Preis auf Anfrage“. Web-only-Veröffentlichung mit frischem geprüftem Backup, isoliertem Drill und geprüftem Rollback. API, bestehende Lokal-Websites, Daten und Fiskal-TEST bleiben unverändert. Dies ist keine fiskalische LIVE- oder Geräteabnahme.
