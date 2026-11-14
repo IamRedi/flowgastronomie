@@ -1,5 +1,13 @@
 # FlowGastronomie · RestaurantFlow
 
+## Verified venue metadata cycle · 14 November 2026
+
+An existing restaurant website now exposes fact-derived Restaurant metadata in
+four locales after an owner-approved web-only release and fresh GeoFindbar native
+before/after checks. Contact/menu/prices and disabled online ordering remain as
+published. No paid API, new fiscal/payment capability or ranking uplift is implied.
+[Verification and limits](docs/RESTAURANT_METADATA_CLIENT_20261114.md).
+
 ## Clearer setup for new venues · 13 November 2026
 
 Public home and pricing now answer three buyer questions in DE/EN/IT/SQ: requesting price/setup, safe sample demos, and separate cash-register/online-payment/fiscal-LIVE prerequisites. Enquiry activates no operational functions. The real GeoFindbar cycle retains eight unchanged questions and actual agent answers before/after publication; no paid API or claimed visibility uplift. [Verification](docs/FLOW_GEO_CLIENT_20261113.md).

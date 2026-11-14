@@ -1,5 +1,14 @@
 # FlowGastronomie · RestaurantFlow
 
+## Verifizierter Website-Metadatenzyklus · 14. November 2026
+
+Eine bestehende Restaurant-Website enthält jetzt faktenbasierte Restaurant-Daten
+in vier Sprachen, nach freigegebener reiner Web-Veröffentlichung und neuen nativen
+GeoFindbar-Prüfungen davor/danach. Kontakt, Menü, Preise und deaktivierte
+Onlinebestellung bleiben erhalten. Keine kostenpflichtigen API-Aufrufe, neue
+Fiskal-/Zahlungsaktivierung oder behauptete Rankingsteigerung.
+[Nachweis und Grenzen](docs/RESTAURANT_METADATA_CLIENT_20261114.md).
+
 ## Klarer Einstieg für neue Betriebe · 13. November 2026
 
 Die öffentliche Start- und Paketeseite beantwortet jetzt drei Käuferfragen in DE/EN/IT/SQ: Preis/Einrichtung anfragen, sichere Beispieldemo und die getrennten Voraussetzungen für Kasse, Online-Zahlung und Fiskal-LIVE. Der Kontakt aktiviert keine Betriebsfunktionen. Der reale GeoFindbar-Zyklus mit acht unveränderten Fragen und Agentenantworten vor/nach Veröffentlichung ist dokumentiert; keine bezahlte API, kein behaupteter Sichtbarkeitsgewinn. [Prüfnachweis](docs/FLOW_GEO_CLIENT_20261113.md).
