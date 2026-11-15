@@ -8,6 +8,10 @@
 
 **[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
 
+## Private database on existing pilot infrastructure · 15 November 2026
+
+The existing pilot now uses PostgreSQL 18 on its existing infrastructure. All retained records were compared; encrypted off-host backups and native recovery were verified. Product capabilities and public interfaces are unchanged. Fiscal LIVE and device acceptance remain separate gates. This does not raise product readiness or availability claims. [Sync note](docs/POSTGRES_MILESTONE_20261115.md).
+
 ## P2 online · 5 November 2026
 
 The native presentation is published and verified in DE/EN/IT/SQ. [Publication receipt](docs/P2_PUBLICATION_20261105.md). Product limits and historical application evidence remain explicit.

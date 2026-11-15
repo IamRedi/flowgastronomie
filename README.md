@@ -8,6 +8,10 @@
 
 **[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
 
+## Private Datenhaltung im bestehenden Pilot · 15. November 2026
+
+Der bestehende Pilot verwendet jetzt PostgreSQL 18 auf der bereits vorhandenen Infrastruktur. Alle vorhandenen Datensätze wurden abgeglichen; verschlüsselte externe Backups und native Wiederherstellung wurden geprüft. Die Produktfunktionen und veröffentlichten Oberflächen bleiben gleich. Fiskal-LIVE und Geräteabnahme sind weiterhin getrennte Freigaben. Keine neue Reifegrad- oder Verfügbarkeitszusage. [Abgleich](docs/POSTGRES_MILESTONE_20261115.md).
+
 ## P2 online · 5. November 2026
 
 Die native Vorstellung ist in DE/EN/IT/SQ veröffentlicht und geprüft. [Veröffentlichungsnachweis](docs/P2_PUBLICATION_20261105.md). Produktgrenzen und historische Teststände bleiben ausdrücklich erhalten.
