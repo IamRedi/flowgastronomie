@@ -4,9 +4,15 @@
 
 **Restaurant software that digitises only what the venue actually needs.** Table QR menus in four languages, Service Radar, counter sales, kitchen and bar stations, online ordering and the venue's own website run on one core. The venue decides per area, table or time of day how much of this it switches on. Waiters are not replaced.
 
-![Counter sales with photos of every dish and an open basket, next to the menu on a phone after scanning the table QR code](docs/assets/screenshots/hero.webp)
+![Current public presentation in its warm Day theme, with illustrative kitchen and service examples](docs/assets/identity-20261123/presentation.webp)
 
 **[Deutsche Version](README.md)** · **As of 31 October 2026** · **[Project status and history (German)](docs/PROJEKTSTAND.md)** · **[Verification record](EVIDENCE.md)** · **[Run it yourself](#run-it-yourself)**
+
+## Current identity · 23 November 2026
+
+The [native presentation](https://123serve.de/en) is published with its approved personal plate, fork and open service-flow logo. Day and Evening use lighter, warm hospitality colours, with persistent Auto/Day/Evening choice. Homepage, plans and public demos share the same identity. The portfolio uses the actual presentation hero for the card and the personal product logo in the launcher. [Publication receipt](docs/HOSPITALITY_PUBLICATION_20261123.md).
+
+Pilot menu entries and prices remain unchanged. Device acceptance and fiscal LIVE remain separate approvals; LIVE stays off. Older test counts and application captures below retain their stated historical scope.
 
 ## P2 online · 5 November 2026
 

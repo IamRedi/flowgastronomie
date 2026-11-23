@@ -4,9 +4,15 @@
 
 **Restaurant-Software, die nur das digitalisiert, was der Betrieb wirklich braucht.** Tisch-QR mit Speisekarte in vier Sprachen, Service Radar, Kasse, Küche und Bar, Online-Bestellung und die eigene Website laufen auf einem Kern. Der Betrieb entscheidet pro Bereich, Tisch oder Uhrzeit, wie viel davon er einschaltet. Kellner werden nicht ersetzt.
 
-![Kasse mit Fotos aller Gerichte und offenem Warenkorb, daneben die Speisekarte am Handy nach dem QR-Scan](docs/assets/screenshots/hero.webp)
+![Aktuelle öffentliche Vorstellung mit warmer Tagesgestaltung und Beispielen für Küche und Service](docs/assets/identity-20261123/presentation.webp)
 
 **[English version](README.en.md)** · **Stand: 31. Oktober 2026** · **[Projektstand und Verlauf](docs/PROJEKTSTAND.md)** · **[Prüfprotokoll](EVIDENCE.md)** · **[Selbst starten](#selbst-starten)**
+
+## Aktuelle Gestaltung · 23. November 2026
+
+Die [native Vorstellung](https://123serve.de/de) ist mit dem freigegebenen persönlichen Logo aus Teller, Gabel und offenem Service-Bogen veröffentlicht. Tag und Abend verwenden helle, warme Restaurantfarben; die Auswahl Automatisch/Tag/Abend bleibt erhalten. Startseite, Pakete und öffentliche Demos nutzen dieselbe Identität. Das Portfolio zeigt die echte Vorstellung als Kartenbild und das Produktlogo im App-Starter. [Veröffentlichungsnachweis](docs/HOSPITALITY_PUBLICATION_20261123.md).
+
+Die Menüeinträge und Preise des Pilotbetriebs bleiben unverändert. Geräteabnahme und Fiskal-LIVE sind weiterhin getrennte Freigaben; LIVE bleibt aus. Ältere Testzahlen und Bildschirmaufnahmen unten beziehen sich auf ihre angegebenen historischen Stände.
 
 ## P2 online · 5. November 2026
 
